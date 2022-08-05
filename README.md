@@ -2521,7 +2521,7 @@ egyetlen amit fel tudok idézni, mint ami megpróbált átfogó lenni és az
 eredményeit is transzparensen közzétette a nyilvánosságnak, az az
 egykori Egészségbiztosítási Felügyelet
 [indikátorrendszere](https://web.archive.org/web/20100821180551/http://ebf.hu/letoltes/Indikator2010_gyorsjel_v1.0.pdf),
-mely nagyon jól első lépés volt: [bárki számára
+mely nagyon jó első lépés volt: [bárki számára
 elérhetően](https://web.archive.org/web/20090805125845/http://indikator.ebf.hu:80/)
 tartalmazta az intézmények indikátorait, szakterületenként lebontva
 (például kardiológiához 55 indikátor volt, szülészethez 80 stb.),
