@@ -2454,7 +2454,7 @@ Másodsorban, érdemes megnézni a
 egészen elképesztő mélységű adatok találhatóak a betegségekről
 (regiszter jelleggel – erről is lehetne Magyarországon beszélni…), de az
 ellátás teljesítmény-jellemzőiről is. Érdemes megnézni mondjuk a
-vastagbél-rák audit [oldalát](https://www.nboca.org.uk/), részletesen
+vastagbél-rák audit [oldalát](https://www.nboca.org.uk/), részletes
 tájékoztatók orvosoknak, betegeknek; [így néz
 ki](https://www.nboca.org.uk/content/uploads/2022/02/NBOCA-2021-AR-Final.pdf)
 például egy éves jelentés: betegút-elemzés, betegösszetétel-elemzés,
