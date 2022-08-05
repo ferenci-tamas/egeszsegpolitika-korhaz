@@ -344,7 +344,7 @@ Ezzel végeztünk az előkészülettekel, nincs más dolgunk mint
 feldolgozható formában is lementeni az adatokat:
 
 ``` r
-write.csv2(res, "KorhaziAgyszamEsBetegforgalom.csv", row.names = FALSE, fileEncoding = "CP1252")
+fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
 ```
 
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a

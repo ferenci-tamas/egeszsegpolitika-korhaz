@@ -13,6 +13,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 12, dpi = 300)
 
 library(data.table)
 library(ggplot2)
+
+set.seed(1)
 ```
 
 
@@ -156,7 +158,7 @@ Ezek után már a megnevezés aggálytalanul használható.
 Ezzel végeztünk az előkészülettekel, nincs más dolgunk mint feldolgozható formában is lementeni az adatokat:
 
 ```{r}
-write.csv2(res, "KorhaziAgyszamEsBetegforgalom.csv", row.names = FALSE, fileEncoding = "CP1252")
+fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
 ```
 
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor kizárjuk a vizsgálatokból:
