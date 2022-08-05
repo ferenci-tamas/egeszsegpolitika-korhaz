@@ -100,14 +100,17 @@ kapcsán.
 Ezt a pontot nyugodtan ugorja át bárki, akit nem érdekelnek annak
 részletei, hogy az adatokat hogyan sikerült feldolgozható formába hozni.
 Itt azonban leírom, részint mert talán önmagában is érdekes lehet,
-emiatt igyekszem kommentálni is, illetv rámutatni a nehézségekre,
+emiatt igyekszem kommentálni is, illetve rámutatni a nehézségekre,
 részint, hogy a munkám teljesen transzparens, bárki számára
 reprodukálható legyen. Akit a technikai részletek nem érdekelnek, de a
-számszerű eredményeket szeretné használni, itt letöltheti bármilyen
-programban feldolgozható, letisztított és egységes formában a 2003 és
-2021 között ágyszám- és betegforgalmi adatait a magyar aktív
-fekvőbeteg-ellátásnak. Az elemzés – csakúgy mint a letöltés és
-adatfeldolgozás – [R statisztikai
+számszerű eredményeket szeretné használni, itt letöltheti feldolgozható,
+letisztított és egységes formában a 2003 és 2021 között ágyszám- és
+betegforgalmi adatait a magyar aktív fekvőbeteg-ellátásnak: [CSV
+formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.csv),
+illetve [XLSX (Excel)
+formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.xlsx).
+Az elemzés – csakúgy mint a letöltés és adatfeldolgozás – [R
+statisztikai
 környezet](https://www.youtube.com/c/FerenciTam%C3%A1s/playlists?view=50&sort=dd&shelf_id=2)
 alatt történt; az ehhez szükséges kódokat nem csak itt, de az eredményt
 közlő pontokban is megadom (akit ez nem érdekel, nyugodtan ugorja át a
@@ -345,6 +348,7 @@ feldolgozható formában is lementeni az adatokat:
 
 ``` r
 fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
+openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
 ```
 
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a
