@@ -1577,9 +1577,10 @@ Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú
 Ez így néz ki 2021-ben:
 
 ``` r
-ggplot(res[Ev==2021][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(KorhazRovid)][order(MukodoAtlagAgy)],
-       aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) + geom_jitter(width = 0, height = 0.1) +
-  scale_y_discrete(limits=rev) + labs(x = "Működő átlagos ágyszám", y = "")
+ggplot(res[Ev==2021][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+  order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
+  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+  labs(x = "Működő átlagos ágyszám", y = "")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
@@ -1590,7 +1591,8 @@ intézményekre szűkítve):
 
 ``` r
 knitr::kable(res[Ev==2021][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
-  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = Korhaz)][order(`Működő átlagos ágyszám`)][1:15])
+  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = Korhaz)][
+    order(`Működő átlagos ágyszám`)][1:15])
 ```
 
 <table>
@@ -2054,7 +2056,8 @@ Ennek a következménye, hogy így néz ki a ténylege összefüggés a 2021-es
 magyar adatokon:
 
 ``` r
-ggplot(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
+ggplot(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
+       aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
   geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
   labs(x = "Működő ágyak átlagos száma", y = "Ellátott betegek száma")
 ```
@@ -2099,7 +2102,8 @@ is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
 adata, a vastag piros pedig az országos átlag adott szakmában):
 
 ``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0], aes(x = Ev, y = Agykihasznalas, group = KorhazRovid)) +
+ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
+       aes(x = Ev, y = Agykihasznalas, group = KorhazRovid)) +
     facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
     geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
         ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)) , .(Ev, SzakmaMegnev)],
@@ -2184,7 +2188,8 @@ minden halvány vonal egy kórház adata, a vastag piros pedig az országos
 átlag adott szakmában:
 
 ``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0], aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
+ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
+       aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam)) , .(Ev, SzakmaMegnev)],
@@ -2619,7 +2624,8 @@ fel, ahol legalább 30 beteget elláttak):
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz, t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
+  , .(Halalozas, Korhaz,
+      t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
        aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
@@ -2670,7 +2676,8 @@ Hasonló a helyzet a bőrgyógyászatnál:
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz, t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
+  , .(Halalozas, Korhaz,
+      t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
@@ -2681,7 +2688,8 @@ Vagy épp a pszichiátriánál:
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz, t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
+  , .(Halalozas, Korhaz,
+      t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
@@ -2694,9 +2702,10 @@ mind különböző!):
 
 ``` r
 ggplot(res[Ev==2021][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, KorhazRovid, SzakmaMegnev, t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev) + geom_point() + geom_errorbar(size = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  , .(Halalozas, KorhazRovid, SzakmaMegnev,
+      t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev) + geom_point() +
+  geom_errorbar(size = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
