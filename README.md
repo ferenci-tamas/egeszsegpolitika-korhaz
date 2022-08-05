@@ -327,7 +327,8 @@ tehát bizonytalan, a megnevezés mindenesetre használható.
 
 Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az
 ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy
-egységes legyen):
+egységes legyen), illetve egy szakmanevet lerövidítünk, hogy jobban
+kiférjen az ábrákon:
 
 ``` r
 res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
@@ -343,6 +344,9 @@ res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
 res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
 res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
 res[SzakmaMegnev=="Felvételi osztály"]$SzakmaMegnev <- "Sürgősségi betegellátás"
+
+res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
+  "Aneszt. és intenzív betegellátás"
 ```
 
 Ezek után már a megnevezés aggálytalanul használható.
@@ -517,7 +521,7 @@ Kórház
 <tbody>
 <tr>
 <td style="text-align:left;">
-Aneszteziológiai és intenzív betegellátás
+Aneszt. és intenzív betegellátás
 </td>
 <td style="text-align:right;">
 5
@@ -1226,7 +1230,7 @@ Kórház
 <tbody>
 <tr>
 <td style="text-align:left;">
-Aneszteziológiai és intenzív betegellátás
+Aneszt. és intenzív betegellátás
 </td>
 <td style="text-align:right;">
 1.2

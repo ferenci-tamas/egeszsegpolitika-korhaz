@@ -135,7 +135,7 @@ knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
 
 Amint látható, itt már van egy kis kavarodás, de egy kivételtől eltekintve nem szó szerinti gond, csak a szakma megnevezése nem volt egységes. Az egyetlen kivétel a 17-es kód, itt tényleges gikszer van: 2003-tól 2011-ig ezt a "Felvételi osztály" szakmára használják, utána viszont egy durva hiba történik, mert _ugyanazt_ a kódot kiosztják egy teljesen más szakmának ("Arc-, állcsont- és szájsebészet"). A 17-es kód tehát bizonytalan, a megnevezés mindenesetre használható.
 
-Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes legyen):
+Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes legyen), illetve egy szakmanevet lerövidítünk, hogy jobban kiférjen az ábrákon:
 
 ```{r}
 res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
@@ -151,6 +151,9 @@ res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
 res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
 res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
 res[SzakmaMegnev=="Felvételi osztály"]$SzakmaMegnev <- "Sürgősségi betegellátás"
+
+res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
+  "Aneszt. és intenzív betegellátás"
 ```
 
 Ezek után már a megnevezés aggálytalanul használható.
