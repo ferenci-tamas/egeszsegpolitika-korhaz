@@ -2704,8 +2704,8 @@ mind különböző!):
 ggplot(res[Ev==2021][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazRovid, SzakmaMegnev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev) + geom_point() +
-  geom_errorbar(size = 0.5) + labs(x = "Halálozási arány [%]", y = "")
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev, scales = "free") +
+  geom_point() + geom_errorbar(size = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
