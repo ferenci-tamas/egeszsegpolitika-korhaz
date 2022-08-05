@@ -1101,7 +1101,7 @@ megoldani, ráadásul itt nem csak az orvosokról van szó, sokszor maguk a
 betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
 ellátórendszerben és a háziorvos szerepe csak annyi, hogy adjon
 beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
-alapellátás erősítése.
+alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!)
 
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat
 erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben:
@@ -1132,7 +1132,8 @@ most, egy ilyen helyzetben kivételesen pont jól jön. Ahogy telt az idő,
 kiderült, hogy valójában még ez sem igazán valósul meg: az elsődleges
 szűk keresztmetszet ugyanis ilyen helyzetben sem az ágy, vagy épp az
 orvostechnikai berendezés, legyen az lélegeztetőgép vagy bármi más, nem
-a műszer volt Magyarországon, hanem egész egyszerűen a szakember.
+a műszer volt Magyarországon, hanem egész egyszerűen a szakember. Az
+orvos, de még inkább: az ápoló.
 
 Vegyük példának Dániát: miközben ott kórházi ágyból 40%-kal kevesebb van
 lakosságarányosan mint nálunk, ahogy a fenti ábra is mutatja, addig
@@ -2158,26 +2159,22 @@ természetesen ez nagyon szakterület-függő, intenzív ellátásban sokkal
 inkább lehet ilyenre szükség, reumatológián aligha. Ezt figyelembe kell
 venni, amikor megítéljük az egyes szakmák ágykihasználását. (Valamelyest
 igazából minden szakmánál kell ilyenre gondolni, például mert tartalékot
-kell beépíteni arra az esetre is, ha egy kórházzal történik valami,
-úgyhogy az egészségügy egészében is kell legyen tartalék. Ezt indokolják
-az igazán katasztrofális események – például hatalmas járvány – de azért
-ezt a szempontot nem szabad túldimenzionálni: ahogy korábban is utaltam
-rá, most itt van az élő példa arra, hogy a szűk keresztmetszet
-egyáltalán nem az ágyak vagy a lélegeztetőgépek száma lett, hanem, hogy
-nincs orvos, de még inkább, hogy nincs ápoló.) A következő problémakör a
-szezonalitás: bizonyos betegségekből markánsan több van télen, mint
-nyáron, van amiből pont fordítva, más esetben eltérhet hétvége és
-hétköznapi, nemzeti ünnep stb. stb. A kórháznak erre is fel kell
-készülnie, hiszen ne feledjük, hogy az ágykihasználás az egy – egész
-éves – *átlag*, miközben a betegeket nem csak egy éves átlagban kell
-tudnunk elhelyezni, hanem minden nap. Természetesen a szakirodalom, a
-historikus adatok tudnak segíteni ennek megtervezésében. Végezetül pedig
-tekintettel kell lenni a hosszú távú trendekre is: bizonyos területek
-esetszáma, ha csak lassan, évek alatt is, de csökken, másoké nő. Lehet
-persze azt mondani, hogy ezt menet közben állítjuk, és alapvetően
-tényleg ez a teeendő, de azért azt is látni kell, hogy a kórházi ágyszám
-nem rettenetesen rugalmas, tehát érdemes lehet némi tartalékot beépíteni
-az előre látható jövőbeli változásokra is.
+kell beépíteni arra az esetre is, ha egy kórházzal történik valami vagy
+egy kiterjedt katasztrófa üt be, úgyhogy az egészségügy egészében is
+kell legyen tartalék.) A következő problémakör a szezonalitás: bizonyos
+betegségekből markánsan több van télen, mint nyáron, van amiből pont
+fordítva, más esetben eltérhet hétvége és hétköznapi, nemzeti ünnep stb.
+stb. A kórháznak erre is fel kell készülnie, hiszen ne feledjük, hogy az
+ágykihasználás az egy – egész éves – *átlag*, miközben a betegeket nem
+csak egy éves átlagban kell tudnunk elhelyezni, hanem minden nap.
+Természetesen a szakirodalom, a historikus adatok tudnak segíteni ennek
+megtervezésében. Végezetül pedig tekintettel kell lenni a hosszú távú
+trendekre is: bizonyos területek esetszáma, ha csak lassan, évek alatt
+is, de csökken, másoké nő. Lehet persze azt mondani, hogy ezt menet
+közben állítjuk, és alapvetően tényleg ez a teeendő, de azért azt is
+látni kell, hogy a kórházi ágyszám nem rettenetesen rugalmas, tehát
+érdemes lehet némi tartalékot beépíteni az előre látható jövőbeli
+változásokra is.
 
 Térjünk most át az ápolási időre! Azt már láttuk, hogy az ápolási idő
 csökkentése a technikai hatékonyságot növeli (tehát, azonos ágyszám
