@@ -482,11 +482,11 @@ A válasz az, hogy természetesen ez utóbbiba!
 
 A helyzet ugyanis az, hogy nagyon sokszor az történik, hogy a legjobban felkészült, legmagasabb szintű intézmények gyűjtik be a legkomplikáltabb eseteket (épp azért, mert ők a legmagasabb szintűek), amiknél -- bármilyen jól is operálnak -- nem lehet túl szívderítő eredményt elérni. Az összesített statisztikájukat viszont ez le fogja rontani; akár még az is előfordulhat, hogy _minden_ súlyosságban jobb az egyik kórház, de _összességében_ mégis rosszabb! Hogy ez matematikailag lehetetlen lenne (ahogy talán sokan gondolják e ponton)...? Közel sem! Vessünk egy pillantást erre a táblázatra; az egyszerűség kedvéért a betegség-súlyosság most legyen kétfokozatú:
 
-|                            | X kórház          | Y kórház        |
-|----------------------------|-------------------|-----------------|
-| Enyhe állapotú betegek     | 2\% (100/5000)    | 3\% (85/2800)   |
-| Súlyos állapotú betegek    | 10\% (500/5000)   | 17\% (34/200)   |
-| Összességében              | 6\% (600/10000)   | 4\% (119/3000)  |
+|                            | X kórház          | Y kórház         |
+|----------------------------|-------------------|------------------|
+| Enyhe állapotú betegek     | 2\% (100/5000)    | 3\% (85/2800)    |
+| Súlyos állapotú betegek    | 10\% (500/5000)   | 17\% (34/200)    |
+| _Összességében_            | _6\% (600/10000)_ | _4\% (119/3000)_ |
 
 A zárójelben lévő szám mutatja, hogy az adott kategóriában hány beteg volt, és közülük hány halt meg, így adódik ki a zárójel előtti halálozási arány. Amint látjuk, X kórház jobb az enyhe állapotú betegek műtétjeinél, _és_ jobb a súlyos állapotúaknál... összességében viszont mégis rosszabb! A táblázatból azonban már látszik, hogy itt csakugyan semmi ellentmondás vagy paradoxon nincs: egyszerűen az történik, hogy a súlyosabb állapotúak műtétjeinél rosszabb a halálozási arány, és X-nél ez teszi ki a betegek felét, míg Y csak mutatóban operál ilyet. Így hiába is jobb X mindkét betegcsoportban, az össz-eredménye rosszabb lesz a rengeteg súlyos állapotú betege miatt.
 

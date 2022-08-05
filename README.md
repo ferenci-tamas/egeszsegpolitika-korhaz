@@ -2389,11 +2389,11 @@ is előfordulhat, hogy *minden* súlyosságban jobb az egyik kórház, de
 pillantást erre a táblázatra; az egyszerűség kedvéért a
 betegség-súlyosság most legyen kétfokozatú:
 
-|                         | X kórház       | Y kórház      |
-|-------------------------|----------------|---------------|
-| Enyhe állapotú betegek  | 2% (100/5000)  | 3% (85/2800)  |
-| Súlyos állapotú betegek | 10% (500/5000) | 17% (34/200)  |
-| Összességében           | 6% (600/10000) | 4% (119/3000) |
+|                         | X kórház         | Y kórház        |
+|-------------------------|------------------|-----------------|
+| Enyhe állapotú betegek  | 2% (100/5000)    | 3% (85/2800)    |
+| Súlyos állapotú betegek | 10% (500/5000)   | 17% (34/200)    |
+| *Összességében*         | *6% (600/10000)* | *4% (119/3000)* |
 
 A zárójelben lévő szám mutatja, hogy az adott kategóriában hány beteg
 volt, és közülük hány halt meg, így adódik ki a zárójel előtti
