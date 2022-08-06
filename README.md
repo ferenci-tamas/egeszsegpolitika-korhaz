@@ -3,7 +3,7 @@ adatok elemzéséről, és néhány egészségpolitikai megjegyzés ezek ürügy
 ================
 Ferenci Tamás (<tamas.ferenci@medstat.hu>)
 
-*“A gyávaság forrása, hogy az emberek nem tudják elképzelni a rossznál
+*„A gyávaság forrása, hogy az emberek nem tudják elképzelni a rossznál
 még rosszabbat.”*
 
 *(Örkény István)*
@@ -66,18 +66,18 @@ számolását), harmadrészt az átlagos ápolási időtartamot (ezek együtt
 lehetővé teszik ágykihasználás számolását). Ezeket az adatokat
 megyénként, és szerencsére kórházanként is közlik, valamint alábontják
 szakmai osztályonként is. Összességében tehát adott kórház adott
-szakmájához lehet leásni. (A “szakma” itt nem azt jelenti, mint a
+szakmájához lehet leásni. (A „szakma” itt nem azt jelenti, mint a
 hétköznapi szóhasználatban, mondjuk, hogy orvos vagy ápoló, hanem azt,
 amit szakterületnek szoktak hívni: urológia, szemészet, aneszteziológia
 és intenzív betegellátás stb.) Fontos hiányossága még ennek az
-adatközlésnek is, hogy a “szakmai osztály” nem ugyanaz, mint a kórházi
+adatközlésnek is, hogy a „szakmai osztály” nem ugyanaz, mint a kórházi
 osztály: van kórház amelyik három különböző, adott esetben lényegesen
 eltérő betegösszetételű és profilú intenzív osztályt is működtet, ám
 ebben az adatközlésben ezek elkülönítése nem lehetséges. Az ilyen
 különbségeket tehát még ez a relatíve finom felbontású adat is össze
 fogja mosni, erre tekintettel kell lenni.
 
-Bár azt írtam, hogy “nyilvánosan elérhető”, természetesen ebben is van
+Bár azt írtam, hogy „nyilvánosan elérhető”, természetesen ebben is van
 csavar: igen, nyilvánosan elérhető – csak épp egy nagyon nehezen
 feldolgozható formában. (Persze már annak is örülni kell, hogy legalább
 nem kinyomtatott, majd beszkennelt papíron [teszik
@@ -204,9 +204,9 @@ A következő kommentárok tartoznak a fentiekhez:
     melyik táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a
     sorszámot) közlik a fenntartókat, de nagyon szerencsétlen
     formátumban: egy oszlopban van a fenntartó és az intézmény. Ezt úgy
-    kell elképzelni, hogy először szerepel az “önkormányzati eü.
+    kell elképzelni, hogy először szerepel az „önkormányzati eü.
     intézmény” kifejezés, majd utána jönnek az ilyen fenntartójúak
-    azonosítói, aztán egy “központi eü. intézmény” szó, majd sorakoznak
+    azonosítói, aztán egy „központi eü. intézmény” szó, majd sorakoznak
     ezek kódjai stb., ráadásul közben még összegzősorok is vannak. A
     problémát egy trükkel oldjuk meg: ezt az oszlopot kétszer egymás
     mellé másoljuk, majd az egyik oszlopból kitöröljük azokat az
@@ -230,7 +230,7 @@ A következő kommentárok tartoznak a fentiekhez:
 -   A következő probléma az aktív és krónikus ellátások elkülönítése. A
     2012 és azt követő évek táblázataiban nincsen probléma, ezeknél
     ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód,
-    így nyugodtan legyűjthetjük “ész nélkül” az összes megfelelő
+    így nyugodtan legyűjthetjük „ész nélkül” az összes megfelelő
     táblázatot, maximum a végén elhagyjuk azokat, ahol nincs szakmakód.
     A probléma az, hogy 2012 előtt nem követték ezt a szabályt, és a
     krónikus ellátást végző szakmák mellett is fel volt tüntetve a
@@ -241,9 +241,9 @@ A következő kommentárok tartoznak a fentiekhez:
     sem jó megoldás, hogy elkezdjük legyűjteni a sorokat addig, amíg van
     szakmakód, mert van olyan kórház, amiben egyáltalán nincs aktív
     ellátás. Végül azt a megoldást találtam ki, hogy megkeressük az
-    “aktív” és a “krónikus” szavak előfordulását (ezek az
-    összegző-sorokban biztosan szerepelnek). Ha az “aktív” szó csak a
-    “krónikus” után van, akkor nincs aktív ellátás (a szó az “aktív és
+    „aktív” és a „krónikus” szavak előfordulását (ezek az
+    összegző-sorokban biztosan szerepelnek). Ha az „aktív” szó csak a
+    „krónikus” után van, akkor nincs aktív ellátás (a szó az „aktív és
     krónikus összesen” nagy összegző sorban szerepelt), ezt az
     intézményt átugorhatjuk, ha nem, akkor a kettő *közötti* sorokat
     kell kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így
@@ -320,9 +320,9 @@ knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
 Amint látható, itt már van egy kis kavarodás, de egy kivételtől
 eltekintve nem szó szerinti gond, csak a szakma megnevezése nem volt
 egységes. Az egyetlen kivétel a 17-es kód, itt tényleges gikszer van:
-2003-tól 2011-ig ezt a “Felvételi osztály” szakmára használják, utána
+2003-tól 2011-ig ezt a „Felvételi osztály” szakmára használják, utána
 viszont egy durva hiba történik, mert *ugyanazt* a kódot kiosztják egy
-teljesen más szakmának (“Arc-, állcsont- és szájsebészet”). A 17-es kód
+teljesen más szakmának („Arc-, állcsont- és szájsebészet”). A 17-es kód
 tehát bizonytalan, a megnevezés mindenesetre használható.
 
 Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az
@@ -385,7 +385,7 @@ mutatni. Az adatok feldolgozásához a `data.table`, a vizualizációhoz a
 ## Adatvalidáció
 
 Elsőként nézzük meg az adatok validitását. Fontos, hogy ez alatt nem azt
-értem, hogy melyik adat “gyanús” vagy akár “szinte irreális” (fogunk
+értem, hogy melyik adat „gyanús” vagy akár „szinte irreális” (fogunk
 ilyet is látni), hanem azt, ami *matematikailag* lehetetlen, hogy jó
 legyen.
 
@@ -404,13 +404,13 @@ Nem tudom a jelenség magyarázata mi lehet, kézenfekvőnek tűnik, hogy a
 koronavírus-járvány miatt került ide sok beteg, nagyobb ágyszámon, de ha
 így van, akkor meg az átlagos ágyszám adata hibás, hiszen annak
 *elvileg* tükröznie kell az egész évben történt változásokat (ennek a
-definíciója ugyanis a kimutatás szerint: “kórházi ágyak számának a
+definíciója ugyanis a kimutatás szerint: „kórházi ágyak számának a
 tárgyév során bekövetkezett változásait is tükröző súlyozott átlaga”).
 Érdekes azt is megjegyezni, hogy igazából már az átlagos ápolási
 időtartam sem stimmel (vagy jobban mondva legalábbis nem konzisztens a
 többi adattal): a NEAK [definíciója
 szerint](http://site.oep.hu/statisztika/2011/pdf/hun/Fekvobeteg_modszertan_2011.pdf)
-ez aktív ellátás esetén “a teljesített ápolási napok száma osztva az
+ez aktív ellátás esetén „a teljesített ápolási napok száma osztva az
 osztályokról elbocsátott betegek számával”, jelen esetben 11705 / 1841 =
 6.36, ami nem egyezik pontosan a táblázatban szereplő értékkel. (Ez az
 apró eltérés az oka annak, hogy a fenti kiszámolt hányados nem egyezik
@@ -433,9 +433,9 @@ osztályok több beteget bocsátottak el, mint ahány egynapos esetük volt.
 A kórházak működésének egyik legközvetlenebb mutatója a betegforgalom,
 azaz a felvett majd elbocsátott betegek száma. (A kettő mindenképpen
 egyezik egy adott szakmaosztály esetében, ugyanis a magyar terminológiai
-“elbocsátottnak” nevezi a más osztályra áthelyezett és a meghalt
+„elbocsátottnak” nevezi a más osztályra áthelyezett és a meghalt
 betegeket is.) Ez még persze nem olyan értelemben teljesítmény, ahogy a
-köznyelv hívja (“mennyire jó hatásfokú a gyógyítás”), de mégis ez az
+köznyelv hívja („mennyire jó hatásfokú a gyógyítás”), de mégis ez az
 első szintje a teljesítmény-vizsgálatnak. Egy további, második lépés
 lehet az ilyen jellegű szempontok bevonása, erre később fogok rátérni.
 
@@ -905,7 +905,7 @@ gyakorlatuk van, akik ezzel a szűk területtel foglalkoznak, így sokkal
 inkább tudják követni a szakirodalmat, és mindezt ott, ahol
 rendelkezésre állnak a legkorszerűbb eszközök (hiszen van értelme
 megvenni, mert használják őket)? Az egyetlen ellenérv a szemaskó-i
-stílusú “de legalább közel van” megfontolás, csakhogy ebben a konkrét
+stílusú „de legalább közel van” megfontolás, csakhogy ebben a konkrét
 esetben ez is abszurd érv, lévén, hogy a szülészet *pont hogy* egy jól
 tervezhető terület. (Ennél még az infarktus-ellátás is ezerszer jobban
 centralizált – nagyon helyesen! – pedig aligha lehet mondani, hogy ott
@@ -918,7 +918,7 @@ kórházat – bezár a kormány. Sajnos az elmúlt 20 év bőven szolgáltatott
 példát arra, hogy kis számú kivételtől eltekintve fundamentálisan senki
 nem jobb a deákné vásznánál, úgyhogy hadd fogalmazzak úgy: a
 *mindenkori* ellenzék azonnal rávetné magát, jó eséllyel a legolcsóbb és
-leghitványabb demagógiát használva, hogy “a kormány kórházat zár be!!!”
+leghitványabb demagógiát használva, hogy „a kormány kórházat zár be!!!”
 (pláne egy szülészetet, atyaisten!). Senkit nem érdekel, hogy ez
 egyébként egy jó döntés – mint ahogy szakmai téren nincs is semmiféle
 vita, hogy az ilyen osztályok fenntartása értelmetlen, illetve az még
@@ -944,7 +944,7 @@ mentőszolgálat megerősítésével együtt képzelhető el.
 
 (Valójában ez sem ilyen egyszerű. Az a gond, hogy van még egy szempont:
 a korábbiban említett nagy hatalmú szereplők igen komoly kapacitással és
-rutinnal rendelkeznek abban, hogy “rendben, csak dolgozzunk ki előbb
+rutinnal rendelkeznek abban, hogy „rendben, csak dolgozzunk ki előbb
 minden részletet” jelszó alatt valójában elszabotálják az egészet,
 úgyhogy néha igenis jobb – a betegeknek is! – az egy lépcsőben történő
 bevezetés majd később finomítás stratégiája. Sokszor muszáj elkezdeni,
@@ -968,13 +968,13 @@ tevékenységének elvégzésében (és ekkor kijelöl helyette másikat). És h
 megnézzük ezt jobban, akkor mit látunk? Azt, hogy a Mezőtúri Kórház
 előbb 2022. június 10., 11., 12. és 14. napokra [mondta
 le](https://www.nnk.gov.hu/attachments/article/446/6517-4-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20Rendel%C5%91%20-%20Kijel%C3%B6l%C3%A9s.pdf)
-a szülészeti ügyeletet (a kórház indoklása: “aneszteziológus szakorvos
+a szülészeti ügyeletet (a kórház indoklása: „aneszteziológus szakorvos
 hiánya”), aztán lemondta 21., 23., 28., 29. és 31. [napokra
 is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20-%20Kijel%C3%B6l%C3%A9s.pdf),
-(indoklás: “aneszteziológus szakorvos hiánya”), majd végül július 1-3.,
+(indoklás: „aneszteziológus szakorvos hiánya”), majd végül július 1-3.,
 5., 8-10., 12-17., 19-21., 26. és 28. [napokra
 is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20%C3%A9s%20Rendel%C5%91int%C3%A9zet%20-%20Kijel%C3%B6l%C3%A9s.pdf)
-lemondta (indoklás: “aneszteziológus szakorvos hiánya”). De szerencsére
+lemondta (indoklás: „aneszteziológus szakorvos hiánya”). De szerencsére
 van szülészet Mezőtúron, ez a lényeg.
 
 Külön bája (?) a történetnek, hogy mindeközben a szolnoki Hetényi Géza
@@ -983,10 +983,10 @@ különböző akadályoztatás miatti kijelölő határozata van, ugyanis a
 Hetényi május 21-22., június 3-5., 8., 11., 13., 17-18., 22-23., 27.,
 29-30., július 1-4., 9-10., 15-16., 19., 23., 31. napjaira lemondta a
 szülőszobai ügyeletet és a hozzá kapcsolódó újszülött ellátást (az
-indoklás minden esetben: “személyi feltételek átmeneti hiánya”, magyarán
+indoklás minden esetben: „személyi feltételek átmeneti hiánya”, magyarán
 minden bizonnyal szülész-nőgyógyászuk nincsen), valamint július 1-től
 meghatározatlan ideig lemondta a csecsemő intenzív ellátást is
-(indoklás: “szakdolgozó hiány”).
+(indoklás: „szakdolgozó hiány”).
 
 Így előáll az az egészen hihetetlen helyzet, hogy van két kórház,
 egymástól 50 km-re, amelyek egyike sem tud teljes szülészetet adni, mert
@@ -1005,7 +1005,7 @@ egészségügy összeomlása, általában az aktuális ellenzék prognosztizálj
 ezt jövőre. Én emlékszem arra is, hogy 2006-ban fog jövőre összeomlani
 az egészségügy, most is jövőre fog összeomlani az egészségügy. Nem, az
 egészségügy – nagyon extrém esetektől eltekintve – nem tud összeomlani.
-*Valahogy* fog működni, bármi történik, “maximum” emberek rosszabb, vagy
+*Valahogy* fog működni, bármi történik, „maximum” emberek rosszabb, vagy
 sokkal rosszabb ellátást kapnak, mint lehetne.)
 
 ## Ágyszámra vonatkozó adatok
@@ -1026,7 +1026,7 @@ nagyobb, annál jobban teljesít az ország. Valójában az egészségügy
 teljesítménye szempontjából a kórházi ágyak számának nem feltétlenül van
 több jelentősége, mint a kórházi ablakok számának, de erről majd picit
 később. Mindez ráadásul a lakosság szemléletébe is *nagyon* mélyen
-beivódott, talán ez az egyik oka annak, amiért a “kórházbezárás” már
+beivódott, talán ez az egyik oka annak, amiért a „kórházbezárás” már
 mint szó is hihetetlenül erős negatív érzelmeket vált ki a legtöbb
 emberből (és ezt – sajnos – a politikusok is jól tudják, de erről
 szintén kicsit később).
@@ -1034,7 +1034,7 @@ szintén kicsit később).
 A másik ok a magyar egészségügy történeti szerveződése: a klasszikus
 szovjet szervezési modell (a szemaskói szisztéma) egyik jellemzője a
 teljesen vegyes minőségű, földrajzilag fragmentált ellátás, magyarra
-fordítva: “olyan amilyen, de közel van”. És itt is hatalmas probléma,
+fordítva: „olyan amilyen, de közel van”. És itt is hatalmas probléma,
 hogy az évtizedek alatt ez egyszerűen beleivódott az emberek
 gondolkodásába, hovatovább ők maguk várják ezt el.
 
@@ -1049,17 +1049,17 @@ elérhetővé, amivel meg lehet spórolni a kórházi ellátást; ezzel persze
 ezek a kapacitások feleslegessé válnak.
 
 Valójában a kórházcentrikusság és a nagy ágyszám nem egyszerűen
-“indokolatlan” vagy “felesleges”, hanem aktívan káros: a kórház a lehető
+„indokolatlan” vagy „felesleges”, hanem aktívan káros: a kórház a lehető
 legrosszabb megoldás, mindenkinek. A legrosszabb az államnak is, mert a
 fölényesen legdrágább ellátási forma (ez természetesen nem egyszerűen
-“csak pénzt” jelent, hiszen az itt elköltött pénzt az egészségügy más
+„csak pénzt” jelent, hiszen az itt elköltött pénzt az egészségügy más
 területéről kell elvonni), de nem jó a betegnek sem, mert
 fertőzésveszélyes, mert hosszabb ideig tart a lábadozás, mert megterhelő
 egy vadidegen környezetben gyógyulni. Tehát amit lehet, azt nem
 kórházban kellene megoldani, például amit csak lehet, meg kell tenni az
 egynapos ellátások fejlesztéséért.
 
-A probléma az, hogy bár mondhatjuk, hogy “ezek a kapacitások
+A probléma az, hogy bár mondhatjuk, hogy „ezek a kapacitások
 feleslegessé”, vagy, mint láttuk, jobban mondva egyenesen károssá
 válnak, leépíteni meg nem könnyű, épp a korábban vázolt politikai okok
 és egyéni érdekek miatt (és sok esetben a finanszírozás is ezt
@@ -1095,7 +1095,7 @@ háziorvos – szakrendelő – kórház) minden lejjebb lévő szint szűrő
 szerepet valósít meg, és a beteg csak akkor kerül feljebb, ha alsóbb
 szinten nem oldható meg a problémája, a valóságban ez minimálisan
 valósul meg. Ennek csak az lehet az eredménye, hogy olyanok is fekszenek
-kórházban, akiknek nem kellene. Jól ismert, hogy a “kapuőri” háziorvosok
+kórházban, akiknek nem kellene. Jól ismert, hogy a „kapuőri” háziorvosok
 valójában annyira túlterheltek, hogy esélyük sincs ezt érdemben
 megoldani, ráadásul itt nem csak az orvosokról van szó, sokszor maguk a
 betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
@@ -1767,10 +1767,10 @@ indultunk. Persze így megmarad 10 kórházigazgató pozíciója és mind a 10
 polgármester elmondhatja a következő választási kampányban, hogy
 megvédte a helyi kórházat…
 
-Itt lényegében megint visszatérünk a szemaskó-i “rossz minőségű, de
+Itt lényegében megint visszatérünk a szemaskó-i „rossz minőségű, de
 legalább közel van” megfontoláshoz. Mivel Magyarországon ebbe generációk
 nőttek bele, nagyon nehéz bármit kezdeni vele, hiszen maga a lakosság is
-azt követeli, hogy közel legyen a kórház, “ne kelljen sokat buszozni”,
+azt követeli, hogy közel legyen a kórház, „ne kelljen sokat buszozni”,
 és igen, én is pontosan értem és tudom, hogy rengeteg faluból borzasztó
 nehéz bejutni a városba, pláne a megyeszékhelyre, mert olyan a
 buszmenetrend, olyan minőségűek az utak, de az akkor is elég abszurd,
@@ -1823,11 +1823,11 @@ stb.)
 Ez az ágyszám-csökkentés sajnálatosan nagyon jó példa annak
 illusztrálására, amit korábban mondtam a politika szerepéről.
 
-“Népirtás”, “az egészségügy aktív eutanáziája”, “halálos döfést kap az
+„Népirtás”, „az egészségügy aktív eutanáziája”, „halálos döfést kap az
 egészségügy”, ez volt a belépőszint az intézkedést akkor vitatók
 részéről, a miniszter jelzői a tömeggyilkosnál kezdődtek, és Mengelénél
-folytatódtak, jött a “rákos beteg nem kap gyógyszert” (a neki küldött
-levélben név szerint szerepeltetve a minisztert), az “egészségügyi
+folytatódtak, jött a „rákos beteg nem kap gyógyszert” (a neki küldött
+levélben név szerint szerepeltetve a minisztert), az „egészségügyi
 reform első áldozata” (a mindszenti beteg, nem tudom emlékszik-e erre
 még valaki, én sajnos jól), aztán külön az első budapesti áldozata stb.
 stb. stb., egyszerűen egy olyan őrületet sikerült konstruálni, ahol már
@@ -1850,7 +1850,7 @@ pontosan annyit. Az egyetlen, amit tettek, hogy két évvel később,
 2012-ben *még további* 2000 ágyat megszüntettek (nagyon helyesen!). A
 probléma inkább morális: egy nem volt az akkor kormányra kerültek közül
 (legjobb tudomásom szerint), aki annyit mondott volna, legalább utólag,
-hogy “az ágyszám-csökkentés nem halálos döfés meg aktív eutanázia volt,
+hogy „az ágyszám-csökkentés nem halálos döfés meg aktív eutanázia volt,
 hanem egy helyes döntés, tényleg ezt kellett tenni”.
 
 Molnár Lajos 2015-ben halt meg, még ekkor sem volt senki közülük, aki
@@ -1916,7 +1916,7 @@ fenntartsák az import-korlátozásokat.
 Egyszóval, ha minden amerikai tisztában lenne a helyzettel, akkor ez a
 korlátozás valószínűleg egy másodpercet nem élne túl – csakhogy nem ez a
 helyzet. És egy dolgot hadd hangsúlyozzak: nem azért, mert az emberek
-“buták”, “tudatlanok” vagy “érdektelenek”: bizonyos szempontból teljesen
+„buták”, „tudatlanok” vagy „érdektelenek”: bizonyos szempontból teljesen
 racionális a viselkedésük, hiszen 30 dollárért *tényleg* nem éri meg még
 csak a tájékozódásba sem ölni túl nagy energiát, nem hogy a
 tiltakozásba. Azaz: nagyon eltérő a felek érdekeltsége a szituációban.
@@ -1979,20 +1979,20 @@ tudja mit kell tenni, az ellenzékben hirtelen felismeri, hogy ebben
 milyen jó kis uszítási potenciál van. És a dolog oda-vissza működik.
 Talán nem egy hatalmas súlyú ügy, de egy nagyon karakterisztikus példa:
 a biztosítási jogviszony ellenőrzése az egészségügyi ellátás során
-(közkeletű nevén: a “potyautasok” kiszűrése). Azt gondolom, hogy ez
+(közkeletű nevén: a „potyautasok” kiszűrése). Azt gondolom, hogy ez
 vitán felül egy pozitív, előremutató és szükséges lépés. Két alkalommal
 futottak neki, először 2006/2007-ben, aztán 2019-ben. Hihetetlen
 tanulságos megnézni, hogy ugyanazon politikusok vagy sajtótermékek
 hogyan reagáltak erre a – még egyszer mondom: *teljesen azonos*! –
 intézkedésre 2006/2007-ben
-([HVG](https://hvg.hu/itthon/20071210_egeszsegugy_apeh_tb): “Az idén
+([HVG](https://hvg.hu/itthon/20071210_egeszsegugy_apeh_tb): „Az idén
 áprilisban indult ellenőrzés során 600 ezer ember egészségügyi ellátásra
 jogosító jogviszonya rendeződött \[…\] a jogviszony-ellenőrzés célja,
 hogy kiderüljön: ki milyen jogon veszi igénybe az egészségügyi ellátást
 \[…\] jövőre minden egészségügyi ellátóhely és szolgáltató köteles lesz
 ellenőrizni a jogosultságot”, [Magyar
 Nemzet](https://magyarnemzet.hu/velemeny-archivum/2006/09/orvoslejaratas-kormanyzati-hatszellel):
-“Ezért van az, hogy a kormány egyre többet beszél a potyautasokról,
+„Ezért van az, hogy a kormány egyre többet beszél a potyautasokról,
 legalább félmillió járulék nem fizetőről ejtve szót, akikben jómódú
 adócsalót sejtet, de sokkal inkább a társadalom nyomorultjaira
 akadhatunk itt. \[…\] A potyautas-probléma valójában adóbehajtási
@@ -2002,7 +2002,7 @@ orvosi etika \[…\] a rá váró \>\>társadalmi reform\<\< annak
 elsajátítása, hogy a fizetőképes és nem fizetőképes, illetve a
 fizetőképesség foka szerint tudjon ismét különbséget tenni a betegek
 között.”) és 2019-ben
-([HVG](https://hvg.hu/itthon/20210213_taj_tb_potyautastorveny): “Az
+([HVG](https://hvg.hu/itthon/20210213_taj_tb_potyautastorveny): „Az
 orvosoknak pont a potyautastörvénynek is nevezett új szabályozás
 betartásával járó adminisztráció nem hiányzott most. Van, aki már üzent:
 ő mindenkit el fog látni. \[…\] \>\>Nem leszek végrehajtó, nekem nem ez
@@ -2012,7 +2012,7 @@ mondta a hvg.hu-nak egy kelet-magyarországi kistelepülésen dolgozó orvos
 hozzá ellátásért, akkor ő kérje el a pénzt, vagy tagadja meg a
 gyógyítást”, [Magyar
 Nemzet](https://magyarnemzet.hu/gazdasag/2019/12/automatikusan-szurik-majd-a-potyautasokat):
-“Jövőre az adminisztrációs terhek jelentős csökkentésén túl az
+„Jövőre az adminisztrációs terhek jelentős csökkentésén túl az
 egészségügy potyautasait automatikusan kiszűri a törvény rendelkezései
 alapján felálló új rendszer \[…\] a társadalombiztosítási
 törvénytervezet egyik célja automatikusan kiszűrni a potyautasokat, akik
@@ -2044,7 +2044,7 @@ idő: ha az rövidebb, akkor ugyanazon az egy ágyon is több beteg meg tud
 fordulni adott idő alatt.
 
 De legyünk kicsit szisztematikusabbak, ez a dolog ugyanis könnyen
-“meg-matematizálható”! (Ígérem, hogy a négy alapműveleten túl másra nem
+„meg-matematizálható”! (Ígérem, hogy a négy alapműveleten túl másra nem
 lesz szükség.) Lényegében azt az okfejtést kell megismételni, amit az
 adatvalidációnál használtunk, csak most általánosan. Ha az átlagos
 ápolási időtartam jele *A**t**l**A**p**T**a**r**t**a**m*, akkor egy év
@@ -2237,7 +2237,7 @@ osztálynál, ott valami rosszabbul megy. Ez egy nagyon sok helyen
 felbukkanó gondolkodási hiba, amelyet olyan fontosnak érzek, hogy
 szeretném még az adatok bármiféle bemutatása előtt, külön is
 megtárgyalni. Nem arról van szó, hogy ezek az adatok feltétlenül
-“használhatatlanok”, de az alkalmazásuk – és értelmezésük – során nagyon
+„használhatatlanok”, de az alkalmazásuk – és értelmezésük – során nagyon
 pontosan tisztában kell lennünk a limitációkkal.
 
 Mielőtt belevágunk, kezdjük néhány szűkítéssel. Először is, az
@@ -2271,14 +2271,14 @@ amennyiben nem transzparens a teljesítménymérés, akkor sokkal kisebb a
 nyomás a javítás irányába, ha azonban az érintettek tudják, hogy erről a
 közvélemény is értesül, akkor ez jellemzően már önmagában is nagyon jól
 kikényszeríti a sokkal jobb minőségű munkát. Nem értek egyet azzal az
-ellenérvvel, hogy “Minek az átlagembernek ez a sok adat? Úgysem tud vele
+ellenérvvel, hogy „Minek az átlagembernek ez a sok adat? Úgysem tud vele
 mit kezdeni!”. Azon túl, hogy minden állampolgár fizeti a
 népegészségügyet, ezért azt gondolom, hogy joga van megismerni annak
 minden adatát, ami más jogát nem sérti, de valóban tény, hogy a legtöbb
 ember nem közvetlenül fogyasztja (fogyasztaná) ezeket az információkat.
 Hanem hogyan? Szakértőkön, elemzéseken, kutatók analízisén keresztül.
 Ezek megszületésének azonban feltétele, hogy legyenek adatok, amik
-elemezhetőek! Az adatok visszatartása tehát igenis gond “az
+elemezhetőek! Az adatok visszatartása tehát igenis gond „az
 átlagembernek” is, még akkor is, ha ő maga nem elemezné az adatokat,
 mert azt is lehetetlenné teszi, hogy független szakértők elemzését
 hallja. Ha viszont ilyen nem létezik, az nem egyszerűen gond, hanem
@@ -2305,7 +2305,7 @@ megvan a bizalom az adatok hitelességében; és ezzel vissza is
 kanyarodtunk az első ponthoz. Arra természetesen, épp emiatt, vigyázni
 kell, hogy az adatokat csak kellő alaposságú előzetes ellenőrzés,
 adattisztítás után közöljük. Azt pedig, hogy az adatokat majd
-“félreértik”, pont egy őszinte, partnerként kezelő kommunikációval,
+„félreértik”, pont egy őszinte, partnerként kezelő kommunikációval,
 közérthető magyarázatokkal lehet a leginkább megelőzni. Igen, eleinte
 félre fogják érteni, társadalmi vita fog indulni, ebbe be kell szállni,
 ami munkaigényes lesz, de a valódi eredmények elérése már csak ilyen.
@@ -2356,7 +2356,7 @@ ingyen – elérhetővé is tesz (itt vannak például az ajánlásaik
 vagy épp
 [tüdőrákhoz](https://erj.ersjournals.com/content/erj/48/3/852.full.pdf)).
 
-Megjegyzem, hogy valójában még a “halálozás” sem feltétlenül olyan
+Megjegyzem, hogy valójában még a „halálozás” sem feltétlenül olyan
 egyértelműen definiált fogalom, mint azt az ember elsőre gondolhatná. Az
 számít, hogy a kórházban halt meg (de van, aki egy-két napot van bent,
 van aki több hetet!), vagy fixen mondjuk harminc napon belül? Az adott
@@ -2404,7 +2404,7 @@ hiába is jobb X mindkét betegcsoportban, az össz-eredménye rosszabb lesz
 a rengeteg súlyos állapotú betege miatt.
 
 Hát ezért nem lehet egyszerűen a halálozási adatokat összevetni: számít
-a “bemenő-oldal”, a betegösszetétel is! (Természetesen az eredeti
+a „bemenő-oldal”, a betegösszetétel is! (Természetesen az eredeti
 mondatom kicsit túl provokatív volt: éppenséggel *lehet*, hogy a 4%-os
 halálozási arányú kórházba érdemes menni, csak – mint ez a példa is
 rámutat – ez nem következik abból, hogy a 4 kisebb mint a 6.) Azaz, ha
@@ -2533,7 +2533,7 @@ mutatókat, a kórházi minőségfejlesztés működését.
 
 Az EBF-et 2007-ben hozták létre, 2010 nyarán megszüntették – miután
 előtte az akkori ellenzék, erre az egy példára konkrétan is emlékszem,
-“kismamák ultrahang nélkül” szalagcímeket futtatott, melyben az *EBF
+„kismamák ultrahang nélkül” szalagcímeket futtatott, melyben az *EBF
 adatai alapján* mutatták be, hogy hány terhesgondozóban nincs ultrahang.
 Majd ezek után hatalomra kerültek, és azonnal megszüntették az EBF-et.
 Anélkül, hogy bárki átvette volna az indikátorrendszeri funkcióit. (Még
@@ -2571,7 +2571,7 @@ ezúttal már kormányrendelet, nem kormányhatározat. Ennek jóságát és
 működőképességét megítélni lehetetlen, hiszen a szöveg egy teljes
 általánosságokban fogalmazó keretszabály. Akármi is sül ki belőle, az
 egész biztosan elkeserítő, hogy a transzparencia még elvileg sem
-követelmény: a jogszabály külön említi, hogy az “átláthatóság érdekében”
+követelmény: a jogszabály külön említi, hogy az „átláthatóság érdekében”
 – csak épp az indikátorokat és azok számítását teszi kötelezően
 nyilvánosan közlendővé, nem magukat az eredményeket! (Lehet, hogy jót
 tett volna, ha a szakmai szervezetek nem egy (!) napot kapnak a tervezet
@@ -2606,7 +2606,7 @@ statisztika szerint közülük 83 meghalt! Nem sokkal jobb – elvileg – a
 helyzet a ceglédi Toldy Ferenc Kórház (13B2) SBO-ján: 58 ellátott beteg
 az évben, közülük 53 meghalt. Nem tudom mi e jelenség oka, de szinte
 biztosnak tűnik, hogy valamiféle adminisztratív hiba áll a hátterében.
-(A harmadik legnagyobb halálozási adat is “csak” 64%-os, és intenzív
+(A harmadik legnagyobb halálozási adat is „csak” 64%-os, és intenzív
 osztályról került ki, ami máris sokkal hihetőbb.)
 
 Ennél finomabb elemzést igényel, de azért vannak még meglepő dolgok az
@@ -2631,7 +2631,7 @@ tartományban – a 43.-nak meg 17%? Ez mindenképpen magyarázatot igényel;
 
 A fenti okfejtés is mutatja, hogy a halálozási adatok mire
 használhatóak: (betegösszetételi adatok híján) teljesítménymérés helyett
-inkább amolyan “anomália-detekcióról” beszélhetünk.
+inkább amolyan „anomália-detekcióról” beszélhetünk.
 
 Még egy módon érdemes ábrázolni az adatokat: nézzük meg csak a
 fül-orr-gégészetek halálozásait (az áttekinthetőség és a kellő
@@ -2658,7 +2658,7 @@ akkor rossz, de most nem ez lesz számunkra az érdekes.) Ez akkor azt
 jelenti, hogy kívülről nézve a dolog olyan, mintha minden beteg
 gyógyulása egy *szabályos* pénzérme feldobásának az eredménye lenne. (Ez
 elég szörnyen hangzik, mert rossz csengése van annak, hogy
-“véletlenszerű”, hogy meggyógyulok-e, de újra mondom, ez akár jó hír is
+„véletlenszerű”, hogy meggyógyulok-e, de újra mondom, ez akár jó hír is
 lehet – ha egyébként 60% lenne a halálozási arány.) Kérdés: vajon hány
 beteg fog meghalni, ha 100-at láttak el egy év alatt? Az ember hajlamos
 rávágni, hogy 50 (hiszen 50% a halálozási arány), de legyünk
@@ -2672,7 +2672,7 @@ akár 50% is lehet. Ezért mondhatjuk, hogy a kapott számban
 bizonytalanság van: igen, 100-ból 45 halála esetén 45% a legjobb
 tippünk, de ez nem biztos, a valóság lehet kicsit nagyobb vagy épp
 kisebb is. A konfidenciaintervallum ezt adja meg: mik azok a valódi
-értékek, amelyek mellett még “kényelmesen” (megfelelően definiált
+értékek, amelyek mellett még „kényelmesen” (megfelelően definiált
 értelemben) kaphattuk azt, pusztán a véletlen ingadozás miatt, amit
 ténylegesen kaptunk is. Mondhatjuk, hogy ezek azok a valódi halálozási
 arányok, amik kompatibilisek a kapott számmal.
