@@ -2194,12 +2194,12 @@ ggplot(res[Ev==2021][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegne
 
 ![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
-Jól látszanak a területenként eltérések, de ennyi adat alapján mindössze
-két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése, nemzetközi
-összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a nagyon
-kilógó értékeket keressük meg, pusztán matematikai alapon. Ez utóbbira
-egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy másik
-lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán
+Jól látszanak a területenkénti eltérések, de ennyi adat alapján
+mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése,
+nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a
+nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez
+utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy
+másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán
 minden halvány vonal egy kórház adata, a vastag piros pedig az országos
 átlag adott szakmában:
 
@@ -2209,7 +2209,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam)) , .(Ev, SzakmaMegnev)],
-    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red")
+    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
@@ -2732,7 +2733,7 @@ is, itt minden vonal egy kórházat jelöl:
 ``` r
 ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, color = KorhazRovid, group = KorhazRovid)) +
   geom_line() + facet_wrap(~SzakmaMegnev, scales = "free") + guides(color = "none") +
-  labs(x = "", y = "Halálozási arány [%]")
+  labs(x = "Év", y = "Halálozási arány [%]")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->

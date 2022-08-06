@@ -445,7 +445,7 @@ ggplot(res[Ev==2021][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegne
   labs(x = "Átlagos ápolási időtartam [nap]", y = "")
 ```
 
-Jól látszanak a területenként eltérések, de ennyi adat alapján mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése, nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán minden halvány vonal egy kórház adata, a vastag piros pedig az országos átlag adott szakmában:
+Jól látszanak a területenkénti eltérések, de ennyi adat alapján mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése, nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán minden halvány vonal egy kórház adata, a vastag piros pedig az országos átlag adott szakmában:
 
 ```{r warning = FALSE, fig.height = 10}
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -453,7 +453,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam)) , .(Ev, SzakmaMegnev)],
-    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red")
+    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]")
 ```
 
 Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol nem nagyon változott -- ilyen szempontból -- a helyzet az évek alatt, van ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a leglátványosabb példa). Az is jól látható, hogy a 2006/2007-es reform el tudta érni több területen is az ápolási időtartam érzékelhető csökkenését: a fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a legegyértelműbb példák erre.
@@ -583,7 +584,7 @@ Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben 
 ```{r warning = FALSE, fig.height = 10}
 ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, color = KorhazRovid, group = KorhazRovid)) +
   geom_line() + facet_wrap(~SzakmaMegnev, scales = "free") + guides(color = "none") +
-  labs(x = "", y = "Halálozási arány [%]")
+  labs(x = "Év", y = "Halálozási arány [%]")
 ```
 
 A rejtélyeket nem igazán oldja fel a dolog, sőt, az bizonyos tekintetben inkább csak fokozódik: látszik, hogy a pszichiátrián a kilógó érték nem egy egyszeri történés volt, hanem egy több éven át tartó tendencia. Erre végképp nincsen magyarázatom (hacsak nem a betegösszetétel tényleg ennyire extrém).
