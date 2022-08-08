@@ -186,6 +186,8 @@ if(!file.exists("res.rds")) {
   }))
   
   res <- res[order(Ev)]
+  res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
+                        substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
   
   saveRDS(res, "res.rds")
 } else res <- readRDS("res.rds")
@@ -471,7 +473,7 @@ kableExtra::add_header_above(
     dcast(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(ElbocsatottBetegSzam), which.max(ElbocsatottBetegSzam))]), .(SzakmaMegnev)],
-      SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazRovid"))[, c(1, 2, 4, 3, 5)],
+      SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
     col.names = c("Szakma", rep(c("Betegszám", "Kórház"), 2))),
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
@@ -527,13 +529,13 @@ Aneszt. és intenzív betegellátás
 5
 </td>
 <td style="text-align:left;">
-0160
+Országos Orvosi Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 3936
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -544,13 +546,13 @@ Arc-, állcsont- és szájsebészet
 143
 </td>
 <td style="text-align:left;">
-1401
+Somogy Megyei Kaposi Mór Oktató Kórház
 </td>
 <td style="text-align:right;">
 1190
 </td>
 <td style="text-align:left;">
-0643
+Szegedi Tudományegyetem Szent-Györgyi Albert Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -561,13 +563,13 @@ Belgyógyászat
 3
 </td>
 <td style="text-align:left;">
-0153
+Országos Reumatológiai és Fizioterápiás Intézet
 </td>
 <td style="text-align:right;">
 19168
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -578,13 +580,13 @@ Bőr- és nemibeteg
 0
 </td>
 <td style="text-align:left;">
-0301
+Bács-Kiskun Megyei Kórház, Kecskemét
 </td>
 <td style="text-align:right;">
 497
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -595,13 +597,13 @@ Csecsemő- és gyermekgyógyászat
 35
 </td>
 <td style="text-align:left;">
-0803
+Karolina Kórház és Rendelőintézet, Mosonmagyaróvár
 </td>
 <td style="text-align:right;">
 18287
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -612,13 +614,13 @@ Fül-orr-gégegyógyászat
 41
 </td>
 <td style="text-align:left;">
-0306
+Kiskunhalasi Semmelweis Kórház
 </td>
 <td style="text-align:right;">
 1960
 </td>
 <td style="text-align:left;">
-0563
+Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -629,13 +631,13 @@ Gyermek- és ifjúságpszichiátria
 313
 </td>
 <td style="text-align:left;">
-0468
+Békés Megyei Központi Kórház
 </td>
 <td style="text-align:right;">
 566
 </td>
 <td style="text-align:left;">
-0122
+Heim Pál Országos Gyermekgyógyászati Intézet
 </td>
 </tr>
 <tr>
@@ -646,13 +648,13 @@ Infektológia
 865
 </td>
 <td style="text-align:left;">
-1801
+Markusovszky Egyetemi Oktatókórház, Szombathely
 </td>
 <td style="text-align:right;">
 7370
 </td>
 <td style="text-align:left;">
-0563
+Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -663,13 +665,13 @@ Kardiológia
 0
 </td>
 <td style="text-align:left;">
-1402
+Siófoki Kórház-Rendelőintézet
 </td>
 <td style="text-align:right;">
 9790
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -680,13 +682,13 @@ Neurológia
 87
 </td>
 <td style="text-align:left;">
-0602
+Csongrád-Csanád Megyei Eü. Ellátó Közp. Hódmezővásárhely-Makó
 </td>
 <td style="text-align:right;">
 2843
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -697,13 +699,13 @@ Onkológia, onkoradiológia
 293
 </td>
 <td style="text-align:left;">
-1201
+Szent Lázár Megyei Kórház, Salgótarján
 </td>
 <td style="text-align:right;">
 6128
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -714,13 +716,14 @@ Ortopédia-traumatológia
 145
 </td>
 <td style="text-align:left;">
-0504
+Sátoraljaújhelyi Erzsébet Kórház
 </td>
 <td style="text-align:right;">
 9519
 </td>
 <td style="text-align:left;">
-0116
+Péterfy Kórház-Rendelőintézet és Manninger Jenő Országos Traumatológiai
+Intézet
 </td>
 </tr>
 <tr>
@@ -731,13 +734,13 @@ Plasztikai- és égéssebészet
 20
 </td>
 <td style="text-align:left;">
-0109
+Dél-pesti Centrumkórház - Országos Hematológiai és Infektológiai Intézet
 </td>
 <td style="text-align:right;">
 875
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -748,13 +751,13 @@ Pszichiátria
 167
 </td>
 <td style="text-align:left;">
-0563
+Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 <td style="text-align:right;">
 3696
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -765,13 +768,13 @@ Reumatológia
 0
 </td>
 <td style="text-align:left;">
-0801
+Petz Aladár Egyetemi Oktató Kórház
 </td>
 <td style="text-align:right;">
 855
 </td>
 <td style="text-align:left;">
-2237
+Betegápoló Irgalmas Rend
 </td>
 </tr>
 <tr>
@@ -782,13 +785,13 @@ Sebészet
 5
 </td>
 <td style="text-align:left;">
-0160
+Országos Orvosi Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 10037
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -799,13 +802,13 @@ Szemészet
 467
 </td>
 <td style="text-align:left;">
-1201
+Szent Lázár Megyei Kórház, Salgótarján
 </td>
 <td style="text-align:right;">
 10421
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -816,13 +819,13 @@ Szülészet-nőgyógyászat
 608
 </td>
 <td style="text-align:left;">
-1607
+Mezőtúri Kórház és Rendelőintézet
 </td>
 <td style="text-align:right;">
 13302
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -833,13 +836,13 @@ Sürgősségi betegellátás
 58
 </td>
 <td style="text-align:left;">
-13B2
+Toldy Ferenc Kórház és Rendelőintézet, Cegléd
 </td>
 <td style="text-align:right;">
 16699
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -850,13 +853,13 @@ Tüdőgyógyászat
 298
 </td>
 <td style="text-align:left;">
-1701
+Tolna Megyei Balassa János Kórház
 </td>
 <td style="text-align:right;">
 8611
 </td>
 <td style="text-align:left;">
-0156
+Országos Korányi Pulmonológiai Intézet
 </td>
 </tr>
 <tr>
@@ -867,13 +870,13 @@ Urológia
 306
 </td>
 <td style="text-align:left;">
-0403
+Dr. László Elek Kórház és Rendelőintézet, Orosháza
 </td>
 <td style="text-align:right;">
 3013
 </td>
 <td style="text-align:left;">
-0563
+Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 </tr>
 </tbody>
@@ -1181,7 +1184,7 @@ kableExtra::add_header_above(
     dcast(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(MukodoAtlagAgy), which.max(MukodoAtlagAgy))]), .(SzakmaMegnev)],
-      SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazRovid"))[, c(1, 2, 4, 3, 5)],
+      SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
     col.names = c("Szakma", rep(c("Ágyszám", "Kórház"), 2))),
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
@@ -1237,13 +1240,13 @@ Aneszt. és intenzív betegellátás
 1.2
 </td>
 <td style="text-align:left;">
-0153
+Országos Reumatológiai és Fizioterápiás Intézet
 </td>
 <td style="text-align:right;">
 105.0
 </td>
 <td style="text-align:left;">
-0643
+Szegedi Tudományegyetem Szent-Györgyi Albert Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -1254,13 +1257,13 @@ Arc-, állcsont- és szájsebészet
 7.0
 </td>
 <td style="text-align:left;">
-1401
+Somogy Megyei Kaposi Mór Oktató Kórház
 </td>
 <td style="text-align:right;">
 26.0
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -1271,13 +1274,13 @@ Belgyógyászat
 3.7
 </td>
 <td style="text-align:left;">
-1954
+Deák Jenő Kórház, Tapolca
 </td>
 <td style="text-align:right;">
 389.0
 </td>
 <td style="text-align:left;">
-1501
+Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -1288,13 +1291,13 @@ Bőr- és nemibeteg
 0.4
 </td>
 <td style="text-align:left;">
-1309
+Pest Megyei Flór Ferenc Kórház, Kistarcsa
 </td>
 <td style="text-align:right;">
 30.0
 </td>
 <td style="text-align:left;">
-0563
+Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -1305,13 +1308,13 @@ Csecsemő- és gyermekgyógyászat
 4.0
 </td>
 <td style="text-align:left;">
-0101
+Szent Imre Egyetemi Oktatókórház
 </td>
 <td style="text-align:right;">
 384.7
 </td>
 <td style="text-align:left;">
-0122
+Heim Pál Országos Gyermekgyógyászati Intézet
 </td>
 </tr>
 <tr>
@@ -1322,13 +1325,13 @@ Fül-orr-gégegyógyászat
 7.1
 </td>
 <td style="text-align:left;">
-1514
+Szent Damján Görögkatolikus Kórház
 </td>
 <td style="text-align:right;">
 54.0
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -1339,13 +1342,13 @@ Gyermek- és ifjúságpszichiátria
 15.0
 </td>
 <td style="text-align:left;">
-0122
+Heim Pál Országos Gyermekgyógyászati Intézet
 </td>
 <td style="text-align:right;">
 24.0
 </td>
 <td style="text-align:left;">
-0643
+Szegedi Tudományegyetem Szent-Györgyi Albert Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -1356,13 +1359,13 @@ Infektológia
 20.0
 </td>
 <td style="text-align:left;">
-0601
+Dr. Bugyi István Kórház, Szentes
 </td>
 <td style="text-align:right;">
 185.9
 </td>
 <td style="text-align:left;">
-0242
+Pécsi Tudományegyetem
 </td>
 </tr>
 <tr>
@@ -1373,13 +1376,13 @@ Kardiológia
 15.0
 </td>
 <td style="text-align:left;">
-1102
+Vaszary Kolos Kórház, Esztergom
 </td>
 <td style="text-align:right;">
 176.0
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -1390,13 +1393,13 @@ Neurológia
 8.6
 </td>
 <td style="text-align:left;">
-0119
+Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet
 </td>
 <td style="text-align:right;">
 116.0
 </td>
 <td style="text-align:left;">
-1501
+Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -1407,13 +1410,13 @@ Onkológia, onkoradiológia
 15.0
 </td>
 <td style="text-align:left;">
-0112
+Bajcsy-Zsilinszky Kórház és Rendelőintézet
 </td>
 <td style="text-align:right;">
 193.0
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 <tr>
@@ -1424,13 +1427,14 @@ Ortopédia-traumatológia
 4.9
 </td>
 <td style="text-align:left;">
-0160
+Országos Orvosi Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 251.0
 </td>
 <td style="text-align:left;">
-0116
+Péterfy Kórház-Rendelőintézet és Manninger Jenő Országos Traumatológiai
+Intézet
 </td>
 </tr>
 <tr>
@@ -1441,13 +1445,13 @@ Plasztikai- és égéssebészet
 2.5
 </td>
 <td style="text-align:left;">
-0109
+Dél-pesti Centrumkórház - Országos Hematológiai és Infektológiai Intézet
 </td>
 <td style="text-align:right;">
 30.0
 </td>
 <td style="text-align:left;">
-01A6
+Magyar Honvédség Egészségügyi Központ
 </td>
 </tr>
 <tr>
@@ -1458,13 +1462,13 @@ Pszichiátria
 20.0
 </td>
 <td style="text-align:left;">
-0601
+Dr. Bugyi István Kórház, Szentes
 </td>
 <td style="text-align:right;">
 201.2
 </td>
 <td style="text-align:left;">
-1501
+Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
 </td>
 </tr>
 <tr>
@@ -1475,13 +1479,13 @@ Reumatológia
 12.5
 </td>
 <td style="text-align:left;">
-1309
+Pest Megyei Flór Ferenc Kórház, Kistarcsa
 </td>
 <td style="text-align:right;">
 128.1
 </td>
 <td style="text-align:left;">
-01H3
+Országos Mozgásszervi Intézet
 </td>
 </tr>
 <tr>
@@ -1492,13 +1496,13 @@ Sebészet
 4.9
 </td>
 <td style="text-align:left;">
-0160
+Országos Orvosi Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 261.0
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -1509,13 +1513,13 @@ Szemészet
 10.0
 </td>
 <td style="text-align:left;">
-0242
+Pécsi Tudományegyetem
 </td>
 <td style="text-align:right;">
 60.0
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -1526,13 +1530,13 @@ Szülészet-nőgyógyászat
 7.6
 </td>
 <td style="text-align:left;">
-0564
+Kazincbarcikai Kórház
 </td>
 <td style="text-align:right;">
 200.0
 </td>
 <td style="text-align:left;">
-0140
+Semmelweis Egyetem
 </td>
 </tr>
 <tr>
@@ -1543,13 +1547,13 @@ Sürgősségi betegellátás
 2.5
 </td>
 <td style="text-align:left;">
-1514
+Szent Damján Görögkatolikus Kórház
 </td>
 <td style="text-align:right;">
 53.3
 </td>
 <td style="text-align:left;">
-0122
+Heim Pál Országos Gyermekgyógyászati Intézet
 </td>
 </tr>
 <tr>
@@ -1560,13 +1564,13 @@ Tüdőgyógyászat
 10.0
 </td>
 <td style="text-align:left;">
-0802
+Soproni Erzsébet Oktató Kórház és Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 304.0
 </td>
 <td style="text-align:left;">
-0156
+Országos Korányi Pulmonológiai Intézet
 </td>
 </tr>
 <tr>
@@ -1577,13 +1581,13 @@ Urológia
 13.0
 </td>
 <td style="text-align:left;">
-0112
+Bajcsy-Zsilinszky Kórház és Rendelőintézet
 </td>
 <td style="text-align:right;">
 80.0
 </td>
 <td style="text-align:left;">
-0940
+Debreceni Egyetem Klinikai Központ
 </td>
 </tr>
 </tbody>
@@ -1608,7 +1612,7 @@ intézményekre szűkítve):
 
 ``` r
 knitr::kable(res[Ev==2021][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
-  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = Korhaz)][
+  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
     order(`Működő átlagos ágyszám`)][1:15])
 ```
 
@@ -1626,7 +1630,7 @@ Működő átlagos ágyszám
 <tbody>
 <tr>
 <td style="text-align:left;">
-1954 Deák Jenő Kórház, Tapolca (NEAK kód: N592)
+Deák Jenő Kórház, Tapolca
 </td>
 <td style="text-align:right;">
 3.7
@@ -1634,7 +1638,7 @@ Működő átlagos ágyszám
 </tr>
 <tr>
 <td style="text-align:left;">
-0160 Országos Orvosi Rehabilitációs Intézet (NEAK kód: 2913)
+Országos Orvosi Rehabilitációs Intézet
 </td>
 <td style="text-align:right;">
 13.3
@@ -1642,7 +1646,7 @@ Működő átlagos ágyszám
 </tr>
 <tr>
 <td style="text-align:left;">
-1104 Selye János Kórház, Komárom (NEAK kód: 1871)
+Selye János Kórház, Komárom
 </td>
 <td style="text-align:right;">
 20.0
@@ -1650,7 +1654,7 @@ Működő átlagos ágyszám
 </tr>
 <tr>
 <td style="text-align:left;">
-0564 Kazincbarcikai Kórház (NEAK kód: S913)
+Kazincbarcikai Kórház
 </td>
 <td style="text-align:right;">
 27.8
@@ -1658,7 +1662,7 @@ Működő átlagos ágyszám
 </tr>
 <tr>
 <td style="text-align:left;">
-1968 Állami Szívkórház, Balatonfüred (NEAK kód: 2893)
+Állami Szívkórház, Balatonfüred
 </td>
 <td style="text-align:right;">
 34.0
@@ -1666,8 +1670,8 @@ Működő átlagos ágyszám
 </tr>
 <tr>
 <td style="text-align:left;">
-0205 Komlói Egészségcentrum, Bányászati Utókezelő és Éjjeli Szanatórium
-Egészségügyi Központ (NEAK kód: N584)
+Komlói Egészségcentrum, Bányászati Utókezelő és Éjjeli Szanatórium
+Egészségügyi Központ
 </td>
 <td style="text-align:right;">
 35.0
@@ -1675,7 +1679,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-2004 Hévízgyógyfürdő és Szent András Reumakórház (NEAK kód: N597)
+Hévízgyógyfürdő és Szent András Reumakórház
 </td>
 <td style="text-align:right;">
 39.0
@@ -1683,7 +1687,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-0152 Országos Sportegészségügyi Intézet (NEAK kód: 2910)
+Országos Sportegészségügyi Intézet
 </td>
 <td style="text-align:right;">
 40.0
@@ -1691,7 +1695,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-0163 Országos Klinikai Idegtudományi Intézet (NEAK kód: 2903)
+Országos Klinikai Idegtudományi Intézet
 </td>
 <td style="text-align:right;">
 42.0
@@ -1699,7 +1703,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-0153 Országos Reumatológiai és Fizioterápiás Intézet (NEAK kód: 2907)
+Országos Reumatológiai és Fizioterápiás Intézet
 </td>
 <td style="text-align:right;">
 48.0
@@ -1707,7 +1711,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-1607 Mezőtúri Kórház és Rendelőintézet (NEAK kód: N586)
+Mezőtúri Kórház és Rendelőintézet
 </td>
 <td style="text-align:right;">
 54.0
@@ -1715,8 +1719,7 @@ Egészségügyi Központ (NEAK kód: N584)
 </tr>
 <tr>
 <td style="text-align:left;">
-0119 Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet (NEAK
-kód: 2887)
+Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet
 </td>
 <td style="text-align:right;">
 65.9
@@ -1724,7 +1727,7 @@ kód: 2887)
 </tr>
 <tr>
 <td style="text-align:left;">
-9521 MÁV Kórház és Rendelőintézet, Szolnok (NEAK kód: 8002)
+MÁV Kórház és Rendelőintézet, Szolnok
 </td>
 <td style="text-align:right;">
 88.0
@@ -1732,7 +1735,7 @@ kód: 2887)
 </tr>
 <tr>
 <td style="text-align:left;">
-1911 Veszprém Megyei Tüdőgyógyintézet, Farkasgyepű (NEAK kód: 2601)
+Veszprém Megyei Tüdőgyógyintézet, Farkasgyepű
 </td>
 <td style="text-align:right;">
 95.0
@@ -1740,8 +1743,7 @@ kód: 2887)
 </tr>
 <tr>
 <td style="text-align:left;">
-0606 Csongrád-Csanád Megyei Mellkasi Betegségek Szakkórháza (NEAK kód:
-1484)
+Csongrád-Csanád Megyei Mellkasi Betegségek Szakkórháza
 </td>
 <td style="text-align:right;">
 102.0
@@ -1790,6 +1792,15 @@ tudják, hogy ezt nem fogják tudni (egyébként nem csak a saját
 hibájukból, lásd még transzparens teljesítménymérés hiánya…), azt
 viszont, hogy a kórház közel vagy messze van, azt fogják tudni. És ez a
 fontosabb számukra.
+
+(Mindazonáltal attól is óvnék, hogy átessünk a ló túloldalára: nehogy
+valaki azt gondolja, hogy pusztán egy fentihez hasonló lista alapján
+eldönthető a kérdés. Lehetnek nagyon speciális területű intézmény, amik
+a jellegükből adódóan kicsik. Számíthat a távolság, az elérhetőség:
+hiába is kicsi egy kórház, lehet, hogy nagy a jelentősége, ha a
+környékén sincs másik. Ez a dolog persze fordítva is működik: ha egy
+kórház kicsi *és* ráadásul még mellette van egy nagy, az pláne
+megkérdőjelezi a racionalitását.)
 
 Egészen idáig csak a 2021-es évet elemeztük. Ha visszamegyünk időben,
 akkor is érdekes lehet a kórházankénti, szakmai osztályonkénti lebontás

@@ -110,6 +110,8 @@ if(!file.exists("res.rds")) {
   }))
   
   res <- res[order(Ev)]
+  res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
+                        substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
   
   saveRDS(res, "res.rds")
 } else res <- readRDS("res.rds")
@@ -219,7 +221,7 @@ kableExtra::add_header_above(
     dcast(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(ElbocsatottBetegSzam), which.max(ElbocsatottBetegSzam))]), .(SzakmaMegnev)],
-      SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazRovid"))[, c(1, 2, 4, 3, 5)],
+      SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
     col.names = c("Szakma", rep(c("Betegszám", "Kórház"), 2))),
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
@@ -313,7 +315,7 @@ kableExtra::add_header_above(
     dcast(res[Ev==2021][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(MukodoAtlagAgy), which.max(MukodoAtlagAgy))]), .(SzakmaMegnev)],
-      SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazRovid"))[, c(1, 2, 4, 3, 5)],
+      SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
     col.names = c("Szakma", rep(c("Ágyszám", "Kórház"), 2))),
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
@@ -331,7 +333,7 @@ Itt már részletesebb elemzés nélkül is látszanak meglepő eredmények; ím
 
 ```{r}
 knitr::kable(res[Ev==2021][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
-  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = Korhaz)][
+  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
     order(`Működő átlagos ágyszám`)][1:15])
 ```
 
@@ -340,6 +342,8 @@ Ezeket látva is felmerülhet kérdés az ilyen intézmények fenntartásának r
 Itt lényegében megint visszatérünk a szemaskó-i "rossz minőségű, de legalább közel van" megfontoláshoz. Mivel Magyarországon ebbe generációk nőttek bele, nagyon nehéz bármit kezdeni vele, hiszen maga a lakosság is azt követeli, hogy közel legyen a kórház, "ne kelljen sokat buszozni", és igen, én is pontosan értem és tudom, hogy rengeteg faluból borzasztó nehéz bejutni a városba, pláne a megyeszékhelyre, mert olyan a buszmenetrend, olyan minőségűek az utak, de az akkor is elég abszurd, hogy erre tekintettel nem azt próbáljuk megkönnyíteni, hogy a beteget vigyük a kórházhoz, hanem a kórházat visszük a beteghez... Komolyan bárki azt gondolja, hogy az működőképes, hogy akkor nem az utat javítjuk, nem a buszt fejlesztjük, nem a betegszállítást erősítjük -- hanem inkább építünk minden második sarokra egy (pici és rossz minőségű, de mégis csak) kórházat?! Teljesen komoly, hogy ez a megoldás a rossz buszmenetrendre és a gyenge betegszállításra?
 
 Félek tőle, hogy a politikusok többsége e tekintetben sajnos nem buta, hanem tudatosan demagóg, magyarán: ők is pontosan tudják, hogy a lakosság rosszabb minőségű ellátást fog kapni, és hogy a közeli kórházat követelők valójában maguk is rosszabbul járnak ezzel, de egyúttal azt is tudják, hogy ezt nem fogják tudni (egyébként nem csak a saját hibájukból, lásd még transzparens teljesítménymérés hiánya...), azt viszont, hogy a kórház közel vagy messze van, azt fogják tudni. És ez a fontosabb számukra.
+
+(Mindazonáltal attól is óvnék, hogy átessünk a ló túloldalára: nehogy valaki azt gondolja, hogy pusztán egy fentihez hasonló lista alapján eldönthető a kérdés. Lehetnek nagyon speciális területű intézmény, amik a jellegükből adódóan kicsik. Számíthat a távolság, az elérhetőség: hiába is kicsi egy kórház, lehet, hogy nagy a jelentősége, ha a környékén sincs másik. Ez a dolog persze fordítva is működik: ha egy kórház kicsi _és_ ráadásul még mellette van egy nagy, az pláne megkérdőjelezi a racionalitását.)
 
 Egészen idáig csak a 2021-es évet elemeztük. Ha visszamegyünk időben, akkor is érdekes lehet a kórházankénti, szakmai osztályonkénti lebontás vizsgálata, de elsőként nézzünk inkább egy összképet. Így alakult az évek alatt az aktív kórházi ágyak száma (itt is a működő átlagos ágyszámot értve ez alatt):
 
