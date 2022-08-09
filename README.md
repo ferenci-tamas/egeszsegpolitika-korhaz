@@ -885,42 +885,153 @@ Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 Mindezekből jól látszik a magyar egészségügyi ellátórendszer néhány
 strukturális problémája. Vegyük például a szülészet-nőgyógyászat
 szakmát! Itt egészen extrém esetek vannak: az ábra bal szélén lévő pont
-egy olyan kórház (1607), ami egész évben összesen 608 beteget látott el
-ebben a szakmában. (Nem akarom kipécézni őket: 6 működő aktív ággyal
-rendelkező tényleges fekvőbeteg-ellátó intézmény van, ahol a
-szülészet-nőgyógyászat egy év alatt kevesebb mint 1000 beteget látott
-el.) Fókuszáljunk most e szakterületen belül csak a szülésekre (mint
-nagyszámú, és a közvélemény szemében is nagy súllyal megjelenő
-érintkezési pont a fekvőbeteg-ellátással). Ez a 608 esemény
-természetesen nem mind szülés! Az ország összes szülészeti-nőgyógyászati
-osztálya együtt 190308 beteget látott el, ez jó közelítéssel kétszerese
-a születések számának; ha ez az arány érvényes e kórházban is, akkor azt
-jelenti, hogy ott a szülések száma kevesebb volt, mint napi 1… Ilyen
-osztályokat minek fenntartani?! És itt most nem az anyagi szempontokról
-beszélek: az itt dolgozó orvosok, szakdolgozók nem fognak tudni manuális
-gyakorlatot szerezni, ezer más dolgot kénytelenek csinálni, így nem
-tudnak elmélyedni ebben a konkrét területben, nem fognak rendelkezésre
-állni a legkorszerűbb műszerek (vagy ha igen, akkor meg elment egy halom
-pénz arra, hogy aztán szinte teljesen kihasználatlanul álljanak). Nem
-lenne jobb – *a szülőnőknek is*, sőt, elsősorban nekik! – ha olyan
-orvosok, szülésznők és ápolók látnák el őket, akiknek bőséges manuális
-gyakorlatuk van, akik ezzel a szűk területtel foglalkoznak, így sokkal
-inkább tudják követni a szakirodalmat, és mindezt ott, ahol
-rendelkezésre állnak a legkorszerűbb eszközök (hiszen van értelme
-megvenni, mert használják őket)? Az egyetlen ellenérv a szemaskó-i
-stílusú „de legalább közel van” megfontolás, csakhogy ebben a konkrét
-esetben ez is abszurd érv, lévén, hogy a szülészet *pont hogy* egy jól
-tervezhető terület. (Ennél még az infarktus-ellátás is ezerszer jobban
-centralizált – nagyon helyesen! – pedig aligha lehet mondani, hogy ott
-kevésbé fontos, hogy gyorsan ellátást kapjon a beteg, vagy, hogy jobban
-előre lehet tervezni az eseményt…)
+a Mezőtúri Kórház, ami egész évben összesen 608 beteget látott el ebben
+a szakmában. Ez természetesen nem mind szülés! A konkrét beavatkozások
+kórházankénti számáról Magyarországon semmilyen információnk nem lehet,
+az egyedüli kivétel azonban épp a szülések száma: egy [másik
+kimutatásból](http://neak.gov.hu//data/cms1025544/Szules_csaszarmetsz_2015_2021_fin_ev.pdf)
+ez az egy megnézhető, és így tudhatjuk, hogy ebben a kórházban 217
+szülés volt 2021-ben. Azaz kevesebb, mint napi 1… (Nem akarom kipécézni
+őket: 7 osztály van, ahol az 500-at sem érte el az éves szülések száma,
+31, ahol az 1000-et sem.) Ilyen osztályokat minek fenntartani?! És itt
+most nem az anyagi szempontokról beszélek: az itt dolgozó orvosok,
+szakdolgozók nem fognak tudni manuális gyakorlatot szerezni, ezer más
+dolgot kénytelenek csinálni, így nem tudnak elmélyedni ebben a konkrét
+területben, nem fognak rendelkezésre állni a legkorszerűbb műszerek
+(vagy ha igen, akkor meg elment egy halom pénz arra, hogy aztán szinte
+teljesen kihasználatlanul álljanak). Nem lenne jobb – *a szülőnőknek
+is*, sőt, elsősorban nekik! – ha olyan orvosok, szülésznők és ápolók
+látnák el őket, akiknek bőséges manuális gyakorlatuk van, akik ezzel a
+szűk területtel foglalkoznak, így sokkal inkább tudják követni a
+szakirodalmat, és mindezt ott, ahol rendelkezésre állnak a legkorszerűbb
+eszközök? Az egyetlen ellenérv a szemaskó-i stílusú „de legalább közel
+van” megfontolás, csakhogy ebben a konkrét esetben ez is abszurd érv,
+lévén, hogy a szülészet *pont hogy* egy jól tervezhető terület. (Ennél
+még az infarktus-ellátás is ezerszer jobban centralizált – nagyon
+helyesen! – pedig aligha lehet mondani, hogy ott kevésbé fontos, hogy
+gyorsan ellátást kapjon a beteg, vagy, hogy jobban előre lehet tervezni
+az eseményt…)
 
-A valódi magyarázat tehát azt gondolom teljesen máshol van: annak
-politikai következményei jelentik a problémát, hogy egy osztályt – pláne
-kórházat – bezár a kormány. Sajnos az elmúlt 20 év bőven szolgáltatott
-példát arra, hogy kis számú kivételtől eltekintve fundamentálisan senki
-nem jobb a deákné vásznánál, úgyhogy hadd fogalmazzak úgy: a
-*mindenkori* ellenzék azonnal rávetné magát, jó eséllyel a legolcsóbb és
+Azt, hogy a fent leírtak nem pusztán elméleti spekulációt jelentenek,
+hanem a gyakorlatban is így vannak, ma már bőséges mennyiségű empirikus
+bizonyíték is alátámasztja. A kérdést nagyon sokan, nagyon sokszor
+megvizsgálták tényadatok alapján, egységes eredményekkel; kiragadott
+példaként itt egy részlet egy ma már [klasszikus
+kutatás](https://www.nejm.org/doi/10.1056/NEJMsa012337) eredményeiből:
+
+![Halálozás függése az évente ellátott
+esetszámtól](nejmsa012337_f2_A.png)
+
+Az ábrán az látszik, hogy négy különböző műtéttípus esetén (ez a négy
+csoportja az oszlopoknak) hogyan alakul a – 30 napon belüli vagy kórházi
+– halálozás a szerint, hogy az adott kórház mennyi műtét végez a
+kérdéses típusból (minél világosabb az oszlop, annál többet). Az
+eredmény nem igényel sok kommentárt: a növekvő gyakorlattal csökken,
+esetenként egészen drámai mértékben a halálozás. (Természetesen
+felvethető, hogy a különböző kórházak más összetételű, például más
+súlyosságú vagy életkorú betegeket láttak el – ez a probléma egyébként
+később nálunk is jelentkezni fog egy kérdés kapcsán – de az eredmények
+erre már korrigálva vannak.)
+
+Szó szerint több ezer hasonló vizsgálat
+[készült](https://pubmed.ncbi.nlm.nih.gov/?term=volume+outcome) az idők
+folyamán, különböző országokban, különböző időintervallumokban, a
+legkülönfélébb beavatkozásokra, lényében a fentivel egyező
+eredményekkel.
+
+De mi a helyzet a szülésekkel (ha már egyszer ezt hoztam fent
+példaként)? Szerencsére erre vonatkozóan is vannak eredmények. [Heller
+és mtsai](https://academic.oup.com/ije/article/31/5/1061/745823) azt
+találták német adatokat vizsgálva, hogy azokon a szülészeteken, ahol évi
+500-nál kevesebb szülést vezetnek, 3,5-szer (!) akkora az
+újszülött-halandóság mint ahol több mint 1500 szülés van. (Emlékeztetek
+rá, hogy van olyan magyar kórház, ahol szülészet-nőgyógyászati
+ellátásból *összesen* alig van 500, nemhogy szülésből.) Több vizsgálat
+megerősítette, hogy az anyai komplikációknál is hasonló a helyzet. Ilyen
+szempontból kifejezetten érdekes [Kozhimannil és
+mtsai](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-0035-1570380)
+amerikai kutatása, amelyben külön is nézték az intézményeket típus
+szerint. A mi kérdéskörünkhoz legközelebb álló „városi, de nem oktató”
+kategóriában (alsó harmad: kevesebb mint 650 szülés, középső harmad:
+650-1400 szülés, felső harmad: több mint 1400 szülés évente) azt
+találták, most csak a statisztikailag szignifikáns eredményeket idézem,
+hogy a közepes intézményekben 19%-kal, a kis intézményekben 39%-kal
+nagyobb a postpartum vérzés esélye, mint a nagy intézményekben, a
+vérátömlesztés-igény a közepesekben 18%-kal nagyobb esélyű, a kicsikben
+24%-kal, továbbá a közepes intézményekben a súlyos gátsérülés esélye is
+8%-kal nagyobb mint a nagy intézményekben (és mindössze egy ellentétes
+adat van, a chorioamnionitis ritkább a közepesekben). A sort lehetne
+folytatni, vannak ellentétes eredmények, ha jóval kisebb számban is, de
+a meta-analízisek a fenti konklúziót erősítik meg, a nagy kockázatú
+szülések esetén egyértelműen
+([Obladen](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-2007-960745)),
+de a kis kockázatúak esetében is efelé mutatnak az eredmények ([Walther
+és
+mtsai](https://bmcpregnancychildbirth.biomedcentral.com/articles/10.1186/s12884-021-03988-y)).
+
+Nem tudok ilyen jellegű magyar kutatásról mint az előbbiek – miközben ez
+alapvető fontosságú lenne a hazai szülészeti ellátás minőségének a
+javításához. Ebben az az igazán szomorú, hogy minden adat és módszertani
+tudás rendelkezésre állna ehhez Magyarországon is, egyedül szándék
+kérdése lenne, hogy a kérdést empirikus alapon, itthon is megvizsgáljuk
+és az eredményeket transzparensen közöljük. Tegyük hozzá, hogy
+egyedülállóan büszkék lehetnénk arra, hogy – Tauffer Vilmosnak
+köszönhetően – a világviszonylatban is párját ritkító adatgyűjtést
+[folytatunk](http://medicalonline.hu/cikk/a_szuleszeti__adatszolgaltatas_helyzete_hazankban),
+1931 óta. Ehhez képest ott tartunk, hogy hétköznapi halandó számára
+feldolgozható formában lényegében semmilyen információ nem érhető el
+ebből, a Tauffer-statisztika honlapján a legfrissebb összefoglaló
+jelentés 2009-es (!) és egyébként [így néz
+ki](http://193.225.50.35/dokumentum/S2009/tauffer_stat.ppt). Mindezt
+2022-ben.
+
+(Természetesen nem egyedül a szülés a releváns, sőt, mint a legelső
+példám ábrája is mutatja, lényegében minden beavatkozásra, műtétre
+megvizsgálható ez a kérdés. Olyannyira, hogy nemzetközileg több helyen
+már [az is
+megtörtént](https://www.sciencedirect.com/science/article/abs/pii/S016885101830424X),
+hogy a betegbiztonság érdekében minimális szükséges esetszámot
+[határoztak meg](https://www.karger.com/Article/Fulltext/456041)
+kórházra, vagy akár orvosra is, beavatkozás-típusonként. [Így néz
+ki](https://www.g-ba.de/downloads/62-492-2882/Mm-R_2022-06-16_iK-2022-07-16-2022-01-01.pdf)
+például a német szabályozás, mondjuk a 16. oldalra lépve azt látjuk,
+hogy totál térdprotézis-műtétből 50 eset/kórház/év a betegbiztonsági
+minimum. Természetesen ennek a megvalósulása is transzparansen
+[lekérdezhető](https://www.bindoc.de/statistik-tool): a
+»Mindestmengenregelung« pontra kattintva láthatjuk az összes német
+kórházat, hogy adott, szabályozás alá eső beavatkozásból – ez a
+»Leistungsart« pontban állítható – mennyit végeztek; szín jelöli a
+megfelelést. Folytatva a példát, a Klinikum Barnim 68 térdprotézis-műtét
+végzett így zölden világít, de az Asklepios Klinikum Uckermark csak
+32-t, ezért a piros szín. Költői kérdés: vajon mikor fogunk ide eljutni
+Magyarországon…? Jelenleg a szülés az *egyetlen* esemény, aminek
+legalább az esetszámát le lehet kérdezni kórházanként, ezen kívül
+*semmilyen* beavatkozás számáról nem érhető el semmilyen információ
+transzparensen.)
+
+Nagyobb újszülött-halandóság, gyakoribb postpartum vérzés, gyakoribb
+súlyos gátsérülés – csak annyit kérdeznék: megérte, hogy közel van?
+
+Arról nem beszélve, hogy bár 31 kórházban nincs évi 1000 szülés,
+mindössze egyetlen megye van, ahol a megyében sincs legalább 1000
+szülést levezető kórház (és ez is csak éppenhogy: Tolnában 982 szülést
+vezetett a Balassa János Kórház). Magyarul: szinte minden esetben
+ugyanazon megyén belül is volna olyan kórház, ahol kellő gyakorlattal
+rendelkeznek. Orosházán úgy vezetnek évi kevesebb mint 500 szülést, hogy
+onnan 39 kilométerre található a Békés Megyei Központi Kórház évi
+majdnem 2000 szüléssel. Pécsen az ország egyik legnagyobb, egyetemi
+klinika szintű szülészetétől 36 és 45 kilométerre is vezetnek szülést,
+közülük a nagyobbikban van évi 681 szülés. (Nekünk Mohács kell! –
+bocsánat.) A legextrémebb példa talán Jász-Nagykun-Szolnok megye, ahol
+*négy* helyen is vezetnek szülést, de úgy, hogy ebből háromban kevesebb
+mint 700 az évi esetszám.
+
+A valódi magyarázat tehát azt hiszem teljesen más: annak politikai
+következményei jelentik a problémát, hogy egy osztályt – pláne kórházat
+– bezár a kormány. Sajnos az elmúlt 20 év bőven szolgáltatott példát
+arra, hogy kis számú kivételtől eltekintve fundamentálisan senki nem
+jobb a deákné vásznánál, úgyhogy hadd fogalmazzak úgy: a *mindenkori*
+ellenzék azonnal rávetné magát, jó eséllyel a legolcsóbb és
 leghitványabb demagógiát használva, hogy „a kormány kórházat zár be!!!”
 (pláne egy szülészetet, atyaisten!). Senkit nem érdekel, hogy ez
 egyébként egy jó döntés – mint ahogy szakmai téren nincs is semmiféle
@@ -961,9 +1072,9 @@ addig az átalakításba csak addig, amíg nem érünk a végére, és utána m�
 *kevesebben* fognak meghalni.)
 
 És még egyetlen gondolat ehhez. Emlékszik az olvasó, hogy melyik volt a
-legkisebb forgalmú szülészet? A 1607-es kódszámú. Elárulom, hogy ez nem
-más, mint a Mezőtúri Kórház. Namost, ha az ember felmegy a Nemzeti
-Népegészségügyi Központ (NNK) honlapjára, akkor megtalálja [azt a
+legkisebb forgalmú szülészet? A Mezőtúri Kórház. Namost, ha az ember
+felmegy a Nemzeti Népegészségügyi Központ (NNK) honlapjára, akkor
+megtalálja [azt a
 részt](https://www.nnk.gov.hu/index.php/egeszsegugyi-igazgatasi-foosztaly/nyilvantartasok/ellatasi-teruletek-nyilvantartasai/kijeloles),
 ami az úgynevezett kijelölő határozatokat tartalmazza: az NNK akkor ad
 ki ilyet, ha egy kórház valamilyen okból akadályozott egy
@@ -978,18 +1089,18 @@ is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAr
 5., 8-10., 12-17., 19-21., 26. és 28. [napokra
 is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20%C3%A9s%20Rendel%C5%91int%C3%A9zet%20-%20Kijel%C3%B6l%C3%A9s.pdf)
 lemondta (indoklás: „aneszteziológus szakorvos hiánya”). De szerencsére
-van szülészet Mezőtúron, ez a lényeg.
+van szülészet Mezőtúron, ez a lényeg!
 
 Külön bája (?) a történetnek, hogy mindeközben a szolnoki Hetényi Géza
 Kórháznak, amit az NNK kijelölt a mezőtúri helyett, összesen *öt*
-különböző akadályoztatás miatti kijelölő határozata van, ugyanis a
-Hetényi május 21-22., június 3-5., 8., 11., 13., 17-18., 22-23., 27.,
-29-30., július 1-4., 9-10., 15-16., 19., 23., 31. napjaira lemondta a
-szülőszobai ügyeletet és a hozzá kapcsolódó újszülött ellátást (az
-indoklás minden esetben: „személyi feltételek átmeneti hiánya”, magyarán
-minden bizonnyal szülész-nőgyógyászuk nincsen), valamint július 1-től
-meghatározatlan ideig lemondta a csecsemő intenzív ellátást is
-(indoklás: „szakdolgozó hiány”).
+különböző akadályoztatás miatti kijelölő határozata van ezen a
+területen, ugyanis a Hetényi május 21-22., június 3-5., 8., 11., 13.,
+17-18., 22-23., 27., 29-30., július 1-4., 9-10., 15-16., 19., 23., 31.
+napjaira lemondta a szülőszobai ügyeletet és a hozzá kapcsolódó
+újszülött ellátást (az indoklás minden esetben: „személyi feltételek
+átmeneti hiánya”, magyarán minden bizonnyal szülész-nőgyógyászuk
+nincsen), valamint július 1-től meghatározatlan ideig lemondta a
+csecsemő intenzív ellátást is (indoklás: „szakdolgozó hiány”).
 
 Így előáll az az egészen hihetetlen helyzet, hogy van két kórház,
 egymástól 50 km-re, amelyek egyike sem tud teljes szülészetet adni, mert
@@ -1800,7 +1911,8 @@ a jellegükből adódóan kicsik. Számíthat a távolság, az elérhetőség:
 hiába is kicsi egy kórház, lehet, hogy nagy a jelentősége, ha a
 környékén sincs másik. Ez a dolog persze fordítva is működik: ha egy
 kórház kicsi *és* ráadásul még mellette van egy nagy, az pláne
-megkérdőjelezi a racionalitását.)
+megkérdőjelezi a racionalitását; ezt a vetületet a szülészeti osztályok
+kapcsán érintettem is.)
 
 Egészen idáig csak a 2021-es évet elemeztük. Ha visszamegyünk időben,
 akkor is érdekes lehet a kórházankénti, szakmai osztályonkénti lebontás
@@ -2541,7 +2653,9 @@ szűrhetően régió, település és intézmény alapján, teljesen
 testreszabhatóan (még saját indikátorrendszert, vagy egyéni rangsort is
 lehetett gyártani). De mértek struktúra jellegű indikátorokat is,
 vizsgálták az egészségügyi dolgozók helyzetét, figyeltek betegbiztonsági
-mutatókat, a kórházi minőségfejlesztés működését.
+mutatókat, a kórházi minőségfejlesztés működését; összesen [791
+indikátort](https://www.imeonline.hu/tmp/c89995380b79be07c0074b8d3eb73a34.pdf)
+definiáltak, mértek és közöltek transzparensen.
 
 Az EBF-et 2007-ben hozták létre, 2010 nyarán megszüntették – miután
 előtte az akkori ellenzék, erre az egy példára konkrétan is emlékszem,
@@ -2564,16 +2678,25 @@ hogy amiket korábban leírtam, azok nem papíron nagyon jól hangzó, de
 gyakorlatban, Magyarországon kivihetetlen fantáziák, nem elméleti
 okoskodás, ami úgyis megvalósíthatatlan: itt az élő példa, hogy
 megcsinálták, egy maroknyi csapat, egy gazdasági és politikai válság
-közepén, minimális pénzből; ha jól emlékszem, az egész EBF-nek összesen
-is 100 millió forint volt a költségvetése, miközben ebből egy tucatnyi
-funkciót betöltött az teljesítménymérésen túl. (Például ellenőrzéseket
-végzett, lejáratták és gáncsolták is érte eleget azok a hatalmasságok az
-egészségügyben, akik nem voltak hozzászokva ahhoz, hogy nem az
-egészségügyi hierarchiába beletört, fiatal ellenőrök érkeznek bejelentés
-nélkül.) És mindezt 12 évvel ezelőtt. 12 év telt az EBF megszüntetése
-óta, és azóta nemhogy a 12 évvel ezelőtti lehetőségeket nem sikerült
-újra elérni, de még csak a leghalványabb nyoma sincs ilyen – pláne
-nyilvános, teljesen transzparens – indikátorrendszernek.
+közepén, minimális pénzből. (Az egész EBF-nek az utolsó teljes évében
+500 millió forint körüli volt a költségvetése, miközben a
+teljesítménymérésen túl kezelték többek között a teljes
+várólista-nyilvánosságot, ellátták a gyógyszerpiac és az
+egészségpénztárak felügyeletét és évi mintegy 2000 betegjogi ellenőrzést
+folytattak le. Ez utóbbi miatt lejáratták és gáncsolták is érte eleget
+azok a hatalmasságok az egészségügyben, akik nem voltak hozzászokva
+ahhoz, hogy fiatal, az egészségügyi hierarchiába nem beletört ellenőrök
+érkeznek bejelentés nélkül az intézményükbe.)
+
+És mindezt 12 évvel ezelőtt. 12 év telt az EBF megszüntetése óta, és
+azóta nemhogy a 12 évvel ezelőtti lehetőségeket nem sikerült újra
+elérni, de még csak a leghalványabb nyoma sincs ilyen – pláne nyilvános,
+teljesen transzparens – indikátorrendszernek. A NEAK jelenlegi
+„indikátorrendszere” 3 (azaz három) [mutatóból
+áll](http://neak.gov.hu/felso_menu/szakmai_oldalak/gyogyito_megeleozo_ellatas/szakellatas/fekvobeteg_szakellatas_minosegi_indikator):
+az említett születésszám kiegészítve a császármetszések számával, az
+egynapos sebészeti ellátások aránya és a várólisták hossza; mindez
+közölve egy-egy PDF formátumban kimentett Excel-táblában.
 
 2019 végén született egy
 [kormányhatározat](http://www.kozlonyok.hu/nkonline/MKPDF/hiteles/MK19217.pdf),
@@ -2587,7 +2710,8 @@ követelmény: a jogszabály külön említi, hogy az „átláthatóság érdek
 – csak épp az indikátorokat és azok számítását teszi kötelezően
 nyilvánosan közlendővé, nem magukat az eredményeket! (Lehet, hogy jót
 tett volna, ha a szakmai szervezetek nem egy (!) napot kapnak a tervezet
-[véleményezésére](https://mok.hu/public/media/source/Transzparencia/Allasfoglalasok/EMMI_egyeztet%C3%A9s_fekv%C5%91beteg_ell%C3%A1t%C3%A1s%20min%C5%91s%C3%ADt%C3%A9s_0407.pdf)…)
+[véleményezésére](https://mok.hu/public/media/source/Transzparencia/Allasfoglalasok/EMMI_egyeztet%C3%A9s_fekv%C5%91beteg_ell%C3%A1t%C3%A1s%20min%C5%91s%C3%ADt%C3%A9s_0407.pdf)…
+Miután 12 évig nem történt semmi.)
 
 ## Halálozási adatok
 
@@ -2652,9 +2776,9 @@ fel, ahol legalább 30 beteget elláttak):
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz,
+  , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-       aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
+       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -2704,9 +2828,9 @@ Hasonló a helyzet a bőrgyógyászatnál:
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz,
+  , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -2716,9 +2840,9 @@ Vagy épp a pszichiátriánál:
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
-  , .(Halalozas, Korhaz,
+  , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = Korhaz)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
