@@ -937,13 +937,34 @@ Szó szerint több ezer hasonló vizsgálat
 [készült](https://pubmed.ncbi.nlm.nih.gov/?term=volume+outcome) az idők
 folyamán, különböző országokban, különböző időintervallumokban, a
 legkülönfélébb beavatkozásokra, lényében a fentivel egyező
-eredményekkel.
+eredményekkel. Tulajdonképpen minden beavatkozásra, műtétre
+megvizsgálható ez a kérdés, olyannyira, hogy nemzetközileg több helyen
+már [az is
+megtörtént](https://www.sciencedirect.com/science/article/abs/pii/S016885101830424X),
+hogy a betegbiztonság érdekében minimális szükséges esetszámot
+[határoztak meg](https://www.karger.com/Article/Fulltext/456041)
+kórházra, vagy akár orvosra is, beavatkozás-típusonként. [Így néz
+ki](https://www.g-ba.de/downloads/62-492-2882/Mm-R_2022-06-16_iK-2022-07-16-2022-01-01.pdf)
+például a német szabályozás, mondjuk a 16. oldalra lépve azt látjuk,
+hogy totál térdprotézis-műtétből 50 eset/kórház/év a betegbiztonsági
+minimum. Természetesen ennek a megvalósulása is transzparansen
+[lekérdezhető](https://www.bindoc.de/statistik-tool): a
+»Mindestmengenregelung« pontra kattintva láthatjuk az összes német
+kórházat, hogy adott, szabályozás alá eső beavatkozásból – ez a
+»Leistungsart« pontban állítható – mennyit végeztek; szín jelöli a
+megfelelést. Folytatva a példát, a Klinikum Barnim 68 térdprotézis-műtét
+végzett így zölden világít, de az Asklepios Klinikum Uckermark csak
+32-t, ezért a piros szín. Költői kérdés: vajon mikor fogunk ide eljutni
+Magyarországon…? Jelenleg a szülés az *egyetlen* esemény, aminek
+legalább az esetszámát le lehet kérdezni kórházanként, ezen kívül
+*semmilyen* beavatkozás számáról nem érhető el semmilyen információ
+transzparensen.
 
-De mi a helyzet a szülésekkel (ha már egyszer ezt hoztam fent
-példaként)? Szerencsére erre vonatkozóan is vannak eredmények. [Heller
-és mtsai](https://academic.oup.com/ije/article/31/5/1061/745823) azt
-találták német adatokat vizsgálva, hogy azokon a szülészeteken, ahol évi
-500-nál kevesebb szülést vezetnek, 3,5-szer (!) akkora az
+De mi a helyzet a szülésekkel, ha már egyszer ezt hoztam fent problémás
+hazai példaként? Szerencsére erre vonatkozóan is vannak eredmények.
+[Heller és mtsai](https://academic.oup.com/ije/article/31/5/1061/745823)
+azt találták német adatokat vizsgálva, hogy azokon a szülészeteken, ahol
+évi 500-nál kevesebb szülést vezetnek, 3,5-szer (!) akkora az
 újszülött-halandóság mint ahol több mint 1500 szülés van. (Emlékeztetek
 rá, hogy van olyan magyar kórház, ahol szülészet-nőgyógyászati
 ellátásból *összesen* alig van 500, nemhogy szülésből.) Több vizsgálat
@@ -984,30 +1005,6 @@ ebből, a Tauffer-statisztika honlapján a legfrissebb összefoglaló
 jelentés 2009-es (!) és egyébként [így néz
 ki](http://193.225.50.35/dokumentum/S2009/tauffer_stat.ppt). Mindezt
 2022-ben.
-
-(Természetesen nem egyedül a szülés a releváns, sőt, mint a legelső
-példám ábrája is mutatja, lényegében minden beavatkozásra, műtétre
-megvizsgálható ez a kérdés. Olyannyira, hogy nemzetközileg több helyen
-már [az is
-megtörtént](https://www.sciencedirect.com/science/article/abs/pii/S016885101830424X),
-hogy a betegbiztonság érdekében minimális szükséges esetszámot
-[határoztak meg](https://www.karger.com/Article/Fulltext/456041)
-kórházra, vagy akár orvosra is, beavatkozás-típusonként. [Így néz
-ki](https://www.g-ba.de/downloads/62-492-2882/Mm-R_2022-06-16_iK-2022-07-16-2022-01-01.pdf)
-például a német szabályozás, mondjuk a 16. oldalra lépve azt látjuk,
-hogy totál térdprotézis-műtétből 50 eset/kórház/év a betegbiztonsági
-minimum. Természetesen ennek a megvalósulása is transzparansen
-[lekérdezhető](https://www.bindoc.de/statistik-tool): a
-»Mindestmengenregelung« pontra kattintva láthatjuk az összes német
-kórházat, hogy adott, szabályozás alá eső beavatkozásból – ez a
-»Leistungsart« pontban állítható – mennyit végeztek; szín jelöli a
-megfelelést. Folytatva a példát, a Klinikum Barnim 68 térdprotézis-műtét
-végzett így zölden világít, de az Asklepios Klinikum Uckermark csak
-32-t, ezért a piros szín. Költői kérdés: vajon mikor fogunk ide eljutni
-Magyarországon…? Jelenleg a szülés az *egyetlen* esemény, aminek
-legalább az esetszámát le lehet kérdezni kórházanként, ezen kívül
-*semmilyen* beavatkozás számáról nem érhető el semmilyen információ
-transzparensen.)
 
 Nagyobb újszülött-halandóság, gyakoribb postpartum vérzés, gyakoribb
 súlyos gátsérülés – csak annyit kérdeznék: megérte, hogy közel van?
