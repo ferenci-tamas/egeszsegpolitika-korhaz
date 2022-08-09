@@ -10,13 +10,43 @@ always_allow_html: true
 lang: hu
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.width = 12, dpi = 300)
 
 library(data.table)
 library(ggplot2)
 
+res <- readRDS("res.rds")
+
 set.seed(1)
+```
+
+```{r atnevezesek, echo = FALSE}
+res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
+res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyászat"
+res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
+res[SzakmaMegnev=="Ortopédia"]$SzakmaMegnev <- "Ortopédia-traumatológia"
+res[SzakmaMegnev=="Traumatológia"]$SzakmaMegnev <- "Ortopédia-traumatológia"
+res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiológia"
+res[SzakmaMegnev=="Fogászati ellátás"]$SzakmaMegnev <- "Fog- és szájsebészet"
+res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai és intenzív betegellátás"
+res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
+res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
+res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
+res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
+res[SzakmaMegnev=="Felvételi osztály"]$SzakmaMegnev <- "Sürgősségi betegellátás"
+
+res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
+  "Aneszt. és intenzív betegellátás"
+```
+
+```{r specek, echo = FALSE}
+res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kórházak",
+                                    "Klinikák", "Állami kórházak", "HM és BM kórházak",
+                                    "MÁV kórházak", "Központi intézmény", "Egyházi",
+                                    "Egyetem", "Önkormányzati eü. intézmény",
+                                    "Központi eü. intézmény", "Egyházi intézmény")
+res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignore.case = TRUE)
 ```
 
 
@@ -51,148 +81,24 @@ Jelen projekt _elsődleges_ célja ezeknek az adatoknak a beolvasása a fenti ne
 
 ## Technikai részletek
 
-Ezt a pontot nyugodtan ugorja át bárki, akit nem érdekelnek annak részletei, hogy az adatokat hogyan sikerült feldolgozható formába hozni. Itt azonban leírom, részint mert talán önmagában is érdekes lehet, emiatt igyekszem kommentálni is, illetve rámutatni a nehézségekre, részint, hogy a munkám teljesen transzparens, bárki számára reprodukálható legyen. Akit a technikai részletek nem érdekelnek, de a számszerű eredményeket szeretné használni, itt letöltheti feldolgozható, letisztított és egységes formában a magyar aktív fekvőbeteg-ellátás 2003 és 2021 közötti ágyszám- és betegforgalmi adatait: [CSV formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.csv), illetve [XLSX (Excel) formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.xlsx). Az elemzés -- csakúgy mint a letöltés és adatfeldolgozás -- [R statisztikai környezet](https://www.youtube.com/c/FerenciTam%C3%A1s/playlists?view=50&sort=dd&shelf_id=2) alatt történt; az ehhez szükséges kódokat nem csak itt, de az eredményt közlő pontokban is megadom (akit ez nem érdekel, nyugodtan ugorja át a szürke hátterű kódokat).
+Fontosnak tartom az adatok feldolgozható formára való hozásának technikai részleteit is közölni, részint mert talán önmagában is érdekes lehet, emiatt igyekszem kommentálni is, illetve rámutatni a nehézségekre, részint, hogy a munkám teljesen transzparens, bárki számára reprodukálható legyen. Akit a technikai részletek nem érdekelnek, de a számszerű eredményeket szeretné használni, itt letöltheti feldolgozható, letisztított és egységes formában a magyar aktív fekvőbeteg-ellátás 2003 és 2021 közötti ágyszám- és betegforgalmi adatait: [CSV formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.csv), illetve [XLSX (Excel) formátum](https://github.com/tamas-ferenci/GondolatokAMagyarKorhaziAdatokElemzeserolEsNehanyEgeszsegpolitikaiMegjegyzes/raw/main/KorhaziAgyszamEsBetegforgalom.xlsx).
 
-Nézzük most a részleteket! Első lépésben kézzel letöltöttem a NEAK honlapjáról az egyes évek adatait (ki kell csomagolni egy `zip` fájlból; a régiek `doc` formátumban vannak meg), majd minden egyes év adatát kézzel átmentettem `docx` formátumban. (Ennek nagy jelentősége nincsen, csak a később használt `R` csomag a `docx` formátumot tudja minden további nélkül kezelni.)
+A további elemzés -- csakúgy mint a letöltés és adatfeldolgozás -- [R statisztikai környezet](https://www.youtube.com/c/FerenciTam%C3%A1s/playlists?view=50&sort=dd&shelf_id=2) alatt történt; az ehhez szükséges kódokat a fenti okokból az eredményt közlő pontokban is megadom (akit ez nem érdekel, nyugodtan ugorja át a szürke hátterű kódokat).
 
-Az adatok feldolgozásához a `docxtractr` nevű R csomag jelenti a megoldást, ez be tud olvasni `docx` formátumú fájlt, sőt, ki tudja belőle szedni a táblázatokat (akár egyszerre az összeset, egy listában), ráadásul még azt is jól tudja kezelni, hogy egy táblázat több oldalon keresztül folytatódik.
-
-Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az mit is csinál:
-
-```{r}
-if(!file.exists("res.rds")) {
-  headernames <- c("Korhaz", "SzakmaKod", "SzakmaMegnev", "OsszesAgy",
-                   "MukodoIAgy", "MukodoIIAgy", "TartoSzuneteloAgy",
-                   "OsszesAtlagAgy", "MukodoAtlagAgy", "ElbocsatottBetegSzam",
-                   "EltavozottBetegSzam", "MasOsztalyBetegSzam", "MeghaltBetegSzam",
-                   "EgynaposEsetSzam", "TeljesithetoApolasiNapSzam",
-                   "TeljesitettApolasiNapSzam", "ApolasAtlTartam", "Agykihasznalas",
-                   "Halalozas")
-  
-  files <- list.files("./doc/")
-  
-  res <- rbindlist(lapply(files, function(file) {
-    yr <- regmatches(file, gregexpr("\\d{4}", file))[[1]]
-    
-    doc <- docxtractr::read_docx(paste0("./doc/", file))
-    
-    res <- docxtractr::docx_extract_all_tbls(doc)
-    res <- lapply(res, as.data.table)
-    
-    FenntartoTablaNum <- which(sapply(res, function(x)
-      names(x[1,1]))==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás.fenntartónként", yr, "..év"))
-    
-    Fenntartok <- data.table(Fenntarto = res[[FenntartoTablaNum]][[1]],
-                             KorhazRovid = res[[FenntartoTablaNum]][[1]])
-    Fenntartok[nchar(Fenntartok$Fenntarto)==4]$Fenntarto <- NA
-    Fenntartok <- tidyr::fill(Fenntartok, Fenntarto)
-    Fenntartok <- Fenntartok[!is.na(Fenntarto)&!is.na(KorhazRovid)]
-    Fenntartok <- Fenntartok[nchar(KorhazRovid)==4]
-    
-    res <- res[sapply(res, function(x)
-      names(x[1, 1])==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás", yr, "..év")&
-        substring(x[1, 1], 1, 4)%in%Fenntartok$KorhazRovid)]
-    
-    res <- rbindlist(lapply(1:length(res), function(i) {
-      firstactive <- grep("Aktív", res[[i]][[2]], ignore.case = TRUE)[1]
-      firstchronic <- grep("Krónikus", res[[i]][[2]], ignore.case = TRUE)[1]
-      if(firstactive>firstchronic) NULL else
-        setNames(cbind(res[[i]][1,1], res[[i]][6:(firstactive-1),]), headernames)
-    }))
-    
-    for(i in headernames[-(1:3)]) res[[i]] <- as.numeric(stringr::str_replace_all(
-      res[[i]], c("," = ".", "[[:space:]]" = "")))
-    
-    res$Ev <- as.integer(yr)
-    
-    res$KorhazRovid <- substring(res$Korhaz, 1, 4)
-    merge(res, Fenntartok, by = "KorhazRovid")
-  }))
-  
-  res <- res[order(Ev)]
-  res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
-                        substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
-  
-  saveRDS(res, "res.rds")
-} else res <- readRDS("res.rds")
-```
-
-A következő kommentárok tartoznak a fentiekhez:
-
-- A fenntartó azt jelenti, hogy milyen típusú fenntartója van az intézménynek (központi, önkormányzati, egyházi stb.). Ezt tulajdonképpen hagyhatnánk is, de bizonyos elemzéseknél jól jön, ha ki tudjuk zárni az elég atipikus intézményeket (pl. vállalkozások által fenntartott intézményeket, melyek jellemzően nulla ágyszámmal csak egynapos ellátást nyújtanak), úgyhogy érdemes lehet nem veszni hagyni. Ha viszont e mellett döntünk, akkor kicsit küzdeni kell. A dokumentumok jellemzően az elején (de még az sem egységes, hogy melyik táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a sorszámot) közlik a fenntartókat, de nagyon szerencsétlen formátumban: egy oszlopban van a fenntartó és az intézmény. Ezt úgy kell elképzelni, hogy először szerepel az "önkormányzati eü. intézmény" kifejezés, majd utána jönnek az ilyen fenntartójúak azonosítói, aztán egy "központi eü. intézmény" szó, majd sorakoznak ezek kódjai stb., ráadásul közben még összegzősorok is vannak. A problémát egy trükkel oldjuk meg: ezt az oszlopot kétszer egymás mellé másoljuk, majd az egyik oszlopból kitöröljük azokat az értékeket, amik nem 4 hosszúak. Ezzel magyarul kitöröltük a kórházak azonosítóit, és meghagytuk a felirat-szövegeket. (A dolgot az teszi lehetővé, hogy a kórház azonosító mindig 4 karakter, viszont a feliratok reményeim szerint soha.) Ezt következően a kiüresített helyekre lehúzzuk fentről az utolsó szöveget -- a `tidyr::fill` pont ezt teszi -- így végeredményben egymás _mellé_ kerültek, ahogy arra szükségünk van, a fenntartók és a kódok. Nincs más dolgunk, mint kitörölni a felesleges sorokat, azaz a feliratok és az összegző-sorokat, de ezt könnyen megtaláljuk azáltal, hogy ezeknél a kód oszlop nem 4 hosszúságú.
-- A rengeteg táblázatból meg kell keresni azt az egyetlen kombinációt, ami érdekel minket: az intézményre lebontott táblákat. Az ilyeneket két feltétellel azonosítjuk: egyrészt a bal szélső oszlop neve adott értékű mindig, másrészt leellenőrizzük, hogy a bal felső cellában -- elvileg itt kell a kórház azonosítója szerepeljen -- a megadott négyjegyű kód tényleg valódi kórházazonosító-e. (Ezeket az azonosítókat az előző lépésnek köszönhetően már ismerjük.)
-- A következő probléma az aktív és krónikus ellátások elkülönítése. A 2012 és azt követő évek táblázataiban nincsen probléma, ezeknél ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód, így nyugodtan legyűjthetjük "ész nélkül" az összes megfelelő táblázatot, maximum a végén elhagyjuk azokat, ahol nincs szakmakód. A probléma az, hogy 2012 előtt nem követték ezt a szabályt, és a krónikus ellátást végző szakmák mellett is fel volt tüntetve a szakmakód. Ez azért gond, mert ezek a kódok átfednek az aktív szakmák kódjaival, sőt, akár még egy kórházon belül is előfordulhat mindkettő (például 2011-ben a Szt. Imre Kórháznak volt 18-as szakmakódú pszichiátriából aktív _és_ krónikus ellátása is). De az sem jó megoldás, hogy elkezdjük legyűjteni a sorokat addig, amíg van szakmakód, mert van olyan kórház, amiben egyáltalán nincs aktív ellátás. Végül azt a megoldást találtam ki, hogy megkeressük az "aktív" és a "krónikus" szavak előfordulását (ezek az összegző-sorokban biztosan szerepelnek). Ha az "aktív" szó csak a "krónikus" után van, akkor nincs aktív ellátás (a szó az "aktív és krónikus összesen" nagy összegző sorban szerepelt), ezt az intézményt átugorhatjuk, ha nem, akkor a kettő _közötti_ sorokat kell kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed ki.
-- A számokat tartalmazó sorokban szóköz az ezres elválasztó, tizedevessző a tizedesjelölő, az előbbieket el kell távolítani, az utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a `gsub`).
-- Szerencsére az oszlopok sorrendje és tartalma végig ugyanaz (ezt tartalmazza a `headernames` változó).
-- A kórház kódja szerencsére mindig a nevének az első négy karaktere.
-
-A fentiek végén megkapjuk a kialakítani tervezett táblázat első változatát. Mindenek előtt végezzünk rajta pár adatvalidációt.
-
-Egyedi kórháznévből összesen `r length(unique(res$Korhaz))` van, de ez valójában nem jelöl ennyi kórházat, hiszen sok kórház neve változott az évek alatt. A rekord `r max((table(substring(unique(res$Korhaz), 1, 4))))`: összesen `r sum((table(substring(unique(res$Korhaz), 1, 4)))==max((table(substring(unique(res$Korhaz), 1, 4)))))` kórház is van, aminek ennyi különböző neve volt 2003 és 2021 között. Szerencsére gyors átfutás alapján az adatok rendben vannak, azaz ugyanahhoz a kód ténylegesen ugyanaz a kórház tartozik (még ha a neve változott is). Így a kód megfelelő azonosító.
-
-Nézzük most a szakmákat:
-
-```{r}
-knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
-  order(V1), .(`Szakmakód` = V1, `Szakma megnevezése` = V2)])
-```
-
-Amint látható, itt már van egy kis kavarodás, de egy kivételtől eltekintve nem szó szerinti gond, csak a szakma megnevezése nem volt egységes. Az egyetlen kivétel a 17-es kód, itt tényleges gikszer van: 2003-tól 2011-ig ezt a "Felvételi osztály" szakmára használják, utána viszont egy durva hiba történik, mert _ugyanazt_ a kódot kiosztják egy teljesen más szakmának ("Arc-, állcsont- és szájsebészet"). A 17-es kód tehát bizonytalan, a megnevezés mindenesetre használható.
-
-Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes legyen), illetve egy szakmanevet lerövidítünk, hogy jobban kiférjen az ábrákon:
-
-```{r}
-res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
-res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyászat"
-res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
-res[SzakmaMegnev=="Ortopédia"]$SzakmaMegnev <- "Ortopédia-traumatológia"
-res[SzakmaMegnev=="Traumatológia"]$SzakmaMegnev <- "Ortopédia-traumatológia"
-res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiológia"
-res[SzakmaMegnev=="Fogászati ellátás"]$SzakmaMegnev <- "Fog- és szájsebészet"
-res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai és intenzív betegellátás"
-res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
-res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
-res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
-res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
-res[SzakmaMegnev=="Felvételi osztály"]$SzakmaMegnev <- "Sürgősségi betegellátás"
-
-res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
-  "Aneszt. és intenzív betegellátás"
-```
-
-Ezek után már a megnevezés aggálytalanul használható.
-
-Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint feldolgozható formában is lementeni az adatokat:
-
-```{r}
-fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
-```
-
-A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor kizárjuk a vizsgálatokból:
-
-```{r}
-res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kórházak",
-                                    "Klinikák", "Állami kórházak", "HM és BM kórházak",
-                                    "MÁV kórházak", "Központi intézmény", "Egyházi",
-                                    "Egyetem", "Önkormányzati eü. intézmény",
-                                    "Központi eü. intézmény", "Egyházi intézmény")
-res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignore.case = TRUE)
-```
-
-(Még így is nagyon sok pl. rendelőintézet belekerül a listánkba, de ezek könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
-
-Most már nekiláthatunk az elemzésnek! Ahogy mondtam is, a dolog inkább illusztratív lesz, de remélem néhány érdekes dolgot meg fogok tudni mutatni. Az adatok feldolgozásához a `data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
+A további részletek a függelékben olvashatóak.
 
 ## Adatvalidáció
 
-Elsőként nézzük meg az adatok validitását. Fontos, hogy ez alatt nem azt értem, hogy melyik adat "gyanús" vagy akár "szinte irreális" (fogunk ilyet is látni), hanem azt, ami _matematikailag_ lehetetlen, hogy jó legyen.
+Az adatok validitása alatt alatt nem azt értem, hogy melyik adat "gyanús" vagy akár "szinte irreális" (fogunk ilyet is látni), hanem azt, ami _matematikailag_ lehetetlen, hogy jó legyen.
 
-Az egyik ilyen kérdés az ágykihasználás. Az egyszerűség kedvéért vegyünk egy konkrét példát: 2021-ben a hatvani Albert Schweitzer Kórház (1035) 15-ös kódú intenzív osztályán az ápolás átlagos időtartama `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam` nap volt. Ez azt jelenti, hogy ha abban a pillanatban, hogy felszabadult egy ágy, azonnal új beteg került rá, egy év alatt összesen 365/`r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam` = `r round(365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` beteget tudtak ellátni. Mivel az évben átlagosan `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy` ágyuk volt, ez összesen `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy` &middot; `r round(365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` = `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy*365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` beteg. Igen ám, de közben a tényleges betegforgalom `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam` beteg volt! (Az elméleti maximum `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam/(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy*365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam), 1)`-szerese!) Ezt -- intenzív osztályról lévén szó nem meglepő módon -- az egynapos ellátás sem tudja megmagyarázni, ilyen ugyanis nem volt.
+Két ilyen ellenőrzési lehetőséget találtam:
 
-Nem tudom a jelenség magyarázata mi lehet, kézenfekvőnek tűnik, hogy a koronavírus-járvány miatt került ide sok beteg, nagyobb ágyszámon, de ha így van, akkor meg az átlagos ágyszám adata hibás, hiszen annak _elvileg_ tükröznie kell az egész évben történt változásokat (ennek a definíciója ugyanis a kimutatás szerint: "kórházi ágyak számának a tárgyév során bekövetkezett változásait is tükröző súlyozott átlaga"). Érdekes azt is megjegyezni, hogy igazából már az átlagos ápolási időtartam sem stimmel (vagy jobban mondva legalábbis nem konzisztens a többi adattal): a NEAK [definíciója szerint](http://site.oep.hu/statisztika/2011/pdf/hun/Fekvobeteg_modszertan_2011.pdf) ez aktív ellátás esetén "a teljesített ápolási napok száma osztva az osztályokról elbocsátott betegek számával", jelen esetben `r format(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$TeljesitettApolasiNapSzam, scientific = FALSE)` / `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam` = `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$TeljesitettApolasiNapSzam/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam, 2)`, ami nem egyezik pontosan a táblázatban szereplő értékkel. (Ez az apró eltérés az oka annak, hogy a fenti kiszámolt hányados nem egyezik pontosan a táblában közölt ágykihasználással, ami `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$Agykihasznalas`%, mindenesetre ez is bőven 100% feletti.) A dolog nem egyedi, összesen `r nrow(res[MukodoAtlagAgy>0&365/ApolasAtlTartam*MukodoAtlagAgy<EltavozottBetegSzam])` példa van ilyen adatra. Egyáltalán nem csak a koronavírus-járvány éveiről van szó, jó kérdés tehát, hogy mi lehet a magyarázat...
+- Az ágykihasználás visszaellenőrzése: több esetet találtam, amikor az elbocsátott betegek száma nagyobb, mint ami 100%-os ágykihasználásnál lehetne (figyelembe véve az átlagos ápolási időtartamot).
+- Elbocsátott betegek számának visszaellenőrzése: több esetet találtam, hogy ággyal nem rendelkező osztályok több beteget láttak el, mint ahány egynapos esetük volt.
 
-Ha már említettük az egynapos ellátást, érdemes arra is ránézni. Itt is hozok konkrét példát: 2011-ben a László Kórház (0109) 07-es szakmakódú szemészete nem rendelkezett egyetlen ággyal sem, mégis elbocsátott `r res[Ev==2021&KorhazRovid=="0109"&SzakmaKod=="07"]$ElbocsatottBetegSzam` beteget. Ez nem meglepő, mert egynapos ellátást nyújtott -- igen ám, csak az egynapos ellátási események száma `r res[Ev==2021&KorhazRovid=="0109"&SzakmaKod=="07"]$EgynaposEsetSzam` volt. A különbség nem nagy, talán csak banális adminisztrációs hibáról van szó, mindenesetre a teljes adatbázisban `r nrow(res[MukodoAtlagAgy==0&ElbocsatottBetegSzam>EgynaposEsetSzam])` esetben fordul elő, hogy működő ágy nélkül osztályok több beteget bocsátottak el, mint ahány egynapos esetük volt.
+Sajnos a fenti jelenségekre nem találtam magyarázatot.
+
+Mivel ez most számunkra nem kulcsponti kérdés, a részleteket és az eredményeket a függelékben közlöm.
 
 ## Betegforgalmi adatok
 
@@ -213,7 +119,7 @@ ggplot(res[Ev==2021], aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   labs(x = "Elbocsátott betegszám [fő]", y = "")
 ```
 
-Nézzük meg a legkisebb és legnagyobb forgalmú osztályokot szakmánként számszerűen is (ez persze elég kiragadott, hiszen egy-egy osztály nem mond sokat a rendszer egészéről, de azért nagyon illusztratív lesz):
+Nézzük meg a 2021-ben legkisebb és legnagyobb forgalmú osztályokat szakmánként számszerűen is (ez persze elég kiragadott, hiszen egy-egy osztály nem mond sokat a rendszer egészéről, de azért nagyon illusztratív lesz):
 
 ```{r}
 kableExtra::add_header_above(
@@ -222,7 +128,7 @@ kableExtra::add_header_above(
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(ElbocsatottBetegSzam), which.max(ElbocsatottBetegSzam))]), .(SzakmaMegnev)],
       SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
-    col.names = c("Szakma", rep(c("Betegszám", "Kórház"), 2))),
+    col.names = c("Szakma", rep(c("Évi betegszám", "Kórház"), 2))),
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
 
@@ -236,9 +142,9 @@ Az ábrán az látszik, hogy négy különböző műtéttípus esetén (ez a né
 
 Szó szerint több ezer hasonló vizsgálat [készült](https://pubmed.ncbi.nlm.nih.gov/?term=volume+outcome) az idők folyamán, különböző országokban, különböző időintervallumokban, a legkülönfélébb beavatkozásokra, lényében a fentivel egyező eredményekkel. Tulajdonképpen minden beavatkozásra, műtétre megvizsgálható ez a kérdés, olyannyira, hogy nemzetközileg több helyen már [az is megtörtént](https://www.sciencedirect.com/science/article/abs/pii/S016885101830424X), hogy a betegbiztonság érdekében minimális szükséges esetszámot [határoztak meg](https://www.karger.com/Article/Fulltext/456041) kórházra, vagy akár orvosra is, beavatkozás-típusonként. [Így néz ki](https://www.g-ba.de/downloads/62-492-2882/Mm-R_2022-06-16_iK-2022-07-16-2022-01-01.pdf) például a német szabályozás, mondjuk a 16. oldalra lépve azt látjuk, hogy totál térdprotézis-műtétből 50 eset/kórház/év a betegbiztonsági minimum. Természetesen ennek a megvalósulása is transzparansen [lekérdezhető](https://www.bindoc.de/statistik-tool): a 'Mindestmengenregelung' pontra kattintva láthatjuk az összes német kórházat, hogy adott, szabályozás alá eső beavatkozásból -- ez a 'Leistungsart' pontban állítható -- mennyit végeztek; szín jelöli a megfelelést. Folytatva a példát, a Klinikum Barnim 68 térdprotézis-műtét végzett így zölden világít, de az Asklepios Klinikum Uckermark csak 32-t, ezért a piros szín. Költői kérdés: vajon mikor fogunk ide eljutni Magyarországon...? Jelenleg a szülés az _egyetlen_ esemény, aminek legalább az esetszámát le lehet kérdezni kórházanként, ezen kívül _semmilyen_ beavatkozás számáról nem érhető el semmilyen információ transzparensen.
 
-De mi a helyzet a szülésekkel, ha már egyszer ezt hoztam fent problémás hazai példaként? Szerencsére erre vonatkozóan is vannak eredmények. [Heller és mtsai](https://academic.oup.com/ije/article/31/5/1061/745823) azt találták német adatokat vizsgálva, hogy azokon a szülészeteken, ahol évi 500-nál kevesebb szülést vezetnek, 3,5-szer (!) akkora az újszülött-halandóság mint ahol több mint 1500 szülés van. (Emlékeztetek rá, hogy van olyan magyar kórház, ahol szülészet-nőgyógyászati ellátásból _összesen_ alig van 500, nemhogy szülésből.) Több vizsgálat megerősítette, hogy az anyai komplikációknál is hasonló a helyzet. Ilyen szempontból kifejezetten érdekes [Kozhimannil és mtsai](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-0035-1570380) amerikai kutatása, amelyben külön is nézték az intézményeket típus szerint. A mi kérdéskörünkhoz legközelebb álló "városi, de nem oktató" kategóriában (alsó harmad: kevesebb mint 650 szülés, középső harmad: 650-1400 szülés, felső harmad: több mint 1400 szülés évente) azt találták, most csak a statisztikailag szignifikáns eredményeket idézem, hogy a közepes intézményekben 19%-kal, a kis intézményekben 39%-kal nagyobb a postpartum vérzés esélye, mint a nagy intézményekben, a vérátömlesztés-igény a közepesekben 18%-kal nagyobb esélyű, a kicsikben 24%-kal, továbbá a közepes intézményekben a súlyos gátsérülés esélye is 8%-kal nagyobb mint a nagy intézményekben (és mindössze egy ellentétes adat van, a chorioamnionitis ritkább a közepesekben). A sort lehetne folytatni, vannak ellentétes eredmények, ha jóval kisebb számban is, de a meta-analízisek a fenti konklúziót erősítik meg, a nagy kockázatú szülések esetén egyértelműen ([Obladen](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-2007-960745)), de a kis kockázatúak esetében is efelé mutatnak az eredmények ([Walther és mtsai](https://bmcpregnancychildbirth.biomedcentral.com/articles/10.1186/s12884-021-03988-y)).
+De mi a helyzet a szülésekkel, ha már egyszer ezt hoztam fent problémás hazai példaként? Szerencsére erre vonatkozóan is vannak eredmények. [Heller és mtsai](https://academic.oup.com/ije/article/31/5/1061/745823) azt találták német adatokat vizsgálva, hogy azokon a szülészeteken, ahol évi 500-nál kevesebb szülést vezetnek, 3,5-szer (!) akkora az újszülött-halandóság mint ahol több mint 1500 szülés van. (Emlékeztetek rá, hogy van olyan magyar kórház, ahol szülészet-nőgyógyászati ellátásból _összesen_ alig van 500, nemhogy szülésből.) Több vizsgálat megerősítette, hogy az anyai komplikációknál is hasonló a helyzet. Ilyen szempontból kifejezetten érdekes [Kozhimannil és mtsai](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-0035-1570380) amerikai kutatása, amelyben külön is nézték az intézményeket típus szerint. A mi kérdéskörünkhoz legközelebb álló "városi, de nem oktató" kategóriában (alsó harmad: kevesebb mint 650 szülés, középső harmad: 650-1400 szülés, felső harmad: több mint 1400 szülés évente) azt találták, most csak a statisztikailag szignifikáns eredményeket idézem, hogy a közepes intézményekben 19%-kal, a kis intézményekben 39%-kal nagyobb a postpartum vérzés esélye, mint a nagy intézményekben, a vérátömlesztés-igény a közepesekben 18%-kal nagyobb esélyű, a kicsikben 24%-kal, továbbá a közepes intézményekben a súlyos gátsérülés esélye is 8%-kal nagyobb mint a nagy intézményekben (és mindössze egy ellentétes adat van, a magzatburok-gyulladás ritkább a közepesekben). A sort lehetne folytatni, vannak ellentétes eredmények, ha jóval kisebb számban is, de a meta-analízisek a fenti konklúziót erősítik meg, a nagy kockázatú szülések esetén egyértelműen ([Obladen](https://www.thieme-connect.com/products/ejournals/abstract/10.1055/s-2007-960745)), de a kis kockázatúak esetében is efelé mutatnak az eredmények ([Walther és mtsai](https://bmcpregnancychildbirth.biomedcentral.com/articles/10.1186/s12884-021-03988-y)).
 
-Nem tudok ilyen jellegű magyar kutatásról mint az előbbiek -- miközben ez alapvető fontosságú lenne a hazai szülészeti ellátás minőségének a javításához. Ebben az az igazán szomorú, hogy minden adat és módszertani tudás rendelkezésre állna ehhez Magyarországon is, egyedül szándék kérdése lenne, hogy a kérdést empirikus alapon, itthon is megvizsgáljuk és az eredményeket transzparensen közöljük. Tegyük hozzá, hogy egyedülállóan büszkék lehetnénk arra, hogy -- Tauffer Vilmosnak köszönhetően -- a világviszonylatban is párját ritkító adatgyűjtést [folytatunk](http://medicalonline.hu/cikk/a_szuleszeti__adatszolgaltatas_helyzete_hazankban), 1931 óta. Ehhez képest ott tartunk, hogy hétköznapi halandó számára feldolgozható formában lényegében semmilyen információ nem érhető el ebből, a Tauffer-statisztika honlapján a legfrissebb összefoglaló jelentés 2009-es (!) és egyébként [így néz ki](http://193.225.50.35/dokumentum/S2009/tauffer_stat.ppt). Mindezt 2022-ben.
+Nem tudok ilyen jellegű magyar kutatásról mint az előbbiek -- miközben ez alapvető fontosságú lenne a hazai szülészeti ellátás minőségének a javításához. Ebben az az igazán szomorú, hogy minden adat és módszertani tudás rendelkezésre állna ehhez Magyarországon is, egyedül szándék kérdése lenne, hogy ezt empirikus alapon, itthon is megvizsgáljuk és az eredményeket transzparensen közöljük. Tegyük hozzá, hogy egyedülállóan büszkék lehetnénk arra, hogy -- Tauffer Vilmosnak köszönhetően -- a világviszonylatban is párját ritkító adatgyűjtést [folytatunk](http://medicalonline.hu/cikk/a_szuleszeti__adatszolgaltatas_helyzete_hazankban), 1931 óta. Ehhez képest ott tartunk, hogy hétköznapi halandó számára feldolgozható formában lényegében semmilyen információ nem érhető el ebből, a Tauffer-statisztika honlapján a legfrissebb összefoglaló jelentés 2009-es (!) és egyébként [így néz ki](http://193.225.50.35/dokumentum/S2009/tauffer_stat.ppt). Mindezt 2022-ben.
 
 Nagyobb újszülött-halandóság, gyakoribb postpartum vérzés, gyakoribb súlyos gátsérülés -- csak annyit kérdeznék: megérte, hogy közel van?
 
@@ -252,13 +158,13 @@ Félreértés ne essék, ez egy nagyon érzékeny, sok helyen összekötött ren
 
 (Valójában ez sem ilyen egyszerű. Az a gond, hogy van még egy szempont: a korábbiban említett nagy hatalmú szereplők igen komoly kapacitással és rutinnal rendelkeznek abban, hogy "rendben, csak dolgozzunk ki előbb minden részletet" jelszó alatt valójában elszabotálják az egészet, úgyhogy néha igenis jobb -- a betegeknek is! -- az egy lépcsőben történő bevezetés majd később finomítás stratégiája. Sokszor muszáj elkezdeni, ha nagyjából megvan a terv, aztán a hibákat menet közben javítani, mert ha már eleve is tökéletesre akarunk mindent megtervezni, akkor az egyrészt lehetetlen, másrészt ha megpróbáljuk, akkor még 10 év múlva is csak tervezni fogunk. Hogy így viszont zavarok lesznek egy ideig? Igen. Hogy ebbe emberek fognak belehalni? Igen. Csak míg a jelenlegi állapotba _minden nap_ emberek halnak bele, _csak értük senki nem emel szót_, addig az átalakításba csak addig, amíg nem érünk a végére, és utána már _kevesebben_ fognak meghalni.)
 
-És még egyetlen gondolat ehhez. Emlékszik az olvasó, hogy melyik volt a legkisebb forgalmú szülészet? A Mezőtúri Kórház. Namost, ha az ember felmegy a Nemzeti Népegészségügyi Központ (NNK) honlapjára, akkor megtalálja [azt a részt](https://www.nnk.gov.hu/index.php/egeszsegugyi-igazgatasi-foosztaly/nyilvantartasok/ellatasi-teruletek-nyilvantartasai/kijeloles), ami az úgynevezett kijelölő határozatokat tartalmazza: az NNK akkor ad ki ilyet, ha egy kórház valamilyen okból akadályozott egy tevékenységének elvégzésében (és ekkor kijelöl helyette másikat). És ha megnézzük ezt jobban, akkor mit látunk? Azt, hogy a Mezőtúri Kórház előbb 2022. június 10., 11., 12. és 14. napokra [mondta le](https://www.nnk.gov.hu/attachments/article/446/6517-4-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20Rendel%C5%91%20-%20Kijel%C3%B6l%C3%A9s.pdf) a szülészeti ügyeletet (a kórház indoklása: "aneszteziológus szakorvos hiánya"), aztán lemondta 21., 23., 28., 29. és 31. [napokra is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20-%20Kijel%C3%B6l%C3%A9s.pdf), (indoklás: "aneszteziológus szakorvos hiánya"), majd végül július 1-3., 5., 8-10., 12-17., 19-21., 26. és 28. [napokra is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20%C3%A9s%20Rendel%C5%91int%C3%A9zet%20-%20Kijel%C3%B6l%C3%A9s.pdf) lemondta (indoklás: "aneszteziológus szakorvos hiánya"). De szerencsére van szülészet Mezőtúron, ez a lényeg!
+És még egyetlen gondolat ehhez. Emlékszik az olvasó, hogy melyik volt a legkisebb forgalmú szülészet? A Mezőtúri Kórház. Ha az ember felmegy a Nemzeti Népegészségügyi Központ (NNK) honlapjára, akkor megtalálja [azt a részt](https://www.nnk.gov.hu/index.php/egeszsegugyi-igazgatasi-foosztaly/nyilvantartasok/ellatasi-teruletek-nyilvantartasai/kijeloles), ami az úgynevezett kijelölő határozatokat tartalmazza: az NNK akkor ad ki ilyet, ha egy kórház valamilyen okból akadályozott egy tevékenységének elvégzésében (és ekkor kijelöl helyette másikat). És ha megnézzük ezt jobban, akkor mit látunk? Azt, hogy a Mezőtúri Kórház előbb 2022. június 10., 11., 12. és 14. napokra [mondta le](https://www.nnk.gov.hu/attachments/article/446/6517-4-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20Rendel%C5%91%20-%20Kijel%C3%B6l%C3%A9s.pdf) a szülészeti ügyeletet (a kórház indoklása: "aneszteziológus szakorvos hiánya"), aztán lemondta 21., 23., 28., 29. és 31. [napokra is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20-%20Kijel%C3%B6l%C3%A9s.pdf), (indoklás: "aneszteziológus szakorvos hiánya"), majd végül július 1-3., 5., 8-10., 12-17., 19-21., 26. és 28. [napokra is](https://www.nnk.gov.hu/attachments/article/446/6517-6-2022_Mez%C5%91t%C3%BAri%20K%C3%B3rh%C3%A1z%20%C3%A9s%20Rendel%C5%91int%C3%A9zet%20-%20Kijel%C3%B6l%C3%A9s.pdf) lemondta (indoklás: "aneszteziológus szakorvos hiánya"). De szerencsére van szülészet Mezőtúron, ez a lényeg!
 
 Külön bája (?) a történetnek, hogy mindeközben a szolnoki Hetényi Géza Kórháznak, amit az NNK kijelölt a mezőtúri helyett, összesen _öt_ különböző akadályoztatás miatti kijelölő határozata van ezen a területen, ugyanis a Hetényi május 21-22., június 3-5., 8., 11., 13., 17-18., 22-23., 27., 29-30., július 1-4., 9-10., 15-16., 19., 23., 31. napjaira lemondta a szülőszobai ügyeletet és a hozzá kapcsolódó újszülött ellátást (az indoklás minden esetben: "személyi feltételek átmeneti hiánya", magyarán minden bizonnyal szülész-nőgyógyászuk nincsen), valamint július 1-től meghatározatlan ideig lemondta a csecsemő intenzív ellátást is (indoklás: "szakdolgozó hiány").
 
 Így előáll az az egészen hihetetlen helyzet, hogy van két kórház, egymástól 50 km-re, amelyek egyike sem tud teljes szülészetet adni, mert az egyikben van szülész-nőgyógyász, de nincs aneszteziológus, a másikban van aneszteziológus, de nincs szülész-nőgyógyász, de a politikának _még ez is jobb_, minthogy legyen egyetlen kórház, ami viszont cserében esetleg mondjuk működik is. Mert, ugye, ahhoz valamit be kellene zárni.
 
-Ne legyenek illúziónk arról, hogy ebbe a helyzetbe nem halnak-e bele emberek. (Csak arra reflektálva, hogy egy átalakítás egy ideig káosszal jár.) Az NNK honlapján e pillanatban 225 kijelölő határozat van 2022-ből.
+Ne legyenek illúziónk arról, hogy ebbe a helyzetbe nem halhatnak-e bele emberek. (Csak arra reflektálva, hogy egy átalakítás egy ideig káosszal jár.) Az NNK honlapján e pillanatban 225 kijelölő határozat van 2022-ből.
 
 (Hogy akkor most összeomlott a magyar egészségügy? Népszerű toposz az egészségügy összeomlása, általában az aktuális ellenzék prognosztizálja ezt jövőre. Én emlékszem arra is, hogy 2006-ban fog jövőre összeomlani az egészségügy, most is jövőre fog összeomlani az egészségügy. Nem, az egészségügy -- nagyon extrém esetektől eltekintve -- nem tud összeomlani. _Valahogy_ fog működni, bármi történik, "maximum" emberek rosszabb, vagy sokkal rosszabb ellátást kapnak, mint lehetne.)
 
@@ -527,7 +433,7 @@ Az angoloknál annak is kialakított módszertana van, hogy az egyes orvosok egy
 
 Egy mondatban összefoglalva: meg kell érteni a minőségi fogalmát az egészségügyi ellátás keretében, azonosítani kell a területeit, lefordítani mindezt konkrét mutatókra, megkezdeni azok szisztematikus mérését, a megfelelő statisztikai eszközökkel korrigálni a betegjellemzőkre (amiket tehát szintén mérni kell), és ez alapján objektív teljesítményjellemzőket kell számolni, majd azokat transzparensen közölni. Meggyőződésem, hogy e nélkül nehezen képzelhető el az egészségügy igazán hatékony, lehetőségeinket kihasználó fejlesztése, viszont másik oldalról mindez nem lenne nehéz: az adatok összegyűjtése -- pláne a mai informatikai lehetőségek mellett -- sokkal inkább szándék, semmint pénz kérdése, módszertani oldalról pedig minden adott, a megoldások léteznek, csak alkalmazni kell őket.
 
-Magyarországon nagyon kevés példa van a fenti folyamatra, jószerével az egyetlen amit fel tudok idézni, mint ami megpróbált átfogó lenni és az eredményeit is transzparensen közzétette a nyilvánosságnak, az az egykori Egészségbiztosítási Felügyelet [indikátorrendszere](https://web.archive.org/web/20100821180551/http://ebf.hu/letoltes/Indikator2010_gyorsjel_v1.0.pdf), mely nagyon jó első lépés volt: [bárki számára elérhetően](https://web.archive.org/web/20090805125845/http://indikator.ebf.hu:80/) tartalmazta az intézmények indikátorait, szakterületenként lebontva (például kardiológiához 55 indikátor volt, szülészethez 80 stb.), szűrhetően régió, település és intézmény alapján, teljesen testreszabhatóan (még saját indikátorrendszert, vagy egyéni rangsort is lehetett gyártani). De mértek struktúra jellegű indikátorokat is, vizsgálták az egészségügyi dolgozók helyzetét, figyeltek betegbiztonsági mutatókat, a kórházi minőségfejlesztés működését; összesen [791 indikátort](https://www.imeonline.hu/tmp/c89995380b79be07c0074b8d3eb73a34.pdf) definiáltak, mértek és közöltek transzparensen.
+Magyarországon nagyon kevés példa van a fenti folyamatra, jószerével az egyetlen amit fel tudok idézni, mint ami megpróbált átfogó lenni és az eredményeit is transzparensen közzétette a nyilvánosságnak, az az egykori Egészségbiztosítási Felügyelet [indikátorrendszere](https://web.archive.org/web/20100821180551/http://ebf.hu/letoltes/Indikator2010_gyorsjel_v1.0.pdf), mely nagyon jó első lépés volt: [bárki számára elérhetően](https://web.archive.org/web/20090805125845/http://indikator.ebf.hu:80/) tartalmazta az intézmények indikátorait, szakterületenként lebontva (például kardiológiához 55 indikátor volt, szülészethez 80 stb.), szűrhetően régió, település és intézmény alapján, teljesen testreszabhatóan (még saját indikátorrendszert, vagy egyéni rangsort is lehetett gyártani). De mértek struktúra jellegű indikátorokat is, vizsgálták az egészségügyi dolgozók helyzetét, figyeltek betegbiztonsági mutatókat, a kórházi minőségfejlesztés működését; összesen [791 indikátort](https://www.imeonline.hu/article.php?article=2011._X./98/az_interneten_elerheto_minosegugyi_informaciok_szerepe_a_betegtajekoztatasban_tanulsagok_a_minosegi_indikatorrendszer_eddigi_mukodese_alapjan) definiáltak, mértek és közöltek transzparensen.
 
 Az EBF-et 2007-ben hozták létre, 2010 nyarán megszüntették -- miután előtte az akkori ellenzék, erre az egy példára konkrétan is emlékszem, "kismamák ultrahang nélkül" szalagcímeket futtatott, melyben az _EBF adatai alapján_ mutatták be, hogy hány terhesgondozóban nincs ultrahang. Majd ezek után hatalomra kerültek, és azonnal megszüntették az EBF-et. Anélkül, hogy bárki átvette volna az indikátorrendszeri funkcióit. (Még arra is volt gondjuk, hogy a honlapját is felszámolják, hogy még nyoma se maradjon meg annak, hogy egyszer valaha ilyen indikátorrendszer létezett Magyarországon. Valószínűleg már nem vagyunk sokan, akik egyáltalán emlékeznek arra, hogy a teljesítménymérés hiánya, a transzparencia hiánya nem valamiféle leküzdhetetlen átok a világ ezen táján, és hogy ebben az országban megvan a tudás, a tehetség, a szorgalom és a lelkesedés, hogy egy ilyen rendszer létrejöjjön, és szolgálja a magyar egészségügy fejlődését. Csak kell hozzá a politika támogatása.)
 
@@ -622,3 +528,126 @@ Remélem, hogy a fenti sorok két -- csak első ránézésre ellentétes -- dolo
 (Az írás a 2022. augusztus 5-én érvényes állapotot tükrözi.)
 
 A [szerző](http://www.medstat.hu/) klinikai biostatisztikus, orvosbiológiai mérnök. A fent leírtak teljes egészében a magánvéleményét képviselik.
+
+## Függelék
+
+### Technikai részletek
+
+Első lépésben kézzel letöltöttem a NEAK honlapjáról az egyes évek adatait (ki kell csomagolni egy `zip` fájlból; a régiek `doc` formátumban vannak meg), majd minden egyes év adatát kézzel átmentettem `docx` formátumban. (Ennek nagy jelentősége nincsen, csak a később használt `R` csomag a `docx` formátumot tudja minden további nélkül kezelni.)
+
+Az adatok feldolgozásához a `docxtractr` nevű R csomag jelenti a megoldást, ez be tud olvasni `docx` formátumú fájlt, sőt, ki tudja belőle szedni a táblázatokat (akár egyszerre az összeset, egy listában), ráadásul még azt is jól tudja kezelni, hogy egy táblázat több oldalon keresztül folytatódik.
+
+Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az mit is csinál:
+
+```{r}
+if(!file.exists("res.rds")) {
+  headernames <- c("Korhaz", "SzakmaKod", "SzakmaMegnev", "OsszesAgy",
+                   "MukodoIAgy", "MukodoIIAgy", "TartoSzuneteloAgy",
+                   "OsszesAtlagAgy", "MukodoAtlagAgy", "ElbocsatottBetegSzam",
+                   "EltavozottBetegSzam", "MasOsztalyBetegSzam", "MeghaltBetegSzam",
+                   "EgynaposEsetSzam", "TeljesithetoApolasiNapSzam",
+                   "TeljesitettApolasiNapSzam", "ApolasAtlTartam", "Agykihasznalas",
+                   "Halalozas")
+  
+  files <- list.files("./doc/")
+  
+  res <- rbindlist(lapply(files, function(file) {
+    yr <- regmatches(file, gregexpr("\\d{4}", file))[[1]]
+    
+    doc <- docxtractr::read_docx(paste0("./doc/", file))
+    
+    res <- docxtractr::docx_extract_all_tbls(doc)
+    res <- lapply(res, as.data.table)
+    
+    FenntartoTablaNum <- which(sapply(res, function(x)
+      names(x[1,1]))==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás.fenntartónként", yr, "..év"))
+    
+    Fenntartok <- data.table(Fenntarto = res[[FenntartoTablaNum]][[1]],
+                             KorhazRovid = res[[FenntartoTablaNum]][[1]])
+    Fenntartok[nchar(Fenntartok$Fenntarto)==4]$Fenntarto <- NA
+    Fenntartok <- tidyr::fill(Fenntartok, Fenntarto)
+    Fenntartok <- Fenntartok[!is.na(Fenntarto)&!is.na(KorhazRovid)]
+    Fenntartok <- Fenntartok[nchar(KorhazRovid)==4]
+    
+    res <- res[sapply(res, function(x)
+      names(x[1, 1])==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás", yr, "..év")&
+        substring(x[1, 1], 1, 4)%in%Fenntartok$KorhazRovid)]
+    
+    res <- rbindlist(lapply(1:length(res), function(i) {
+      firstactive <- grep("Aktív", res[[i]][[2]], ignore.case = TRUE)[1]
+      firstchronic <- grep("Krónikus", res[[i]][[2]], ignore.case = TRUE)[1]
+      if(firstactive>firstchronic) NULL else
+        setNames(cbind(res[[i]][1,1], res[[i]][6:(firstactive-1),]), headernames)
+    }))
+    
+    for(i in headernames[-(1:3)]) res[[i]] <- as.numeric(stringr::str_replace_all(
+      res[[i]], c("," = ".", "[[:space:]]" = "")))
+    
+    res$Ev <- as.integer(yr)
+    
+    res$KorhazRovid <- substring(res$Korhaz, 1, 4)
+    merge(res, Fenntartok, by = "KorhazRovid")
+  }))
+  
+  res <- res[order(Ev)]
+  res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
+                        substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
+  
+  saveRDS(res, "res.rds")
+} else res <- readRDS("res.rds")
+```
+
+A következő kommentárok tartoznak a fentiekhez:
+
+- A fenntartó azt jelenti, hogy milyen típusú fenntartója van az intézménynek (központi, önkormányzati, egyházi stb.). Ezt tulajdonképpen hagyhatnánk is, de bizonyos elemzéseknél jól jön, ha ki tudjuk zárni az elég atipikus intézményeket (pl. vállalkozások által fenntartott intézményeket, melyek jellemzően nulla ágyszámmal csak egynapos ellátást nyújtanak), úgyhogy érdemes lehet nem veszni hagyni. Ha viszont e mellett döntünk, akkor kicsit küzdeni kell. A dokumentumok jellemzően az elején (de még az sem egységes, hogy melyik táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a sorszámot) közlik a fenntartókat, de nagyon szerencsétlen formátumban: egy oszlopban van a fenntartó és az intézmény. Ezt úgy kell elképzelni, hogy először szerepel az "önkormányzati eü. intézmény" kifejezés, majd utána jönnek az ilyen fenntartójúak azonosítói, aztán egy "központi eü. intézmény" szó, majd sorakoznak ezek kódjai stb., ráadásul közben még összegzősorok is vannak. A problémát egy trükkel oldjuk meg: ezt az oszlopot kétszer egymás mellé másoljuk, majd az egyik oszlopból kitöröljük azokat az értékeket, amik nem 4 hosszúak. Ezzel magyarul kitöröltük a kórházak azonosítóit, és meghagytuk a felirat-szövegeket. (A dolgot az teszi lehetővé, hogy a kórház azonosító mindig 4 karakter, viszont a feliratok reményeim szerint soha.) Ezt következően a kiüresített helyekre lehúzzuk fentről az utolsó szöveget -- a `tidyr::fill` pont ezt teszi -- így végeredményben egymás _mellé_ kerültek, ahogy arra szükségünk van, a fenntartók és a kódok. Nincs más dolgunk, mint kitörölni a felesleges sorokat, azaz a feliratok és az összegző-sorokat, de ezt könnyen megtaláljuk azáltal, hogy ezeknél a kód oszlop nem 4 hosszúságú.
+- A rengeteg táblázatból meg kell keresni azt az egyetlen kombinációt, ami érdekel minket: az intézményre lebontott táblákat. Az ilyeneket két feltétellel azonosítjuk: egyrészt a bal szélső oszlop neve adott értékű mindig, másrészt leellenőrizzük, hogy a bal felső cellában -- elvileg itt kell a kórház azonosítója szerepeljen -- a megadott négyjegyű kód tényleg valódi kórházazonosító-e. (Ezeket az azonosítókat az előző lépésnek köszönhetően már ismerjük.)
+- A következő probléma az aktív és krónikus ellátások elkülönítése. A 2012 és azt követő évek táblázataiban nincsen probléma, ezeknél ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód, így nyugodtan legyűjthetjük "ész nélkül" az összes megfelelő táblázatot, maximum a végén elhagyjuk azokat, ahol nincs szakmakód. A probléma az, hogy 2012 előtt nem követték ezt a szabályt, és a krónikus ellátást végző szakmák mellett is fel volt tüntetve a szakmakód. Ez azért gond, mert ezek a kódok átfednek az aktív szakmák kódjaival, sőt, akár még egy kórházon belül is előfordulhat mindkettő (például 2011-ben a Szt. Imre Kórháznak volt 18-as szakmakódú pszichiátriából aktív _és_ krónikus ellátása is). De az sem jó megoldás, hogy elkezdjük legyűjteni a sorokat addig, amíg van szakmakód, mert van olyan kórház, amiben egyáltalán nincs aktív ellátás. Végül azt a megoldást találtam ki, hogy megkeressük az "aktív" és a "krónikus" szavak előfordulását (ezek az összegző-sorokban biztosan szerepelnek). Ha az "aktív" szó csak a "krónikus" után van, akkor nincs aktív ellátás (a szó az "aktív és krónikus összesen" nagy összegző sorban szerepelt), ezt az intézményt átugorhatjuk, ha nem, akkor a kettő _közötti_ sorokat kell kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed ki.
+- A számokat tartalmazó sorokban szóköz az ezres elválasztó, tizedevessző a tizedesjelölő, az előbbieket el kell távolítani, az utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a `gsub`).
+- Szerencsére az oszlopok sorrendje és tartalma végig ugyanaz (ezt tartalmazza a `headernames` változó).
+- A kórház kódja szerencsére mindig a nevének az első négy karaktere.
+
+A fentiek végén megkapjuk a kialakítani tervezett táblázat első változatát. Mindenek előtt végezzünk rajta pár adatvalidációt.
+
+Egyedi kórháznévből összesen `r length(unique(res$Korhaz))` van, de ez valójában nem jelöl ennyi kórházat, hiszen sok kórház neve változott az évek alatt. A rekord `r max((table(substring(unique(res$Korhaz), 1, 4))))`: összesen `r sum((table(substring(unique(res$Korhaz), 1, 4)))==max((table(substring(unique(res$Korhaz), 1, 4)))))` kórház is van, aminek ennyi különböző neve volt 2003 és 2021 között. Szerencsére gyors átfutás alapján az adatok rendben vannak, azaz ugyanahhoz a kód ténylegesen ugyanaz a kórház tartozik (még ha a neve változott is). Így a kód megfelelő azonosító.
+
+Nézzük most a szakmákat:
+
+```{r}
+knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
+  order(V1), .(`Szakmakód` = V1, `Szakma megnevezése` = V2)])
+```
+
+Amint látható, itt már van egy kis kavarodás, de egy kivételtől eltekintve nem szó szerinti gond, csak a szakma megnevezése nem volt egységes. Az egyetlen kivétel a 17-es kód, itt tényleges gikszer van: 2003-tól 2011-ig ezt a "Felvételi osztály" szakmára használják, utána viszont egy durva hiba történik, mert _ugyanazt_ a kódot kiosztják egy teljesen más szakmának ("Arc-, állcsont- és szájsebészet"). A 17-es kód tehát bizonytalan, a megnevezés mindenesetre használható.
+
+Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes legyen), illetve egy szakmanevet lerövidítünk, hogy jobban kiférjen az ábrákon:
+
+```{r}
+<<atnevezesek>>
+```
+
+Ezek után már a megnevezés aggálytalanul használható.
+
+Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint feldolgozható formában is lementeni az adatokat:
+
+```{r}
+fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
+openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
+```
+
+A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor kizárjuk a vizsgálatokból:
+
+```{r}
+<<specek>>
+```
+
+(Még így is nagyon sok pl. rendelőintézet belekerül a listánkba, de ezek könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
+
+Most már nekiláthatunk az elemzésnek! Ahogy mondtam is, a dolog inkább illusztratív lesz, de remélem néhány érdekes dolgot meg fogok tudni mutatni. Az adatok feldolgozásához a `data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
+
+### Adatvalidáció
+
+Az egyik változó, ami más adatokkal validálható, az ágykihasználás. Az egyszerűség kedvéért vegyünk egy konkrét példát: 2021-ben a hatvani Albert Schweitzer Kórház (1035) 15-ös kódú intenzív osztályán az ápolás átlagos időtartama `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam` nap volt. Ez azt jelenti, hogy ha abban a pillanatban, hogy felszabadult egy ágy, azonnal új beteg került rá, egy év alatt összesen 365/`r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam` = `r round(365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` beteget tudtak ellátni. Mivel az évben átlagosan `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy` ágyuk volt, ez összesen `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy` &middot; `r round(365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` = `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy*365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam, 1)` beteg. Igen ám, de közben a tényleges betegforgalom `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam` beteg volt! (Az elméleti maximum `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam/(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$MukodoAtlagAgy*365/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ApolasAtlTartam), 1)`-szerese!) Ezt -- intenzív osztályról lévén szó nem meglepő módon -- az egynapos ellátás sem tudja megmagyarázni, ilyen ugyanis nem volt.
+
+Nem tudom a jelenség magyarázata mi lehet, kézenfekvőnek tűnik, hogy a koronavírus-járvány miatt került ide sok beteg, nagyobb ágyszámon, de ha így van, akkor meg az átlagos ágyszám adata hibás, hiszen annak _elvileg_ tükröznie kell az egész évben történt változásokat (ennek a definíciója ugyanis a kimutatás szerint: "kórházi ágyak számának a tárgyév során bekövetkezett változásait is tükröző súlyozott átlaga"). Érdekes azt is megjegyezni, hogy igazából már az átlagos ápolási időtartam sem stimmel (vagy jobban mondva legalábbis nem konzisztens a többi adattal): a NEAK [definíciója szerint](http://site.oep.hu/statisztika/2011/pdf/hun/Fekvobeteg_modszertan_2011.pdf) ez aktív ellátás esetén "a teljesített ápolási napok száma osztva az osztályokról elbocsátott betegek számával", jelen esetben `r format(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$TeljesitettApolasiNapSzam, scientific = FALSE)` / `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam` = `r round(res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$TeljesitettApolasiNapSzam/res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$ElbocsatottBetegSzam, 2)`, ami nem egyezik pontosan a táblázatban szereplő értékkel. (Ez az apró eltérés az oka annak, hogy a fenti kiszámolt hányados nem egyezik pontosan a táblában közölt ágykihasználással, ami `r res[Ev==2021&KorhazRovid=="1035"&SzakmaKod=="15"]$Agykihasznalas`%, mindenesetre ez is bőven 100% feletti.) A dolog nem egyedi, összesen `r nrow(res[MukodoAtlagAgy>0&365/ApolasAtlTartam*MukodoAtlagAgy<EltavozottBetegSzam])` példa van ilyen adatra. Egyáltalán nem csak a koronavírus-járvány éveiről van szó, jó kérdés tehát, hogy mi lehet a magyarázat...
+
+Ha már említettük az egynapos ellátást, érdemes arra is ránézni. Itt is hozok konkrét példát: 2011-ben a László Kórház (0109) 07-es szakmakódú szemészete nem rendelkezett egyetlen ággyal sem, mégis elbocsátott `r res[Ev==2021&KorhazRovid=="0109"&SzakmaKod=="07"]$ElbocsatottBetegSzam` beteget. Ez nem meglepő, mert egynapos ellátást nyújtott -- igen ám, csak az egynapos ellátási események száma `r res[Ev==2021&KorhazRovid=="0109"&SzakmaKod=="07"]$EgynaposEsetSzam` volt. A különbség nem nagy, talán csak banális adminisztrációs hibáról van szó, mindenesetre a teljes adatbázisban `r nrow(res[MukodoAtlagAgy==0&ElbocsatottBetegSzam>EgynaposEsetSzam])` esetben fordul elő, hogy működő ágy nélkül osztályok több beteget bocsátottak el, mint ahány egynapos esetük volt.
