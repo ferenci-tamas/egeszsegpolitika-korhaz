@@ -141,7 +141,7 @@ Két ilyen ellenőrzési lehetőséget találtam:
 Sajnos a fenti jelenségekre nem találtam magyarázatot.
 
 Mivel ez most számunkra nem kulcsponti kérdés, a részleteket és az
-eredményeket [a függelékben](adatvalidáció-1) közlöm.
+eredményeket [a függelékben](#adatvalidáció-1) közlöm.
 
 ## Betegforgalmi adatok
 
