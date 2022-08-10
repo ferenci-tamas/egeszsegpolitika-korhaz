@@ -26,6 +26,68 @@ Korábbi írásaim:
 
 ------------------------------------------------------------------------
 
+A magyar egészségügyi rendszerrel, ezen belül is a fekvőbeteg-ellátással
+foglalkozó írások, döntések, viták visszatérő kérdése az
+ágyszám-csökkentések, kórházbezárások ügye. Engem – mezei
+állampolgárként és a magyar egészségügyben dolgozó emberként is – mindig
+érdekelt ez a kérdés, többé-kevésbé én is követtem ezeket a vitákat,
+olvastam ezeket az írásokat, és volt véleményem is, de egy ponton
+felmerült bennem, hogy lehet-e erről a kérdésről *adatok alapján* is
+nyilatkozni? Megpróbálhat-e az ember tényekre alapozva, ha nem is
+perdöntő választ adni (mert ez nagyon sokszor értékválasztás kérdése
+is), de legalábbis támpontot szerezni? Igaz-e, hogy Magyarországon túl
+sok kórház van, és be kellene zárni közülük? Vajon tényleg túl kis
+esetszámmal működnek osztályok? Valóban szükség lenne az ágyszám
+csökkentésére? Tényleg túl kevés az orvos Magyarországon? (Mint látni
+fogjuk, sokkal inkább az a kérdés, hogy túl kevés-e az ápoló.) Érdekelni
+kezdett, hogy mit mutatnak az adatok e kérdések kapcsán.
+
+Az adatokon alapuló megközelítéssel sajnos elég hamar elakadtam:
+Magyarországon a kórházak működéséről – sajnos egyáltalán nem [példátlan
+módon](https://github.com/tamas-ferenci/GondolatokAJarvanyugyiAdatokKozleserol)
+– kevés nyilvános információ érhető el, különösen más, nyugati
+országokkal összevetve. Létezik ugyan egy évente közzétett, úgynevezett
+ágyszám- és betegforgalmi kimutatás, ami bár kevés információt
+tartalmaz, de szerencsére ehhez a kérdéshez pont nagyon jól jönne – csak
+ezt sajnos szinte feldolgozhatatlan formában közlik (300 oldalas
+szövegfájl, össze-vissza széttördelt táblázatokkal).
+
+Éppen ezért célul tűztem ki, hogy e kimutatások adatait feldolgozzam,
+összefűzzem (2003-ig sikerült visszamennem az időben) és további
+elemzésre alkalmas formátumban, nyilvánosan közzétegyem. A legkevésbé
+sem titkolt célom ezzel, hogy további kutatásokat inspiráljak, és tegyek
+lehetővé ezáltal.
+
+Miután az adatok feldolgozhatóvá váltak, elvégeztem – mintegy példaként
+is – néhány egyszerű elemzést, melyek a fenti kérdések körül
+csoportosulnak: tényleg sok kórház van? Tényleg sok osztály van? Tényleg
+vannak túl kis osztályok? Az így elemezhetővé tett adatbázisnak
+köszönhetően már meg tudom próbálni az e kérdések kapcsán releváns
+tények bemutatását, majd – ahol szükséges, felvetve pár szempontot a
+szakirodalomból és nemzetközi összehasonlítást téve – megpróbálom
+megadni a saját válaszaimat e kérdésekre.
+
+Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E
+mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis,
+de igen komoly félreértések forrása is lehet. A magyar egészségügy egyik
+nagy problémája véleményem szerint a transzparens teljesítménymérés
+szinte teljes hiánya; ebben tűnhet segítségnek ez az adat. Írásomban
+megmutatom, hogy valójában miért nem ilyen egyszerű a helyzet, de azt
+is, hogy mire lehet mégis felhasználni ezeket a számokat; ki fog jönni
+pár nagyon is érdekes eredmény.
+
+Röviden érintem az ágyszámkihasználás és az átlagos ápolási idő kérdését
+is, melyek lehetővé tesznek néhány egyszerű adatvalidációt: találunk
+olyan adatokat a kimutatásban, amik matematikailag lehetetlennek tűnnek.
+
+Mindezzel a munkával szeretnék hozzájárulni a racionális, adatokon
+alapuló diskurzushoz a magyar egészségpolitikában. Hitem szerint ez a
+hozzáállás javítja a közbeszéd minőségét és hozzájárulhat a
+döntéshozatal jobbításához.
+
+Munkámat transzparensen, mindent részletében reprodukálhatóan közlöm a
+következőkben.
+
 ## A GYÓGYINFOK/OEP/NEAK kórházi ágyszám- és betegforgalmi kimutatása
 
 A járványügyi adatok kapcsán korábban [már írtam
