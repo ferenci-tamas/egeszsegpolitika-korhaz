@@ -96,15 +96,8 @@ hogy milyen a magyar adatközlési – vagy inkább adat nem közlési… –
 rendszer, és hogy ez milyen iszonyatos károkat okoz véleményem szerint
 az egész magyar népegészségügynek. Sajnos a transzparencia hiánya, az
 adatok visszatartása közel nem csak a járványügyre igaz a magyar
-egészségügyön belül; ennek egy másik példájáról fogok most írni.
-Érinteni fogom a kórházak ágyszám- és betegforgalmi adatait, az
-ágykihasználást, valamint a halálozást, ez utóbbi kapcsán hangsúlyosan
-kitérek arra a sok helyen elmondott állításomra is, hogy a magyar
-egészségügy egyik alapvető problémája a transzparens teljesítménymérés
-szinte teljes hiánya.
-
-A másik, most vizsgált aspektus ugyanis a kórházakra vonatkozó
-adatközlés lesz.
+egészségügyön belül; ennek egy másik példájáról fogok most írni: a
+kórházakra vonatkozó adatközlésről.
 
 A nagyon kevés, nyilvánosan elérhető, kórházak működésére és
 teljesítményére vonatkozó magyar adatforrás egyike az ún. ágyszám- és
