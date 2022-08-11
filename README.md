@@ -1634,15 +1634,20 @@ racionalitását illetően. Elmondható minden, amit korábban elmondtam, ott
 éppen a nagyon pici szülészetek példáján, de van még egy további
 szempont, amit viszont itt érdemes megemlíteni: az, hogy egy kórházban,
 egy osztályon egy sor dolog van, ami fix tényező, azaz nem skálázódik a
-betegek számával. Hiába is jönne ki a szülések száma alapján, hogy elég
-0,1 aneszteziológus, mindenképp kelleni fog 1, bizonyos műszerekből és
-berendezésekből mindenképp kell legalább egy darab, akár kétnaponta van
-egy szülés akár naponta van 50. Ezért az ágyszám-csökkentésnél könnyen
-lehet, hogy érdemesebb komplett osztályokat, vagy akár komplett kórházat
-bezárni: ha van 10 darab 1000 ágyas kórházunk, és meg kell szünteti 1000
-ágyat, akkor egy bezárása helyett mindegyikből bezárva 100 ágyat, akár
-még az is lehet, hogy annál is rosszabb helyzetbe kerülünk, mint ahonnan
-indultunk. Persze így megmarad 10 kórházigazgató pozíciója és mind a 10
+betegek számával. Bizonyos műszerekből és berendezésekből mindenképp
+kell legalább egy darab, akár kétnaponta van egy szülés akár naponta van
+50. Kell mosoda, takarítónő, karbantartó, akárhány szülés is van. Nagyon
+fontos azonban hangsúlyoznom, hogy ez ráadásul nem egyszerűen csak pénz
+(méretgazdaságosság) kérdése: hiába is jönne ki a szülések száma
+alapján, hogy elég 0,1 aneszteziológus, mindenképp kelleni fog 1. Nagyon
+nem szerencsés az eleve limitáltan elérhető orvosokat, pláne limitáltan
+elérhető ápolókat nagyon sok kórház között, elaprózottan szétszórni.
+Mindezek miatt az ágyszám-csökkentésnél könnyen lehet, hogy érdemesebb
+komplett osztályokat, vagy akár komplett kórházat bezárni: ha van 10
+darab 1000 ágyas kórházunk, és meg kell szünteti 1000 ágyat, akkor egy
+bezárása helyett mindegyikből bezárva 100 ágyat, akár még az is lehet,
+hogy annál is rosszabb helyzetbe kerülünk, mint ahonnan indultunk.
+Persze így megmarad 10 kórházigazgató pozíciója és mind a 10
 polgármester elmondhatja a következő választási kampányban, hogy
 megvédte a helyi kórházat…
 
@@ -2115,7 +2120,7 @@ szülészet-nőgyógyászat a legegyértelműbb példák erre.
 ## Felvezető helyett kitérő: gondolatok az egészségügyi teljesítmény méréséről
 
 A magyar egészségügy egyik nagyon komoly, alapvető problémája véleményem
-szerint a *transzparens teljesítménymérés* szinte teljes hiánya. Ez egy
+szerint a *transzparens teljesítménymérés szinte teljes hiánya*. Ez egy
 teljesen külön írása tárgya lehetne, úgyhogy itt most semmi másra nem
 szorítkozok, mint néhány címszó felvetésére.
 
@@ -2131,11 +2136,20 @@ megtárgyalni. Nem arról van szó, hogy ezek az adatok feltétlenül
 pontosan tisztában kell lennünk a limitációkkal.
 
 Mielőtt belevágunk, kezdjük néhány szűkítéssel. Először is, az
-egészségügyi teljesítmény több szinten is értelmezhető: egyik végpont
-egy konkrét orvos teljesítményének a mérése, a másik az ország
-egészségügyi rendszere egészének teljesítménymérése. A kettő között is
-értelmezhető fokozat, ennek tipikus példája az, amit most fogunk
-végezni: egy kórházi osztály teljesítményének a mérése.
+egészségügyi teljesítmény több szinten is értelmezhető: egyik véglet egy
+konkrét orvos teljesítményének a mérése, a másik az ország egészségügyi
+rendszere egészének teljesítménymérése. A kettő között is értelmezhető
+fokozat, ennek tipikus példája az, amit most fogunk végezni: egy kórházi
+osztály teljesítményének a mérése. Valójában azonban egy jól működő
+egészségügyi rendszerben a teljesítményt minden szinten mérni kell:
+mérni kell az egészségügy egészének is a teljesítményét (például hogy
+más országokhoz hasonlíthassuk, és így szerezhessünk javításra vonatkozó
+ötleteket), és igen, mérni kell egyes orvosok teljesítményét is. Nem
+egyéni felelősség megállapítása céljából, hanem, hogy feltárjuk a jó és
+rossz teljesítmények rendszerszintű okait, és tudjunk intézkedéseket
+hozni a javításra. De valójában még itt sincs vége, mert még mélyebbre
+kell ásni: egy operatív osztálynál például fontos lehet
+műtét-típusonként külön-külön is mérni a teljesítményt.
 
 Sok helyen kifejtettem, itt csak megismétlem: a teljesítmény mérése
 alapvető szükséglete (lenne) annak, hogy bármiféle racionális
@@ -2232,16 +2246,20 @@ halálozási arányt mérőszámként mondjuk egy szemészeti vagy
 gyermeknőgyógyászati osztálynál (jó esetben), hanem, hogy ahol érdemi a
 halálozás, ott sem *csak* ez számít. Fontos lehet ugyanúgy a beteg
 későbbi életminősége, a fertőződési vagy reoperációs ráták, rövid- és
-hosszútávú szövődmények előfordulásai, és így tovább. Összességében véve
-tehát nem arról van szó, hogy ez jó vagy sem, hanem, hogy nem várható,
-hogy *egyetlen* mutató, legyen az bármilyen jó is, teljeskörűen le tudja
-írni a teljesítményt. És akkor még nem beszéltünk arról, hogy a
-komponensek is érdekesek lehetnek, például külön az ápolási teljesítmény
-mérése. Mindezekre vannak jól bevált megoldások, még külön nemzetközi
-szervezet is létezik ([ICHOM](https://www.ichom.org/)), mely az ilyen
-kimeneti indikátorokat vizsgálja, strukturálja és elkészíti az erre
-vonatkozó részletes, megvalósítást is támogató ajánlásait, melyeket –
-ingyen – elérhetővé is tesz (itt vannak például az ajánlásaik
+hosszútávú szövődmények előfordulásai, és így tovább. Mindezek
+természetesen csak utánkövetéssel, adott esetben különböző adatok,
+táblák összekapcsolásával határozhatóak meg; szerencsére a mai
+informatikai lehetőségek mellett ez nem jelent megoldhatatlan problémát.
+Összességében véve tehát nem arról van szó, hogy ez jó vagy sem, hanem,
+hogy nem várható, hogy *egyetlen* mutató, legyen az bármilyen jó is,
+teljeskörűen le tudja írni a teljesítményt. És akkor még nem beszéltünk
+arról, hogy a komponensek is érdekesek lehetnek, például külön az
+ápolási teljesítmény mérése. Mindezekre vannak jól bevált megoldások,
+még külön nemzetközi szervezet is létezik
+([ICHOM](https://www.ichom.org/)), mely az ilyen kimeneti indikátorokat
+vizsgálja, strukturálja és elkészíti az erre vonatkozó részletes,
+megvalósítást is támogató ajánlásait, melyeket – ingyen – elérhetővé is
+tesz (itt vannak például az ajánlásaik
 [pitvarfibrillációhoz](https://academic.oup.com/eurheartj/article/41/10/1132/5717382)
 vagy épp
 [tüdőrákhoz](https://erj.ersjournals.com/content/erj/48/3/852.full.pdf)).
