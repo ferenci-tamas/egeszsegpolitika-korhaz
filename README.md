@@ -1488,9 +1488,10 @@ a legkisebb kórházak listája (ezt most csak a központi egészségügyi
 intézményekre szűkítve):
 
 ``` r
-knitr::kable(res[Ev==2021][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
-  , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
-    order(`Működő átlagos ágyszám`)][1:15])
+knitr::kable(
+  res[Ev==2021][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"&KorhazRovid!="0163"][
+    , .(`Működő átlagos ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
+      order(`Működő átlagos ágyszám`)][1:15])
 ```
 
 <table>
@@ -1572,14 +1573,6 @@ Országos Sportegészségügyi Intézet
 </tr>
 <tr>
 <td style="text-align:left;">
-Országos Klinikai Idegtudományi Intézet
-</td>
-<td style="text-align:right;">
-42.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Országos Reumatológiai és Fizioterápiás Intézet
 </td>
 <td style="text-align:right;">
@@ -1624,6 +1617,14 @@ Csongrád-Csanád Megyei Mellkasi Betegségek Szakkórháza
 </td>
 <td style="text-align:right;">
 102.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Keszthelyi Kórház
+</td>
+<td style="text-align:right;">
+104.6
 </td>
 </tr>
 </tbody>
@@ -3287,3 +3288,17 @@ az egynapos ellátási események száma 934 volt. A különbség nem nagy,
 talán csak banális adminisztrációs hibáról van szó, mindenesetre a
 teljes adatbázisban 987 esetben fordul elő, hogy működő ágy nélkül
 osztályok több beteget bocsátottak el, mint ahány egynapos esetük volt.
+
+És még egy megjegyzés a végére, ami immár nem egy gépi úton, hanem
+kézzel felderített probléma, de akkor is probléma: a 0163-as kódú
+OITI-nek az adatbázis szerint 2021-ben 42 ágya volt, ami nagyon kevésnek
+tűnik (2020-ban még 170 volt). A magyarázat minden bizonnyal az, hogy az
+intézmény az év közepén összeolvadt a Nyírővel – ezt egy lábjegyzet
+jelzi is a kimutatásban – ám a jelek szerint az ágyszámot mégis az egész
+évre osztották le. (Teljesen logikátlan és értelmetlen módon, hiszen ha
+a számlálóban, tehát az ágyak napi számának összeadásában csak márciusig
+mennek el, akkor nyilván a nevezővel, a napok számával is csak addig
+kell elmenni.) Annyit tettem, hogy az egyetlen kimutatásból, ahol név
+szerint megjelent volna, a legkisebb kórházak listájából, kézzel
+kiszedtem, hiszen így természetesen nincs értelme legkisebb között
+lévőnek nevezni.
