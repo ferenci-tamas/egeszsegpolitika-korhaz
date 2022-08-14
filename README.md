@@ -3281,7 +3281,7 @@ ilyen adatra. Egyáltalán nem csak a koronavírus-járvány éveiről van szó,
 jó kérdés tehát, hogy mi lehet a magyarázat…
 
 Ha már említettük az egynapos ellátást, érdemes arra is ránézni. Itt is
-hozok konkrét példát: 2011-ben a László Kórház (0109) 07-es szakmakódú
+hozok konkrét példát: 2021-ben a László Kórház (0109) 07-es szakmakódú
 szemészete nem rendelkezett egyetlen ággyal sem, mégis elbocsátott 937
 beteget. Ez nem meglepő, mert egynapos ellátást nyújtott – igen ám, csak
 az egynapos ellátási események száma 934 volt. A különbség nem nagy,
