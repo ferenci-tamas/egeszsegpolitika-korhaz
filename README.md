@@ -2065,7 +2065,7 @@ lesz szükség.) Lényegében azt az okfejtést kell megismételni, amit az
 adatvalidációnál használtunk, csak most általánosan. Ha az átlagos
 ápolási időtartam jele $AtlApTartam$, akkor egy év alatt
 $\frac{365}{AtlApTartam}$ beteg tud legfeljebb megfordulni egy ágyon,
-így $AgySzam$ számú ágyon így legfeljebb
+így $AgySzam$ számú ágyon legfeljebb
 $\frac{365}{AtlApTartam} \cdot AgySzam$ beteg fordulhat meg. Ha ehhez
 képest ténylegesen $EllatottBeteg$ számú beteget láttak el, akkor az
 ágykihasználás:
@@ -2088,7 +2088,7 @@ akkor tudjuk növelni adott ágyszám mellett az ellátott betegek számát,
 ha vagy az ágykihasználást javítjuk, vagy az átlagos ápolási időtartamot
 csökkentjük (vagy mindkettő).
 
-Ennek a következménye, hogy így néz ki a ténylege összefüggés a 2021-es
+Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2021-es
 magyar adatokon:
 
 ``` r
@@ -2191,7 +2191,7 @@ Természetesen a szakirodalom, a historikus adatok tudnak segíteni ennek
 megtervezésében. Végezetül pedig tekintettel kell lenni a hosszú távú
 trendekre is: bizonyos területek esetszáma, ha csak lassan, évek alatt
 is, de csökken, másoké nő. Lehet persze azt mondani, hogy ezt menet
-közben állítjuk, és alapvetően tényleg ez a teeendő, de azért azt is
+közben állítjuk, és alapvetően tényleg ez a teendő, de azért azt is
 látni kell, hogy a kórházi ágyszám nem rettenetesen rugalmas, tehát
 érdemes lehet némi tartalékot beépíteni az előre látható jövőbeli
 változásokra is.
@@ -2201,8 +2201,8 @@ csökkentése a technikai hatékonyságot növeli (tehát, azonos ágyszám
 mellett több beteg ellátását teszi lehetővé rögzített idő alatt). Arról
 is volt szó, hogy ez nem pusztán gazdasági kérdés, a betegnek is jobb,
 természetesen, ha kevesebbet van kórházban. Ezt a technikai fejlődés is
-elősegíti, de hozzá kell tenni, hogy Magyarországon sajnos néha a
-finanszírozási érdekek ezt ellensúlyozzák. Vajon mi mindezek összhatása?
+elősegíti, de Magyarországon sajnos az egyéb érdekek ezt néha
+ellensúlyozzák. Vajon mi mindezek összhatása?
 
 Elsőként nézzük meg itt is a 2021-es adatokat:
 
