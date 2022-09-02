@@ -798,8 +798,8 @@ majdnem 2000 szüléssel. Pécsen az ország egyik legnagyobb, egyetemi
 klinika szintű szülészetétől 36 és 45 kilométerre is vezetnek szülést,
 közülük a nagyobbikban van évi 681 szülés. (Nekünk Mohács kell! –
 bocsánat.) A legextrémebb példa talán Jász-Nagykun-Szolnok megye, ahol
-*négy* helyen is vezetnek szülést, de úgy, hogy ebből háromban kevesebb
-mint 700 az évi esetszám.
+*négy* helyen is vezetnek szülést, de úgy, hogy ebből *háromban*
+kevesebb mint 700 az évi esetszám.
 
 A valódi magyarázat tehát azt hiszem teljesen más: annak politikai
 következményei jelentik a problémát, hogy egy osztályt – pláne kórházat
@@ -870,9 +870,10 @@ ez is jobb*, minthogy legyen egyetlen kórház, ami viszont cserében
 esetleg mondjuk működik is. Mert, ugye, ahhoz valamit be kellene zárni.
 
 Ne legyenek illúziónk arról, hogy ebbe a helyzetbe nem halhatnak-e bele
-emberek. (Csak arra reflektálva, hogy egy átalakítás egy ideig káosszal
-jár.) Az NNK honlapján e pillanatban 225 kijelölő határozat van
-2022-ből.
+emberek. (Csak reflektálva arra a gyakran felmerülő szempontra, hogy a
+kórházbezárások, általában, átalakítások egy ideig káosszal járnak, és
+abba „emberek halhatnak bele”.) Az NNK honlapján e pillanatban 225
+kijelölő határozat van 2022-ből.
 
 (Hogy akkor most összeomlott a magyar egészségügy? Népszerű toposz az
 egészségügy összeomlása, általában az aktuális ellenzék prognosztizálja
