@@ -1942,22 +1942,25 @@ tiltakozásba. Azaz: nagyon eltérő a felek érdekeltsége a szituációban.
 eszembe. A kis szülészet megszüntetése sokaknak jó (szülőnők és a
 megszülető újszülöttek abszolút túlnyomó többsége, sok ezer ember) és
 keveseknek rossz (osztályvezető, települési polgármester, az osztály
-dolgozói, bár közülük sem feltétlenül mindenki, néhány tucat ember,
-talán annyi se), *viszont* az egy főre jutó veszteség pici az előbbi
-csoportban (egyetlen konkrét szülésnél azért nincs drámai különbség),
-addig az utóbbiaknál az egy főre jutó nyereség hatalmas (van saját
-osztály, kórház a városban, közeli munkahely). Ebből fakadóan az előbbi
-csoport még abban is kevéssé érdekelt – újra mondom, bizonyos értelemben
-teljesen racionálisan! – hogy egyáltalán *tájékozódjon* a helyzetéről,
-nem hogy ágáljon a változtatásért, a másik csoport viszont nagyon is
-érdekelt, hogy megakadályozza azt, hiszen nekik nagyon közvetlenül és
-nagy mértékben a bőrükre megy a dolog. Összességében egy teljesen analóg
-helyzet fog létrejönni, csak a kongresszusi lobbira történő pénzköltés
-szerepét a szóbeli agitáció fogja átvenni (bár nincs kétségem afelől,
-hogy bizonyos esetekben akár még a pénz is szerepet játszhat). Arról nem
-beszélve, hogy az utóbbi csoportnak sokkal inkább van hangja: egy orvos
-eleve is jellemzően megbecsült, befolyásos tagja a társadalomnak, pláne
-egy kisebb településen, végképp az, ha ráadásul osztályvezető vagy
+dolgozói, néhány tucat ember), és még ezek egy része, épp a
+társadalmilag tényleg káros veszteségek, valamelyest kompenzálhatóak is,
+például a munkába járás, esetleg költözés nagyvonalú támogatásával
+(megint csak, ennek van értelme, nem a kórház szomszédba építésének).
+*Viszont* az egy főre jutó veszteség pici az előbbi csoportban (egyetlen
+konkrét szülésnél azért nincs drámai különbség), addig az utóbbiaknál az
+egy főre jutó nyereség hatalmas (van saját osztály, kórház a városban,
+közeli munkahely). Ebből fakadóan az előbbi csoport még abban is kevéssé
+érdekelt – újra mondom, bizonyos értelemben teljesen racionálisan! –
+hogy egyáltalán *tájékozódjon* a helyzetéről, nem hogy ágáljon a
+változtatásért, a másik csoport viszont nagyon is érdekelt, hogy
+megakadályozza azt, hiszen nekik nagyon közvetlenül és nagy mértékben a
+bőrükre megy a dolog. Összességében egy teljesen analóg helyzet fog
+létrejönni, csak a kongresszusi lobbira történő pénzköltés szerepét a
+szóbeli agitáció fogja átvenni (bár nincs kétségem afelől, hogy bizonyos
+esetekben akár még a pénz is szerepet játszhat). Arról nem beszélve,
+hogy az utóbbi csoportnak sokkal inkább van hangja: egy orvos eleve is
+jellemzően megbecsült, befolyásos tagja a társadalomnak, pláne egy
+kisebb településen, végképp az, ha ráadásul osztályvezető vagy
 kórházigazható. Ők nagy emberek, sokakat elérnek, nyilatkoznak a helyi
 újságnak, rengeteg beteggel beszélnek, akik hallgatnak rájuk, ismerik a
 helyi képviselőket, akik jóban szeretnének lenni velük stb. stb.; addig
@@ -1969,10 +1972,10 @@ kifejezést most találtam ki, fogalmam sincs hogy hívják igazából). Azt
 értem alatta, hogy a szülőnők vesztesége bizonyos értelemben egy
 *láthatatlan* veszteség: igen, minden szülésnél van valamennyi kicsi
 veszteség, de mivel ez emberemlékezet óta így van, ezért az emberek
-fejében nem jelenik meg veszteségként. Ezzel szemben az esetleg
-változtatás veszteseinek nagyon is látható és egyértelműen megjelenő
-veszteségük lenne az osztály bezárásával; ez megint nehezíti az
-érdekeltségek reális megjelenését.
+fejében nem jelenik meg veszteségként. Ezzel szemben a változtatás
+veszteseinek nagyon is látható és egyértelműen megjelenő veszteségük
+lenne az osztály bezárásával; ez megint nehezíti az érdekeltségek reális
+megjelenését.
 
 Felvethető a kérdés, hogy mit lehet mindezzel kezdeni.
 
