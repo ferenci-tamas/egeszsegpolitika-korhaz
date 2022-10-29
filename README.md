@@ -1056,8 +1056,14 @@ indikálhatnak, ráadásul itt nem csak az orvosokról van szó, sokszor
 maguk a betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
 ellátórendszerben és a háziorvos szerepe csak annyi, hogy adjon
 beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
-alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!)
-A helyzet ráadásul egyre romlik, csak egyetlen
+alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!
+Ehhez képest a háziorvosok száma [folyamatosan
+csökken](https://www.ksh.hu/stadat_files/ege/hu/ege0046.html), jelenleg
+607 tartósan betöltetlen háziorvosi praxis [van az
+országban](https://alapellatas.okfo.gov.hu/tajekoztato-a-tartosan-betoltetlen-haziorvosi-korzetekrol/),
+és valószínűleg az sem tesz jót, hogy a háziorvosok
+[átlagéletkora](https://www.parlament.hu/irom41/17188/T_17188_09.pdf)
+már majdnem 60 év.) A helyzet ráadásul egyre romlik, csak egyetlen
 [számadat](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/egeszsegugyi_evkonyv_2014.pdf)
 ennek érzékeltetésére: 1990-ben még a háziorvosi ellátásban megjelentek
 7,2%-át utalták tovább szakrendelésre, 2000-ben 12,1%-át, 2010-ben
@@ -1132,9 +1138,10 @@ magyar egészségügyi rendszer kórházcentrikussága általában rossz hír, d
 most, egy ilyen helyzetben kivételesen pont jól jön. Ahogy telt az idő,
 kiderült, hogy valójában még ez sem igazán valósul meg: az elsődleges
 szűk keresztmetszet ugyanis ilyen helyzetben sem az ágy, vagy épp az
-orvostechnikai berendezés, legyen az lélegeztetőgép vagy bármi más, nem
-a műszer volt Magyarországon, hanem egész egyszerűen a szakember. Az
-orvos, de még inkább: az ápoló.
+orvostechnikai berendezés, legyen az lélegeztetőgép vagy bármi más volt
+Magyarországon, hanem egész egyszerűen a szakember. Az orvos, de még
+inkább: az ápoló. (Sőt, még ez a kör is bővíthető: a szakember-hiány
+megjelenik a gazdasági-műszaki szolgálat terén is.)
 
 Vegyük példának Dániát: miközben ott kórházi ágyból 40%-kal kevesebb van
 lakosságarányosan mint nálunk, ahogy a fenti ábra is mutatja, addig
@@ -2983,7 +2990,7 @@ A következő kommentárok tartoznak a fentiekhez:
     deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed
     ki.
 -   A számokat tartalmazó sorokban szóköz az ezres elválasztó,
-    tizedevessző a tizedesjelölő, az előbbieket el kell távolítani, az
+    tizedesvessző a tizedesjelölő, az előbbieket el kell távolítani, az
     utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható
     (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a
     `gsub`).
