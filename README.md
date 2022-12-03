@@ -12,17 +12,17 @@ még rosszabbat.”*
 
 Korábbi írásaim:
 
--   [Gondolatok a járványügyi adatok
-    közléséről](https://github.com/tamas-ferenci/GondolatokAJarvanyugyiAdatokKozleserol)
--   [Gondolatok a favipiravir hatásosságáról, és a tudományos
-    véleménynyilvánítás
-    szabadságáról](https://github.com/tamas-ferenci/GondolatokAFavipiravirHatasossagarolEsATudomanyosVelemenynyilvanitasSzabadsagarol)
--   [Gondolatok a járvány elleni védekezés értékeléséről, és a járvány
-    hatásának
-    vizsgálatáról](https://github.com/tamas-ferenci/GondolatokAJarvanyElleniVedekezesErtekeleserolEsAJarvanyHatasanakVizsgalatarol)
--   [Gondolatok a védőoltásokkal kapcsolatos bizonytalanság
-    megértéséről, és a saját portánk előtt
-    söprögetésről](https://github.com/tamas-ferenci/GondolatokAVedooltasokkalKapcsolatosBizonytalansagMegerteserol)
+- [Gondolatok a járványügyi adatok
+  közléséről](https://github.com/tamas-ferenci/GondolatokAJarvanyugyiAdatokKozleserol)
+- [Gondolatok a favipiravir hatásosságáról, és a tudományos
+  véleménynyilvánítás
+  szabadságáról](https://github.com/tamas-ferenci/GondolatokAFavipiravirHatasossagarolEsATudomanyosVelemenynyilvanitasSzabadsagarol)
+- [Gondolatok a járvány elleni védekezés értékeléséről, és a járvány
+  hatásának
+  vizsgálatáról](https://github.com/tamas-ferenci/GondolatokAJarvanyElleniVedekezesErtekeleserolEsAJarvanyHatasanakVizsgalatarol)
+- [Gondolatok a védőoltásokkal kapcsolatos bizonytalanság megértéséről,
+  és a saját portánk előtt
+  söprögetésről](https://github.com/tamas-ferenci/GondolatokAVedooltasokkalKapcsolatosBizonytalansagMegerteserol)
 
 ------------------------------------------------------------------------
 
@@ -194,13 +194,12 @@ ami *matematikailag* lehetetlen, hogy jó legyen.
 
 Két ilyen ellenőrzési lehetőséget találtam:
 
--   Az ágykihasználás visszaellenőrzése: több esetet találtam, amikor az
-    elbocsátott betegek száma nagyobb, mint ami 100%-os
-    ágykihasználásnál lehetne (figyelembe véve az átlagos ápolási
-    időtartamot).
--   Elbocsátott betegek számának visszaellenőrzése: több esetet
-    találtam, hogy ággyal nem rendelkező osztályok több beteget láttak
-    el, mint ahány egynapos esetük volt.
+- Az ágykihasználás visszaellenőrzése: több esetet találtam, amikor az
+  elbocsátott betegek száma nagyobb, mint ami 100%-os ágykihasználásnál
+  lehetne (figyelembe véve az átlagos ápolási időtartamot).
+- Elbocsátott betegek számának visszaellenőrzése: több esetet találtam,
+  hogy ággyal nem rendelkező osztályok több beteget láttak el, mint
+  ahány egynapos esetük volt.
 
 Sajnos a fenti jelenségekre nem találtam magyarázatot.
 
@@ -1832,7 +1831,7 @@ ggplot(res[,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(Ev)],
 Az elmúlt 15-20 évben újságot olvasó állampolgár számára nem kell sokat
 magyaráznom, hogy mit látunk a grafikonon. A 2006/2007-ben végrehajtott,
 nagyon sok elemből álló [egészségügyi
-reform](https://www.lira.hu/hu/konyv/szepirodalom/memoar-eletrajz-interju/miert-lettem-antipatikus-2)
+reform](https://www.libri.hu/talalati_lista/?text=mi%C3%A9rt+lettem+antipatikus)
 egyik, és talán legtöbbet emlegetett része volt 16 ezer aktív kórházi
 ágy megszüntetése. (A *teljes* ágyszám nem csökkent ennyivel, ugyanis az
 aktív ágyak csökkentése mellett a krónikus, rehabilitációs ágyak száma
@@ -2725,6 +2724,9 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBeteg
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
+    ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+    ## ℹ Please use `linewidth` instead.
+
 ![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 A vízszintes sávok az úgynevezett 95%-os konfidenciaintervallumok.
@@ -2933,70 +2935,68 @@ if(!file.exists("res.rds")) {
 
 A következő kommentárok tartoznak a fentiekhez:
 
--   A fenntartó azt jelenti, hogy milyen típusú fenntartója van az
-    intézménynek (központi, önkormányzati, egyházi stb.). Ezt
-    tulajdonképpen hagyhatnánk is, de bizonyos elemzéseknél jól jön, ha
-    ki tudjuk zárni az elég atipikus intézményeket (pl. vállalkozások
-    által fenntartott intézményeket, melyek jellemzően nulla ágyszámmal
-    csak egynapos ellátást nyújtanak), úgyhogy érdemes lehet nem veszni
-    hagyni. Ha viszont e mellett döntünk, akkor kicsit küzdeni kell. A
-    dokumentumok jellemzően az elején (de még az sem egységes, hogy
-    melyik táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a
-    sorszámot) közlik a fenntartókat, de nagyon szerencsétlen
-    formátumban: egy oszlopban van a fenntartó és az intézmény. Ezt úgy
-    kell elképzelni, hogy először szerepel az „önkormányzati eü.
-    intézmény” kifejezés, majd utána jönnek az ilyen fenntartójúak
-    azonosítói, aztán egy „központi eü. intézmény” szó, majd sorakoznak
-    ezek kódjai stb., ráadásul közben még összegzősorok is vannak. A
-    problémát egy trükkel oldjuk meg: ezt az oszlopot kétszer egymás
-    mellé másoljuk, majd az egyik oszlopból kitöröljük azokat az
-    értékeket, amik nem 4 hosszúak. Ezzel magyarul kitöröltük a kórházak
-    azonosítóit, és meghagytuk a felirat-szövegeket. (A dolgot az teszi
-    lehetővé, hogy a kórház azonosító mindig 4 karakter, viszont a
-    feliratok reményeim szerint soha.) Ezt következően a kiüresített
-    helyekre lehúzzuk fentről az utolsó szöveget – a `tidyr::fill` pont
-    ezt teszi – így végeredményben egymás *mellé* kerültek, ahogy arra
-    szükségünk van, a fenntartók és a kódok. Nincs más dolgunk, mint
-    kitörölni a felesleges sorokat, azaz a feliratok és az
-    összegző-sorokat, de ezt könnyen megtaláljuk azáltal, hogy ezeknél a
-    kód oszlop nem 4 hosszúságú.
--   A rengeteg táblázatból meg kell keresni azt az egyetlen kombinációt,
-    ami érdekel minket: az intézményre lebontott táblákat. Az ilyeneket
-    két feltétellel azonosítjuk: egyrészt a bal szélső oszlop neve adott
-    értékű mindig, másrészt leellenőrizzük, hogy a bal felső cellában –
-    elvileg itt kell a kórház azonosítója szerepeljen – a megadott
-    négyjegyű kód tényleg valódi kórházazonosító-e. (Ezeket az
-    azonosítókat az előző lépésnek köszönhetően már ismerjük.)
--   A következő probléma az aktív és krónikus ellátások elkülönítése. A
-    2012 és azt követő évek táblázataiban nincsen probléma, ezeknél
-    ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód,
-    így nyugodtan legyűjthetjük „ész nélkül” az összes megfelelő
-    táblázatot, maximum a végén elhagyjuk azokat, ahol nincs szakmakód.
-    A probléma az, hogy 2012 előtt nem követték ezt a szabályt, és a
-    krónikus ellátást végző szakmák mellett is fel volt tüntetve a
-    szakmakód. Ez azért gond, mert ezek a kódok átfednek az aktív
-    szakmák kódjaival, sőt, akár még egy kórházon belül is előfordulhat
-    mindkettő (például 2011-ben a Szt. Imre Kórháznak volt 18-as
-    szakmakódú pszichiátriából aktív *és* krónikus ellátása is). De az
-    sem jó megoldás, hogy elkezdjük legyűjteni a sorokat addig, amíg van
-    szakmakód, mert van olyan kórház, amiben egyáltalán nincs aktív
-    ellátás. Végül azt a megoldást találtam ki, hogy megkeressük az
-    „aktív” és a „krónikus” szavak előfordulását (ezek az
-    összegző-sorokban biztosan szerepelnek). Ha az „aktív” szó csak a
-    „krónikus” után van, akkor nincs aktív ellátás (a szó az „aktív és
-    krónikus összesen” nagy összegző sorban szerepelt), ezt az
-    intézményt átugorhatjuk, ha nem, akkor a kettő *közötti* sorokat
-    kell kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így
-    deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed
-    ki.
--   A számokat tartalmazó sorokban szóköz az ezres elválasztó,
-    tizedesvessző a tizedesjelölő, az előbbieket el kell távolítani, az
-    utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható
-    (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a
-    `gsub`).
--   Szerencsére az oszlopok sorrendje és tartalma végig ugyanaz (ezt
-    tartalmazza a `headernames` változó).
--   A kórház kódja szerencsére mindig a nevének az első négy karaktere.
+- A fenntartó azt jelenti, hogy milyen típusú fenntartója van az
+  intézménynek (központi, önkormányzati, egyházi stb.). Ezt
+  tulajdonképpen hagyhatnánk is, de bizonyos elemzéseknél jól jön, ha ki
+  tudjuk zárni az elég atipikus intézményeket (pl. vállalkozások által
+  fenntartott intézményeket, melyek jellemzően nulla ágyszámmal csak
+  egynapos ellátást nyújtanak), úgyhogy érdemes lehet nem veszni hagyni.
+  Ha viszont e mellett döntünk, akkor kicsit küzdeni kell. A
+  dokumentumok jellemzően az elején (de még az sem egységes, hogy melyik
+  táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a
+  sorszámot) közlik a fenntartókat, de nagyon szerencsétlen formátumban:
+  egy oszlopban van a fenntartó és az intézmény. Ezt úgy kell
+  elképzelni, hogy először szerepel az „önkormányzati eü. intézmény”
+  kifejezés, majd utána jönnek az ilyen fenntartójúak azonosítói, aztán
+  egy „központi eü. intézmény” szó, majd sorakoznak ezek kódjai stb.,
+  ráadásul közben még összegzősorok is vannak. A problémát egy trükkel
+  oldjuk meg: ezt az oszlopot kétszer egymás mellé másoljuk, majd az
+  egyik oszlopból kitöröljük azokat az értékeket, amik nem 4 hosszúak.
+  Ezzel magyarul kitöröltük a kórházak azonosítóit, és meghagytuk a
+  felirat-szövegeket. (A dolgot az teszi lehetővé, hogy a kórház
+  azonosító mindig 4 karakter, viszont a feliratok reményeim szerint
+  soha.) Ezt következően a kiüresített helyekre lehúzzuk fentről az
+  utolsó szöveget – a `tidyr::fill` pont ezt teszi – így végeredményben
+  egymás *mellé* kerültek, ahogy arra szükségünk van, a fenntartók és a
+  kódok. Nincs más dolgunk, mint kitörölni a felesleges sorokat, azaz a
+  feliratok és az összegző-sorokat, de ezt könnyen megtaláljuk azáltal,
+  hogy ezeknél a kód oszlop nem 4 hosszúságú.
+- A rengeteg táblázatból meg kell keresni azt az egyetlen kombinációt,
+  ami érdekel minket: az intézményre lebontott táblákat. Az ilyeneket
+  két feltétellel azonosítjuk: egyrészt a bal szélső oszlop neve adott
+  értékű mindig, másrészt leellenőrizzük, hogy a bal felső cellában –
+  elvileg itt kell a kórház azonosítója szerepeljen – a megadott
+  négyjegyű kód tényleg valódi kórházazonosító-e. (Ezeket az
+  azonosítókat az előző lépésnek köszönhetően már ismerjük.)
+- A következő probléma az aktív és krónikus ellátások elkülönítése. A
+  2012 és azt követő évek táblázataiban nincsen probléma, ezeknél
+  ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód, így
+  nyugodtan legyűjthetjük „ész nélkül” az összes megfelelő táblázatot,
+  maximum a végén elhagyjuk azokat, ahol nincs szakmakód. A probléma az,
+  hogy 2012 előtt nem követték ezt a szabályt, és a krónikus ellátást
+  végző szakmák mellett is fel volt tüntetve a szakmakód. Ez azért gond,
+  mert ezek a kódok átfednek az aktív szakmák kódjaival, sőt, akár még
+  egy kórházon belül is előfordulhat mindkettő (például 2011-ben a Szt.
+  Imre Kórháznak volt 18-as szakmakódú pszichiátriából aktív *és*
+  krónikus ellátása is). De az sem jó megoldás, hogy elkezdjük
+  legyűjteni a sorokat addig, amíg van szakmakód, mert van olyan kórház,
+  amiben egyáltalán nincs aktív ellátás. Végül azt a megoldást találtam
+  ki, hogy megkeressük az „aktív” és a „krónikus” szavak előfordulását
+  (ezek az összegző-sorokban biztosan szerepelnek). Ha az „aktív” szó
+  csak a „krónikus” után van, akkor nincs aktív ellátás (a szó az „aktív
+  és krónikus összesen” nagy összegző sorban szerepelt), ezt az
+  intézményt átugorhatjuk, ha nem, akkor a kettő *közötti* sorokat kell
+  kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így
+  deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed
+  ki.
+- A számokat tartalmazó sorokban szóköz az ezres elválasztó,
+  tizedesvessző a tizedesjelölő, az előbbieket el kell távolítani, az
+  utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható
+  (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a
+  `gsub`).
+- Szerencsére az oszlopok sorrendje és tartalma végig ugyanaz (ezt
+  tartalmazza a `headernames` változó).
+- A kórház kódja szerencsére mindig a nevének az első négy karaktere.
 
 A fentiek végén megkapjuk a kialakítani tervezett táblázat első
 változatát. Mindenek előtt végezzünk rajta pár adatvalidációt.
