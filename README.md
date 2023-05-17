@@ -3397,9 +3397,10 @@ res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignor
 könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
 
 Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
-feldolgozható formában is lementeni az adatokat:
+feldolgozható formátumokban lementeni az adatokat:
 
 ``` r
+saveRDS(res, "KorhaziAgyszamEsBetegforgalom.rds")
 fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
 openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
 ```
