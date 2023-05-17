@@ -536,8 +536,8 @@ Még egy módon érdemes ábrázolni az adatokat: nézzük meg csak a fül-orr-g
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
+  geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
 A vízszintes sávok az úgynevezett 95%-os konfidenciaintervallumok. Leegyszerűsítve: azt jelzik, hogy a véletlen ingadozás miatt mekkora bizonytalanság van a közölt számban. Mi az, hogy véletlen ingadozás? Mondjuk, hogy egy adott osztály halálozása pontosan 50%. (Ez semmit nem mond az osztály teljesítményéről, hiszen ha a beteg olyan állapotban vannak, hogy máshol 60% lenne, akkor ez jó, ha egyébként 40% lenne, akkor rossz, de most nem ez lesz számunkra az érdekes.) Ez akkor azt jelenti, hogy kívülről nézve a dolog olyan, mintha minden beteg gyógyulása egy _szabályos_ pénzérme feldobásának az eredménye lenne. (Ez elég szörnyen hangzik, mert rossz csengése van annak, hogy "véletlenszerű", hogy meggyógyulok-e, de újra mondom, ez akár jó hír is lehet -- ha egyébként 60% lenne a halálozási arány.) Kérdés: vajon hány beteg fog meghalni, ha 100-at láttak el egy év alatt? Az ember hajlamos rávágni, hogy 50 (hiszen 50% a halálozási arány), de legyünk óvatosabbak: ha feldobunk egy szabályos pénzérmét 100-szor, biztos, hogy pont 50 fejet kapunk? Természetesen nem, simán lehet 49 vagy 51, akár még 45 vagy 55 is -- noha a pénzérme tökéletesen szabályos volt. Hát ez a véletlen ingadozás. Nekünk a dolog igazán fordítva lesz érdekes: ha 100 betegből 45 halt meg, akkor még nem biztos, hogy $45/100 = 45$% a valódi halálozási arány, hiszen épp az előbbi példa mutatja, hogy éppenséggel akár 50% is lehet. Ezért mondhatjuk, hogy a kapott számban bizonytalanság van: igen, 100-ból 45 halála esetén 45% a legjobb tippünk, de ez nem biztos, a valóság lehet kicsit nagyobb vagy épp kisebb is. A konfidenciaintervallum ezt adja meg: mik azok a valódi értékek, amelyek mellett még "kényelmesen" (megfelelően definiált értelemben) kaphattuk azt, pusztán a véletlen ingadozás miatt, amit ténylegesen kaptunk is. Mondhatjuk, hogy ezek azok a valódi halálozási arányok, amik kompatibilisek a kapott számmal.
@@ -550,7 +550,7 @@ Hasonló a helyzet a bőrgyógyászatnál:
 ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -560,7 +560,7 @@ Vagy épp a pszichiátriánál:
 ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -571,7 +571,7 @@ ggplot(res[Ev==2021][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazRovid, SzakmaMegnev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev, scales = "free") +
-  geom_point() + geom_errorbar(size = 0.5) + labs(x = "Halálozási arány [%]", y = "")
+  geom_point() + geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
 Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben is, itt minden vonal egy kórházat jelöl:
@@ -694,13 +694,6 @@ Az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízl
 
 Ezek után már a megnevezés aggálytalanul használható.
 
-Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint feldolgozható formában is lementeni az adatokat:
-
-```{r}
-fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
-```
-
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor kizárjuk a vizsgálatokból:
 
 ```{r}
@@ -708,6 +701,13 @@ A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a 
 ```
 
 (Még így is nagyon sok pl. rendelőintézet belekerül a listánkba, de ezek könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
+
+Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint feldolgozható formában is lementeni az adatokat:
+
+```{r}
+fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
+openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
+```
 
 Most már nekiláthatunk az elemzésnek! Ahogy mondtam is, a dolog inkább illusztratív lesz, de remélem néhány érdekes dolgot meg fogok tudni mutatni. Az adatok feldolgozásához a `data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
 

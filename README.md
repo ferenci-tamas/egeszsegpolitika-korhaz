@@ -2720,12 +2720,9 @@ fel, ahol legalább 30 beteget elláttak):
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
+  geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
-
-    ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-    ## ℹ Please use `linewidth` instead.
 
 ![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
@@ -2775,7 +2772,7 @@ Hasonló a helyzet a bőrgyógyászatnál:
 ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -2787,7 +2784,7 @@ Vagy épp a pszichiátriánál:
 ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(size = 0.5) +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -2802,7 +2799,7 @@ ggplot(res[Ev==2021][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazRovid, SzakmaMegnev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) + facet_wrap(~SzakmaMegnev, scales = "free") +
-  geom_point() + geom_errorbar(size = 0.5) + labs(x = "Halálozási arány [%]", y = "")
+  geom_point() + geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
@@ -3381,14 +3378,6 @@ res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev
 
 Ezek után már a megnevezés aggálytalanul használható.
 
-Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
-feldolgozható formában is lementeni az adatokat:
-
-``` r
-fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
-```
-
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a
 speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által
 fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül
@@ -3406,6 +3395,14 @@ res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignor
 
 (Még így is nagyon sok pl. rendelőintézet belekerül a listánkba, de ezek
 könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
+
+Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
+feldolgozható formában is lementeni az adatokat:
+
+``` r
+fwrite(res, "KorhaziAgyszamEsBetegforgalom.csv", sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
+openxlsx::write.xlsx(res, "KorhaziAgyszamEsBetegforgalom.xlsx")
+```
 
 Most már nekiláthatunk az elemzésnek! Ahogy mondtam is, a dolog inkább
 illusztratív lesz, de remélem néhány érdekes dolgot meg fogok tudni
