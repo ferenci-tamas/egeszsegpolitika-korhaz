@@ -13,6 +13,14 @@ lang: hu
 knitr::opts_chunk$set(echo = TRUE, fig.width = 12, dpi = 300,
                       dev = "ragg_png")
 
+knitr::knit_hooks$set(source = function(x, options) {
+  paste0(
+    "<details><summary>", "R kód megjelenítése", "</summary>\n\n",
+    "``` r\n", x, "\n```\n",
+    "\n\n</details>\n"
+  )
+})
+
 library(data.table)
 library(ggplot2)
 
@@ -99,7 +107,7 @@ Jelen projekt _elsődleges_ célja ezeknek az adatoknak a beolvasása a fenti ne
 
 Fontosnak tartom az adatok feldolgozható formára való hozásának technikai részleteit is közölni, részint mert talán önmagában is érdekes lehet, emiatt igyekszem kommentálni is, illetve rámutatni a nehézségekre, részint, hogy a munkám teljesen transzparens, bárki számára reprodukálható legyen. Akit a technikai részletek nem érdekelnek, de a számszerű eredményeket szeretné használni, itt letöltheti feldolgozható, letisztított és egységes formában a magyar aktív fekvőbeteg-ellátás 2003 és 2022 közötti ágyszám- és betegforgalmi adatait: [CSV formátum](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas-egeszsegpolitika/raw/main/ferenci-tamas-korhaz-agyszam-betegforgalom.csv), illetve [XLSX (Excel) formátum](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas-egeszsegpolitika/raw/main/ferenci-tamas-korhaz-agyszam-betegforgalom.xlsx).
 
-A további elemzés -- csakúgy mint a letöltés és adatfeldolgozás -- [R statisztikai környezet](https://www.youtube.com/@FerenciTamas/playlists?view=50&sort=dd&shelf_id=2) alatt történt; az ehhez szükséges kódokat a fenti okokból az eredményt közlő pontokban is megadom (akit ez nem érdekel, nyugodtan ugorja át a szürke hátterű kódokat).
+A további elemzés -- csakúgy mint a letöltés és adatfeldolgozás -- [R statisztikai környezet](https://www.youtube.com/@FerenciTamas/playlists?view=50&sort=dd&shelf_id=2) alatt történt; az ehhez szükséges kódokat a transzparencia és a nyílt tudomány okán az eredményt közlő pontokban is megadom, egyesével minden eredményhez (alapból elrejtve; az "R kód megjelenítése" felirat melletti háromszögre kattintva nyithatóak le).
 
 A további részletek [a függelékben](#technikai-részletek-1) olvashatóak. Egy dolgot fontos itt is kiemelni: az adatgyűjtés technikai megoldása miatt -- illetve mert amúgy is ez volt most a fókuszomban -- az egész elemzés kizárólag az aktív ellátásokra vonatkozik.
 
