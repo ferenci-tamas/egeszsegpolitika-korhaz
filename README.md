@@ -221,12 +221,7 @@ lehet az ilyen jellegű szempontok bevonása, erre később fogok rátérni.
 Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 által 2024-ben ellátott betegek számának eloszlását:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
@@ -243,12 +238,7 @@ Ez önmagában még nem túl informatív, hiszen a különböző szakmák,
 különböző kórházak nagyon eltérően viselkednek. Érdemes ezért az
 eloszlást szakmánként ábrázolni:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024],
@@ -267,12 +257,7 @@ szakmánként számszerűen is (ez persze elég kiragadott, hiszen egy-egy
 osztály nem mond sokat a rendszer egészéről, de azért nagyon
 illusztratív lesz):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 kableExtra::add_header_above(
@@ -1207,12 +1192,7 @@ szakmák, osztályok által ellátott betegek száma? Az ábrán a halvány
 szürke vonalak az egyes osztályok forgalmai, a piros vonal az átlaguk
 (vigyázat, a függőleges tengelyek skálázásai eltérnek):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -1236,12 +1216,7 @@ könnyen megváltozhatott az osztályok darabszáma is az országban). Ez az
 betegek össz-száma, egyfajta mennyiségi, nem minőségi mutatója a magyar
 egészségügy teljesítményének:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
@@ -1333,12 +1308,7 @@ európai országokban néhány nevezetes
 esetén az egynapos ellátásban végzettek aránya (szürke vonalak az
 európai országokat jelentik, piros Magyarország):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- unique(rbind(
@@ -1352,12 +1322,7 @@ res2 <- unique(rbind(
 
     ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- res2[unit=="NR"]
@@ -1365,12 +1330,7 @@ res2 <- res2[unit=="NR"]
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
@@ -1408,12 +1368,7 @@ meg van adva az egynapos esetek száma, így könnyen meg tudjuk az
 arányukat is határozni. Így néz ez ki szakmaosztályonként (szürke
 vonalak az egyes kórházak adatai, piros az országos átlag):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -1511,12 +1466,7 @@ erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben:
 mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A legfrissebb
 adat 2021-es:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
@@ -1524,12 +1474,7 @@ res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TR
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nchar(geo)==2 & hlthcare == "TOTAL"]
@@ -1537,12 +1482,7 @@ res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nch
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
@@ -1550,12 +1490,7 @@ res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res2[order(values, decreasing = TRUE)],
@@ -1601,12 +1536,7 @@ nézzük meg az ágyszámok eloszlását 2024-ben (itt és a továbbiakban csak
 azokkal az intézményekkel foglalkozunk, ahol van egyáltalán működő ágy),
 az átlagos működő ágyszámot alapul véve:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
@@ -1622,12 +1552,7 @@ legnagyobb osztályokkal, de ez nagyon félrevezető lenne, mert az egyes
 szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes,
 úgyhogy készítsünk róla egy ábrát:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
@@ -1643,12 +1568,7 @@ Itt már látszanak a különbségek! Az önmagában vett érdekességen túl it
 is nézzük meg szakmánként is a legkisebb és legnagyobb (ágyszámú)
 osztályokat:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 kableExtra::add_header_above(
@@ -2345,12 +2265,7 @@ Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú
 összesítés is: amikor egy kórház egészének az aktív ágyszámát vizsgáljuk
 meg. Ez így néz ki 2022-ben:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
@@ -2368,12 +2283,7 @@ a legkisebb kórházak listája (ezt most csak a központi egészségügyi
 intézményekre szűkítve, illetve ne felejtsük, csak az aktív ágyakról van
 szó):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 knitr::kable(
@@ -2465,12 +2375,7 @@ vizsgálata, de elsőként nézzünk inkább egy összképet. Így alakult az
 évek alatt az aktív kórházi ágyak száma (itt is a működő átlagos
 ágyszámot értve ez alatt):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(Ev)],
@@ -2757,12 +2662,7 @@ csökkentjük (vagy mindkettő).
 Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
 magyar adatokon:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -2798,12 +2698,7 @@ sajnos ebből az adatbázisból nem tudjuk vizsgálni.
 Nézzük meg most e két tényezőt külön-külön! Kezdjük az
 ágykihasználással. Így néz ki a 2024-es helyzet:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
@@ -2824,12 +2719,7 @@ Ez utóbbi aspektus talán még érdekesebbé tehető, ha az időbeli trendeket
 is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
 adata, a vastag piros pedig az országos átlag adott szakmában):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -2899,12 +2789,7 @@ ellensúlyozzák. Vajon mi mindezek összhatása?
 
 Elsőként nézzük meg itt is a 2024-es adatokat:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
@@ -2925,12 +2810,7 @@ másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrá
 minden halvány vonal egy kórház adata, a vastag piros pedig az országos
 átlag adott szakmában:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
@@ -2959,12 +2839,7 @@ végeredményben alig sikerült ebben előrelépni az évek alatt. Így néz ki
 a befektetett betegek átlagos kórházban töltött időtartama az egyes
 európai országokban; piros jelöli Magyarországot:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
@@ -2972,12 +2847,7 @@ res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = T
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
@@ -2985,12 +2855,7 @@ res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
@@ -3401,12 +3266,7 @@ lehetnek.
 Elsőként nézzük meg, hogy hogyan alakult 2024-ben a kórházi halálozás,
 szakmaosztályonként lebontva:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
@@ -3458,12 +3318,7 @@ fül-orr-gégészetek halálozásait 2021-ből (az áttekinthetőség és a kell
 statisztikai megbízhatóság miatt csak azokat az osztályokat tüntetem
 fel, ahol legalább 30 beteget elláttak):
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
@@ -3519,12 +3374,7 @@ kórház így is extrém kilógó.
 
 Hasonló a helyzet a bőrgyógyászatnál:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
@@ -3540,12 +3390,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30
 
 Vagy épp a pszichiátriánál:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
@@ -3564,12 +3409,7 @@ A sok szakma miatt kevésbé áttekinthető, de azért megnézhetjük az
 különböző!), illetve térjünk át a legfrissebb, 2024-es adatokra, itt is
 lesznek hasonló furcsaságok:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
@@ -3588,12 +3428,7 @@ ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
 Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben
 is, itt minden vonal egy kórházat jelöl:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)) +
@@ -3662,12 +3497,7 @@ keresztül folytatódik.
 Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az
 mit is csinál:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 if(!file.exists("res.rds")) {
@@ -3806,12 +3636,7 @@ neve változott is). Így a kód megfelelő azonosító.
 
 Nézzük most a szakmákat:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
@@ -3888,12 +3713,7 @@ kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes
 legyen); illetve egy szakmanevet is lerövidítünk, hogy jobban kiférjen
 az ábrákon. Összesséségében véve a következő átalakításokat tesszük:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
@@ -3901,12 +3721,7 @@ res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és 
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyászat"
@@ -3914,12 +3729,7 @@ res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyá
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
@@ -3927,12 +3737,7 @@ res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
@@ -3940,12 +3745,7 @@ res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiológia"
@@ -3953,12 +3753,7 @@ res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiol
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai és intenzív betegellátás"
@@ -3966,12 +3761,7 @@ res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai 
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
@@ -3980,12 +3770,7 @@ res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
@@ -3993,12 +3778,7 @@ res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
@@ -4006,12 +3786,7 @@ res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
@@ -4019,24 +3794,14 @@ res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőg
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 ```
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Felvételi osztály"]$SzakmaKod <- "17F"
@@ -4044,12 +3809,7 @@ res[SzakmaMegnev=="Felvételi osztály"]$SzakmaKod <- "17F"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Arc-, állcsont- és szájsebészet"]$SzakmaKod <- "17A"
@@ -4057,12 +3817,7 @@ res[SzakmaMegnev=="Arc-, állcsont- és szájsebészet"]$SzakmaKod <- "17A"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Ortopédia"]$SzakmaKod <- "10O"
@@ -4070,12 +3825,7 @@ res[SzakmaMegnev=="Ortopédia"]$SzakmaKod <- "10O"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Ortopédia-traumatológia"]$SzakmaKod <- "10OT"
@@ -4083,12 +3833,7 @@ res[SzakmaMegnev=="Ortopédia-traumatológia"]$SzakmaKod <- "10OT"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Fog- és szájsebészet"]$SzakmaKod <- "13FSZ"
@@ -4096,12 +3841,7 @@ res[SzakmaMegnev=="Fog- és szájsebészet"]$SzakmaKod <- "13FSZ"
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Fogászati ellátás"]$SzakmaKod <- "13F"
@@ -4117,12 +3857,7 @@ fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül
 osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor
 kizárjuk a vizsgálatokból:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kórházak",
@@ -4134,12 +3869,7 @@ res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kór
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignore.case = TRUE)
@@ -4153,12 +3883,7 @@ könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
 Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
 feldolgozható formátumokban lementeni az adatokat:
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
@@ -4166,12 +3891,7 @@ saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
@@ -4180,12 +3900,7 @@ fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
 
 </details>
 
-<details>
-
-<summary>
-
-R kód megjelenítése
-</summary>
+<details><summary>R kód megjelenítése</summary>
 
 ``` r
 openxlsx2::write_xlsx(
