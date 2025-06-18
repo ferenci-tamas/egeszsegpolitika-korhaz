@@ -1326,13 +1326,6 @@ res2 <- unique(rbind(
 
 ``` r
 res2 <- res2[unit=="NR"]
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
             .(icd9cm, geo, TIME_PERIOD)],
        aes(x = TIME_PERIOD, y = V1, group = forcats::fct_reorder(geo, geo=="HU", .fun = first),
@@ -1470,29 +1463,8 @@ adat 2021-es:
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nchar(geo)==2 & hlthcare == "TOTAL"]
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 ggplot(res2[order(values, decreasing = TRUE)],
        aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
   geom_col() + guides(fill = "none") + labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "")
@@ -2843,21 +2815,7 @@ európai országokban; piros jelöli Magyarországot:
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
   geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
@@ -3497,7 +3455,7 @@ keresztül folytatódik.
 Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az
 mit is csinál:
 
-<details><summary>R kód megjelenítése</summary>
+<details open><summary>R kód megjelenítése</summary>
 
 ``` r
 if(!file.exists("res.rds")) {
@@ -3713,137 +3671,26 @@ kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes
 legyen); illetve egy szakmanevet is lerövidítünk, hogy jobban kiférjen
 az ábrákon. Összesséségében véve a következő átalakításokat tesszük:
 
-<details><summary>R kód megjelenítése</summary>
+<details open><summary>R kód megjelenítése</summary>
 
 ``` r
 res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyászat"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiológia"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai és intenzív betegellátás"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
   "Aneszt. és intenzív betegellátás"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
-```
 
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Felvételi osztály"]$SzakmaKod <- "17F"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Arc-, állcsont- és szájsebészet"]$SzakmaKod <- "17A"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Ortopédia"]$SzakmaKod <- "10O"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Ortopédia-traumatológia"]$SzakmaKod <- "10OT"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Fog- és szájsebészet"]$SzakmaKod <- "13FSZ"
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res[SzakmaMegnev=="Fogászati ellátás"]$SzakmaKod <- "13F"
 ```
 
@@ -3857,7 +3704,7 @@ fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül
 osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor
 kizárjuk a vizsgálatokból:
 
-<details><summary>R kód megjelenítése</summary>
+<details open><summary>R kód megjelenítése</summary>
 
 ``` r
 res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kórházak",
@@ -3865,13 +3712,6 @@ res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kór
                                     "MÁV kórházak", "Központi intézmény", "Egyházi",
                                     "Egyetem", "Önkormányzati eü. intézmény",
                                     "Központi eü. intézmény", "Egyházi intézmény")
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignore.case = TRUE)
 ```
 
@@ -3883,26 +3723,12 @@ könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
 Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
 feldolgozható formátumokban lementeni az adatokat:
 
-<details><summary>R kód megjelenítése</summary>
+<details open><summary>R kód megjelenítése</summary>
 
 ``` r
 saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
        sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-```
-
-</details>
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
 openxlsx2::write_xlsx(
   res, "ferenci-tamas-korhaz-agyszam-betegforgalom.xlsx")
 ```

@@ -15,8 +15,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.width = 12, dpi = 300,
 
 knitr::knit_hooks$set(source = function(x, options) {
   paste0(
-    knitr::raw_html("<details><summary>R kód megjelenítése</summary>\n"),
-    "```r\n", x, "\n```\n",
+    knitr::raw_html(paste0("<details", if(!is.null(options$open) && options$open) " open" else "", "><summary>R kód megjelenítése</summary>")),
+    "\n\n```r\n", paste0(x, collapse = "\n"), "\n```\n",
     "</details>\n"
   )
 })
@@ -627,7 +627,7 @@ Az adatok feldolgozásához a `docxtractr` nevű R csomag jelenti a megoldást, 
 
 Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az mit is csinál:
 
-```{r}
+```{r, open = TRUE}
 if(!file.exists("res.rds")) {
   headernames <- c("Korhaz", "SzakmaKod", "SzakmaMegnev", "OsszesAgy",
                    "MukodoIAgy", "MukodoIIAgy", "TartoSzuneteloAgy",
@@ -707,7 +707,7 @@ knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
 
 Amint látható, itt már van egy kis kavarodás, de pár kivételtől eltekintve nem valódi gond van, csak a szakma megnevezése nem volt egységes. Az egyik kivétel a 17-es kód, itt tényleges gikszer van: 2003-tól 2011-ig ezt a "Felvételi osztály" szakmára használják, utána viszont egy durva hiba történik, mert _ugyanazt_ a kódot kiosztják egy teljesen más szakmának ("Arc-, állcsont- és szájsebészet"). Hasonló történik a 3-as és 10-es kód kapcsán: 2011-ig a 3-as kód a traumatológia, a 10-es pedig az ortopédia, ám 2012-től már a kettőt egybevonják "ortopédia-traumatológia" néven, ami nem lenne probléma, az viszont már maximálisan az, hogy erre _ugyanazt_ a 10-es kódot osztják ki, ami korábban még csak az ortopédia volt magában... Mindkét esetben ugyanaz jelenti a megoldást: a kódokat szedjük szét (17F és 17A, illetve 3, 10O, 10OT neveken) úgy, hogy ennek során az évet is tekintetbe vesszük. (Ez nem lenne kötelező, hiszen az év figyelembevétele a kód mellett, vagy a szöveges elnevezés használata elvileg biztonságos megoldás, de a kavarodások elkerülése érdekében jobbnak láttam, ha pusztán a kód is tükrözi a valós helyzetet.) Potenciálisan zűrös még a 13-as kód: ez 2011-ig a "Fog- és szájsebészet" volt, utána két évig nem használták, majd 2014-ben visszatért, de immár mint "Fogászati ellátás". A biztonság kedvéért ezt is megkülönböztettem (13FSZ és 13F), hozzátéve mellesleg, hogy valószínűleg a 17F a 13FSZ átnevezése. Ezen felül az egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes legyen); illetve egy szakmanevet is lerövidítünk, hogy jobban kiférjen az ábrákon. Összesséségében véve a következő átalakításokat tesszük:
 
-```{r}
+```{r, open = TRUE}
 <<atnevezesek>>
 ```
 
@@ -715,7 +715,7 @@ Ezek után már a megnevezés aggálytalanul használható.
 
 A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor kizárjuk a vizsgálatokból:
 
-```{r}
+```{r, open = TRUE}
 <<specek>>
 ```
 
@@ -723,7 +723,7 @@ A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a 
 
 Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint feldolgozható formátumokban lementeni az adatokat:
 
-```{r}
+```{r, open = TRUE}
 saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
 fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
        sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
