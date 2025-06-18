@@ -106,7 +106,7 @@ betegforgalmi kimutatás. Ezt évente közzéteszik, eleinte a
 készítette, majd 2004-től az Országos Egészségbiztosítási Pénztár (OEP),
 mai nevén Nemzeti Egészségbiztosítási Alapkezelő (NEAK). Az adatok
 2003-ig visszamenőleg [érhetőek
-el](http://neak.gov.hu/felso_menu/szakmai_oldalak/publikus_forgalmi_adatok/gyogyito_megelozo_forgalmi_adat/fekvobeteg_szakellatas_stat/korhazi_agyszam.html)
+el](http://neak.gov.hu/felso_menu/szakmai_oldalak/publikus_forgalmi_adatok/gyogyito_megelozo_forgalmi_adat/fekvobeteg_szakellatas_stat/korhazi_agyszam)
 nyilvánosan. (2003 előtti adatok létének könyvtárban [találtam
 nyomát](https://nektar.oszk.hu/peldinfo_spring/peldinfo.htm?id=1013300&language=hu&view=1),
 de elektronikusan nem sikerült fellelnem, pedig jó lenne még tágabbra
@@ -210,18 +210,18 @@ eredményeket [a függelékben](#adatvalidáció-1) közlöm.
 
 A kórházak működésének egyik legközvetlenebb mutatója a betegforgalom,
 azaz a felvett majd elbocsátott betegek száma. (A kettő mindenképpen
-egyezik egy adott szakmaosztály esetében, ugyanis a magyar terminológiai
+egyezik egy adott szakmaosztály esetében, ugyanis a magyar terminológia
 „elbocsátottnak” nevezi a más osztályra áthelyezett és a meghalt
 betegeket is.) Ez még persze nem olyan értelemben teljesítmény, ahogy a
 köznyelv hívja („mennyire jó hatásfokú a gyógyítás”), de mégis ez az
 első szintje a teljesítmény-vizsgálatnak. Egy további, második lépés
 lehet az ilyen jellegű szempontok bevonása, erre később fogok rátérni.
 
-Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak
-szakmaosztályai által 2022-ben ellátott betegek számának eloszlását:
+Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
+által 2024-ben ellátott betegek számának eloszlását:
 
 ``` r
-ggplot(res[Ev==2022], aes(x = ElbocsatottBetegSzam)) +
+ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
   geom_histogram(boundary = 0, bins = 30) +
   labs(x = "Elbocsátott betegek száma [fő]",
        y = "Gyakoriság [db]")
@@ -234,7 +234,7 @@ különböző kórházak nagyon eltérően viselkednek. Érdemes ezért az
 eloszlást szakmánként ábrázolni:
 
 ``` r
-ggplot(res[Ev==2022],
+ggplot(res[Ev==2024],
        aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) +
   scale_y_discrete(limits=rev) +
@@ -243,7 +243,7 @@ ggplot(res[Ev==2022],
 
 ![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-Nézzük meg a 2022-ben legkisebb és legnagyobb forgalmú osztályokat
+Nézzük meg a 2024-ben legkisebb és legnagyobb forgalmú osztályokat
 szakmánként számszerűen is (ez persze elég kiragadott, hiszen egy-egy
 osztály nem mond sokat a rendszer egészéről, de azért nagyon
 illusztratív lesz):
@@ -251,7 +251,7 @@ illusztratív lesz):
 ``` r
 kableExtra::add_header_above(
   kableExtra::kable(
-    dcast(res[Ev==2022][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    dcast(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(ElbocsatottBetegSzam), which.max(ElbocsatottBetegSzam))]), .(SzakmaMegnev)],
       SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
@@ -333,22 +333,22 @@ Aneszt. és intenzív betegellátás
 
 <td style="text-align:right;">
 
-66
+105
 </td>
 
 <td style="text-align:left;">
 
-Mátrai Gyógyintézet
+Pápai Gróf Esterházy Kórház és Rendelőintézeti Szakrendelő
 </td>
 
 <td style="text-align:right;">
 
-3683
+4683
 </td>
 
 <td style="text-align:left;">
 
-Debreceni Egyetem Klinikai Központ
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -362,17 +362,17 @@ Arc-, állcsont- és szájsebészet
 
 <td style="text-align:right;">
 
-213
+249
 </td>
 
 <td style="text-align:left;">
 
-Markusovszky Egyetemi Oktatókórház, Szombathely
+Vas Vármegyei Markusovszky Egyetemi Oktatókórház
 </td>
 
 <td style="text-align:right;">
 
-1901
+2545
 </td>
 
 <td style="text-align:left;">
@@ -391,17 +391,17 @@ Belgyógyászat
 
 <td style="text-align:right;">
 
-177
+0
 </td>
 
 <td style="text-align:left;">
 
-Budapesti Szent Ferenc Kórház
+Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet
 </td>
 
 <td style="text-align:right;">
 
-17903
+21570
 </td>
 
 <td style="text-align:left;">
@@ -425,12 +425,12 @@ Bőr- és nemibeteg
 
 <td style="text-align:left;">
 
-Petz Aladár Egyetemi Oktató Kórház
+Győr-Moson-Sopron Vármegyei Petz Aladár Egyetemi Oktató Kórház
 </td>
 
 <td style="text-align:right;">
 
-673
+891
 </td>
 
 <td style="text-align:left;">
@@ -449,17 +449,17 @@ Csecsemő- és gyermekgyógyászat
 
 <td style="text-align:right;">
 
-8
+86
 </td>
 
 <td style="text-align:left;">
 
-Karolina Kórház és Rendelőintézet, Mosonmagyaróvár
+Mosonmagyaróvári Karolina Kórház-Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-18924
+17958
 </td>
 
 <td style="text-align:left;">
@@ -478,22 +478,22 @@ Fül-orr-gégegyógyászat
 
 <td style="text-align:right;">
 
-8
+13
 </td>
 
 <td style="text-align:left;">
 
-Gróf Esterházy Kórház és Rendelőintézeti Szakrendelő, Pápa
+Soproni Erzsébet Oktató Kórház és Rehabilitációs Intézet
 </td>
 
 <td style="text-align:right;">
 
-3033
+3341
 </td>
 
 <td style="text-align:left;">
 
-Markhot Ferenc Oktatókórház és Rendelőintézet, Eger
+Szabolcs-Szatmár-Bereg Vármegyei Oktatókh.
 </td>
 
 </tr>
@@ -507,17 +507,17 @@ Gyermek- és ifjúságpszichiátria
 
 <td style="text-align:right;">
 
-337
+282
 </td>
 
 <td style="text-align:left;">
 
-Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
+Jász-Nagykun-Szolnok Vármegyei Hetényi Géza Kórház - Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-566
+748
 </td>
 
 <td style="text-align:left;">
@@ -536,17 +536,17 @@ Infektológia
 
 <td style="text-align:right;">
 
-491
+231
 </td>
 
 <td style="text-align:left;">
 
-Bajcsy-Zsilinszky Kórház és Rendelőintézet
+Győr-Moson-Sopron Vármegyei Petz Aladár Egyetemi Oktató Kórház
 </td>
 
 <td style="text-align:right;">
 
-4271
+2836
 </td>
 
 <td style="text-align:left;">
@@ -565,17 +565,17 @@ Kardiológia
 
 <td style="text-align:right;">
 
-30
+318
 </td>
 
 <td style="text-align:left;">
 
-Siófoki Kórház-Rendelőintézet
+Karcagi Kátai Gábor Kórház
 </td>
 
 <td style="text-align:right;">
 
-10845
+12404
 </td>
 
 <td style="text-align:left;">
@@ -594,22 +594,22 @@ Neurológia
 
 <td style="text-align:right;">
 
-0
+449
 </td>
 
 <td style="text-align:left;">
 
-Csongrád-Csanád Megyei Eü. Ellátó Közp. Hódmezővásárhely-Makó
+Karcagi Kátai Gábor Kórház
 </td>
 
 <td style="text-align:right;">
 
-3323
+5173
 </td>
 
 <td style="text-align:left;">
 
-Országos Mentális, Ideggyógyászati és Idegsebészeti Intézet
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -623,22 +623,22 @@ Onkológia, onkoradiológia
 
 <td style="text-align:right;">
 
-0
+453
 </td>
 
 <td style="text-align:left;">
 
-Péterfy Sándor Utcai Kórház-Rendelőintézet
+Budapesti Uzsoki Utcai Kórház
 </td>
 
 <td style="text-align:right;">
 
-6838
+11160
 </td>
 
 <td style="text-align:left;">
 
-Országos Onkológiai Intézet
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -652,22 +652,22 @@ Ortopédia-traumatológia
 
 <td style="text-align:right;">
 
-268
+127
 </td>
 
 <td style="text-align:left;">
 
-Sátoraljaújhelyi Erzsébet Kórház
+Országos Mozgásszervi Intézet
 </td>
 
 <td style="text-align:right;">
 
-9109
+12796
 </td>
 
 <td style="text-align:left;">
 
-Dr. Manninger Jenő Baleseti Központ
+Budapesti Dr. Manninger Jenő Baleseti Központ
 </td>
 
 </tr>
@@ -681,17 +681,17 @@ Plasztikai- és égéssebészet
 
 <td style="text-align:right;">
 
-25
+99
 </td>
 
 <td style="text-align:left;">
 
-Országos Onkológiai Intézet
+Budapesti Uzsoki Utcai Kórház
 </td>
 
 <td style="text-align:right;">
 
-1097
+1066
 </td>
 
 <td style="text-align:left;">
@@ -710,22 +710,22 @@ Pszichiátria
 
 <td style="text-align:right;">
 
-46
+235
 </td>
 
 <td style="text-align:left;">
 
-Jahn Ferenc Dél-pesti Kórház
+Heves Vármegyei Markhot Ferenc Kórház, Eger
 </td>
 
 <td style="text-align:right;">
 
-4413
+5779
 </td>
 
 <td style="text-align:left;">
 
-Országos Mentális, Ideggyógyászati és Idegsebészeti Intézet
+Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet
 </td>
 
 </tr>
@@ -739,17 +739,17 @@ Reumatológia
 
 <td style="text-align:right;">
 
-0
+137
 </td>
 
 <td style="text-align:left;">
 
-Petz Aladár Egyetemi Oktató Kórház
+Győr-Moson-Sopron Vármegyei Petz Aladár Egyetemi Oktató Kórház
 </td>
 
 <td style="text-align:right;">
 
-1739
+3816
 </td>
 
 <td style="text-align:left;">
@@ -768,22 +768,22 @@ Sebészet
 
 <td style="text-align:right;">
 
-175
+35
 </td>
 
 <td style="text-align:left;">
 
-Dr. Manninger Jenő Baleseti Központ
+Országos Mozgásszervi Intézet
 </td>
 
 <td style="text-align:right;">
 
-10551
+14866
 </td>
 
 <td style="text-align:left;">
 
-Debreceni Egyetem Klinikai Központ
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -797,17 +797,17 @@ Szemészet
 
 <td style="text-align:right;">
 
-1055
+875
 </td>
 
 <td style="text-align:left;">
 
-Markhot Ferenc Oktatókórház és Rendelőintézet, Eger
+Nógrád Vármegyei Szent Lázár Kórház, Salgótarján
 </td>
 
 <td style="text-align:right;">
 
-12721
+13757
 </td>
 
 <td style="text-align:left;">
@@ -826,17 +826,17 @@ Szülészet-nőgyógyászat
 
 <td style="text-align:right;">
 
-347
+4
 </td>
 
 <td style="text-align:left;">
 
-Mohácsi Kórház
+Gottsegen György Országos Kardiovaszkuláris Intézet
 </td>
 
 <td style="text-align:right;">
 
-12783
+13175
 </td>
 
 <td style="text-align:left;">
@@ -855,17 +855,17 @@ Sürgősségi betegellátás
 
 <td style="text-align:right;">
 
-5
+70
 </td>
 
 <td style="text-align:left;">
 
-Szent Damján Görögkatolikus Kórház
+Karcagi Kátai Gábor Kórház
 </td>
 
 <td style="text-align:right;">
 
-18639
+26624
 </td>
 
 <td style="text-align:left;">
@@ -884,7 +884,7 @@ Tüdőgyógyászat
 
 <td style="text-align:right;">
 
-461
+275
 </td>
 
 <td style="text-align:left;">
@@ -894,7 +894,7 @@ Soproni Erzsébet Oktató Kórház és Rehabilitációs Intézet
 
 <td style="text-align:right;">
 
-7853
+9003
 </td>
 
 <td style="text-align:left;">
@@ -913,22 +913,22 @@ Urológia
 
 <td style="text-align:right;">
 
-376
+196
 </td>
 
 <td style="text-align:left;">
 
-Dr. László Elek Kórház és Rendelőintézet, Orosháza
+Orosházi Dr. László Elek Kórház és Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-3943
+4316
 </td>
 
 <td style="text-align:left;">
 
-Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
+Debreceni Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -940,19 +940,20 @@ Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
 Mindezekből jól látszik a magyar egészségügyi ellátórendszer néhány
 strukturális problémája. Vegyük például a szülészet-nőgyógyászat
 szakmát! Itt egészen extrém esetek vannak: az ábra bal szélén lévő pont
-a Mohácsi Kórház, ami egész évben összesen 347 beteget látott el ebben a
-szakmában. Ez természetesen nem mind szülés! A konkrét beavatkozások
-kórházankénti számáról Magyarországon semmilyen információnk nem lehet,
-az egyedüli kivétel azonban épp a szülések száma: egy [másik
-kimutatásból](https://www.neak.gov.hu/pfile/file?path=/letoltheto/altfin_dok/indikatorok/Szules_csaszarmetszes_2015_2022&inline=true)
-ez az egy megnézhető, és így tudhatjuk, hogy ebben a kórházban 231
-szülés volt 2022-ben. Azaz kevesebb, mint napi 1… Konkrétan szülések
+a Keszthelyi Kórház, ami egész évben összesen 568 beteget látott el
+ebben a szakmában. Ez természetesen nem mind szülés! A konkrét
+beavatkozások kórházankénti számáról Magyarországon semmilyen
+információnk nem lehet, az egyedüli kivétel azonban épp a szülések
+száma: egy [másik
+kimutatásból](https://www.neak.gov.hu/felso_menu/szakmai_oldalak/gyogyito_megeleozo_ellatas/szakellatas/fekvobeteg_szakellatas_minosegi_indikator/csaszarmetszesek)
+ez az egy megnézhető, és így tudhatjuk, hogy ebben a kórházban 264
+szülés volt 2024-ben. Azaz kevesebb, mint napi 1… Konkrétan szülések
 számában, mint ebből a táblázatból kiderül, ez a kórház még így is csak
-a második helyezett, a rekorder a Mezőtúri Kórház, 184 szüléssel. (Nem
-akarom kipécézni őket: 6 osztály van, ahol az 500-at sem érte el az éves
-szülések száma, 29, ahol az 1000-et sem.) Ilyen osztályokat minek
-fenntartani?! És itt most nem az anyagi szempontokról beszélek: az itt
-dolgozó orvosok, szakdolgozók nem fognak tudni manuális gyakorlatot
+a *negyedik* helyezett, a rekorder a Mezőtúri Kórház, 146 szüléssel.
+(Nem akarom kipécézni őket: 11 osztály van, ahol az 500-at sem érte el
+az éves szülések száma, 30, ahol az 1000-et sem.) Ilyen osztályokat
+minek fenntartani?! És itt most nem az anyagi szempontokról beszélek: az
+itt dolgozó orvosok, szakdolgozók nem fognak tudni manuális gyakorlatot
 szerezni, ezer más dolgot kénytelenek csinálni, így nem tudnak
 elmélyedni ebben a konkrét területben, nem fognak rendelkezésre állni a
 legkorszerűbb műszerek (vagy ha igen, akkor meg elment egy halom pénz
@@ -967,7 +968,7 @@ konkrét esetben ez is abszurd érv, lévén, hogy a szülészet *pont hogy*
 egy jól tervezhető terület. (Ennél még az infarktus-ellátás is ezerszer
 jobban centralizált – nagyon helyesen! – pedig aligha lehet mondani,
 hogy ott kevésbé fontos, hogy gyorsan ellátást kapjon a beteg, vagy,
-hogy jobban előre lehet tervezni az eseményt…)
+hogy ott jobban előre lehet tervezni az esemény bekövetkezését…)
 
 Azt, hogy a fent leírtak nem pusztán elméleti spekulációt jelentenek,
 hanem a gyakorlatban is így vannak, ma már bőséges mennyiségű empirikus
@@ -986,13 +987,13 @@ esetszámtól</figcaption>
 Az ábrán az látszik, hogy négy különböző műtéttípus esetén (ez a négy
 csoportja az oszlopoknak) hogyan alakul a – 30 napon belüli vagy kórházi
 – halálozás a szerint, hogy az adott kórház mennyi műtét végez a
-kérdéses típusból (minél világosabb az oszlop, annál többet). Az
-eredmény nem igényel sok kommentárt: a növekvő gyakorlattal csökken,
-esetenként egészen drámai mértékben a halálozás. (Természetesen
-felvethető, hogy a különböző kórházak más összetételű, például más
-súlyosságú vagy életkorú betegeket láttak el – ez a probléma egyébként
-később nálunk is jelentkezni fog egy kérdés kapcsán – de az eredmények
-erre már korrigálva vannak.)
+kérdéses típusból, minél világosabb az oszlop, annál többet. Az eredmény
+nem igényel sok kommentárt: a növekvő gyakorlattal csökken, esetenként
+egészen drámai mértékben a halálozás. (Természetesen felvethető, hogy a
+különböző kórházak más összetételű, például más súlyosságú vagy életkorú
+betegeket láttak el – ez a probléma egyébként később nálunk is
+jelentkezni fog egy kérdés kapcsán – de az eredmények erre már
+korrigálva vannak.)
 
 Szó szerint több ezer hasonló vizsgálat
 [készült](https://pubmed.ncbi.nlm.nih.gov/?term=volume+outcome) az idők
@@ -1009,17 +1010,16 @@ ki](https://www.g-ba.de/downloads/62-492-2882/Mm-R_2022-06-16_iK-2022-07-16-2022
 például a német szabályozás, mondjuk a 16. oldalra lépve azt látjuk,
 hogy totál térdprotézis-műtétből 50 eset/kórház/év a betegbiztonsági
 minimum. Természetesen ennek a megvalósulása is transzparansen
-[lekérdezhető](https://www.bindoc.de/statistik-tool): a
-»Mindestmengenregelung« pontra kattintva láthatjuk az összes német
-kórházat, hogy adott, szabályozás alá eső beavatkozásból – ez a
-»Leistungsart« pontban állítható – mennyit végeztek; szín jelöli a
-megfelelést. Folytatva a példát, a Klinikum Barnim 68 térdprotézis-műtét
-végzett így zölden világít, de az Asklepios Klinikum Uckermark csak
-32-t, ezért a piros szín. Költői kérdés: vajon mikor fogunk ide eljutni
-Magyarországon…? Jelenleg a szülés az *egyetlen* esemény, aminek
-legalább az esetszámát le lehet kérdezni kórházanként, ezen kívül
-*semmilyen* beavatkozás számáról nem érhető el semmilyen információ
-transzparensen.
+[lekérdezhető](https://www.aok.de/pp/hintergrund/mindestmengen/mindestmengen-transparenzkarte-2024/):
+a beavatkozás nevére kattintva láthatjuk a kórházakat, hogy adott,
+szabályozás alá eső beavatkozásból – például a »Knie« a térdprotézis –
+mennyit végeztek; szín jelöli a megfelelést. Folytatva a példát, az
+Altmark Klinikum Gardelegen 107 térdprotézis-műtét végzett így zölden
+világít, de a Diakonie Krankenhaus Standort Kirn csak 30-t, ezért a kék
+szín. Költői kérdés: vajon mikor fogunk ide eljutni Magyarországon…?
+Jelenleg a szülés az *egyetlen* esemény, aminek legalább az esetszámát
+le lehet kérdezni kórházanként, ezen kívül *semmilyen* beavatkozás
+számáról nem érhető el semmilyen információ transzparensen.
 
 De mi a helyzet a szülésekkel, ha már egyszer ezt hoztam fent problémás
 hazai példaként? Szerencsére erre vonatkozóan is vannak eredmények.
@@ -1062,27 +1062,33 @@ világviszonylatban is párját ritkító adatgyűjtést
 [folytatunk](http://medicalonline.hu/cikk/a_szuleszeti__adatszolgaltatas_helyzete_hazankban),
 1931 óta. Ehhez képest ott tartunk, hogy hétköznapi halandó számára
 feldolgozható formában lényegében semmilyen információ nem érhető el
-ebből, a Tauffer-statisztika honlapján a legfrissebb összefoglaló
-jelentés 2009-es (!) és egyébként [így néz
-ki](http://193.225.50.35/dokumentum/S2009/tauffer_stat.ppt). Mindezt
-2022-ben.
+ebből: a Tauffer-statisztika honlapján 2022-ben még kint volt a 2009-es
+(!) összefoglaló, mint a legfrissebb (!) elérhető jelentés (egyébként
+érdemes megnézni [hogy néz
+ki](https://prod.eadatlap.hu:8033/dokumentum/S2009/tauffer_stat.ppt),
+még egyszer: ez 2022-ben), azonban mára már ez is lekerült a honlapon
+linkelt anyagok közül, így 2024-re, Tauffer Vilmos hazájában, 90 évvel
+az adatgyűjtés beindítása után sikerült oda eljutnunk, hogy *egyáltalán
+semmilyen* lekérdezhető, nyilvános információszolgáltatás nem érhető el
+ebből az adatgyűjtésből.
 
 Nagyobb újszülött-halandóság, gyakoribb postpartum vérzés, gyakoribb
-súlyos gátsérülés – csak annyit kérdeznék: megérte, hogy közel van?
+súlyos gátsérülés – csak annyit kérdeznék: megérte, hogy közel van a
+kórház?
 
-Arról nem beszélve, hogy bár 29 kórházban nincs évi 1000 szülés,
-mindössze két megye van, ahol a megyében sincs legalább 1000 szülést
-levezető kórház (ebből is az egyik csak éppenhogy: Tolnában 949 szülést
-vezetett a Balassa János Kórház). Magyarul: szinte minden esetben
+Arról nem beszélve, hogy bár 30 kórházban nincs évi 1000 szülés,
+mindössze három megye van, ahol a megyében sincs legalább 1000 szülést
+levezető kórház (ebből is az egyik csak éppenhogy: Zalában 977 szülést
+vezetett a Szent Rafael Kórház). Magyarul: szinte minden esetben
 ugyanazon megyén belül is volna olyan kórház, ahol kellő gyakorlattal
-rendelkeznek. Orosházán úgy vezetnek évi kevesebb mint 400 szülést, hogy
-onnan 39 kilométerre található a Békés Megyei Központi Kórház évi
-majdnem 2000 szüléssel. Pécsen az ország egyik legnagyobb, egyetemi
-klinika szintű szülészetétől 36 és 45 kilométerre is vezetnek szülést,
-közülük a nagyobbikban van évi 617 szülés. (Nekünk Mohács kell! –
-bocsánat.) A legextrémebb példa talán Jász-Nagykun-Szolnok megye, ahol
-*négy* helyen is vezetnek szülést, de úgy, hogy ebből *háromban* 700,
-vagy az alatti az évi esetszám.
+rendelkeznek. Orosházán úgy vezetnek évi alig több mint 500 szülést,
+hogy onnan 39 kilométerre található a Békés Megyei Központi Kórház évi
+1500 szüléssel. 2022-ben még az volt a helyzet, hogy Pécs, az ország
+egyik legnagyobb, egyetemi klinika szintű szülészetétől 36 és 45
+kilométerre is vezetnek szülést, közülük a nagyobbikban van évi 617
+szülés. (Nekünk Mohács kell! – bocsánat.) A legextrémebb példa talán
+Jász-Nagykun-Szolnok megye, ahol *négy* helyen is vezetnek szülést, de
+úgy, hogy ebből *háromban* 600, vagy az alatti az évi esetszám.
 
 A valódi magyarázat tehát azt hiszem teljesen más: annak politikai
 következményei jelentik a problémát, hogy egy osztályt – pláne kórházat
@@ -1101,23 +1107,25 @@ hogy rövidtávon lehet a politikai pecsenyét sütögetni ezen.
 
 Persze nem csak a mindenkori ellenzékről van szó, a saját párttal is meg
 kell küzdeni, hiszen jönni fog a helyi polgármester, jönni fog a körzet
-országgyűlési képviselője, hogy ne csináljuk már, így hogy fogják őt
-legközelebb megválasztani?! (Ami persze a pártunknak is érdeke!) Sőt, ha
-már teljeskörűek vagyunk, akkor van még egy nagyon fontos szereplő: a
-kórházigazgató, az osztályvezető, akik – jó esetben presztízs-, rang-,
-rosszabb esetben anyagi érdekből kifolyólag – szintén nagyon is
-érdekeltek személyesen az osztály, a kórház fennmaradásban, ráadásul
-szavukkal nagy hatást tudnak elérni, pláne kisebb településeken.
+országgyűlési képviselője, hogy ne csináljuk már, ha bezárjuk a
+kórházat, akkor hogy fogják őt legközelebb megválasztani?! (Ami persze a
+pártunknak is érdeke!) Sőt, ha már teljeskörűek vagyunk, akkor van még
+egy nagyon fontos szereplő: a kórházigazgató, az osztályvezető, akik –
+jó esetben presztízs-, rang-, rosszabb esetben anyagi érdekből
+kifolyólag – szintén nagyon is érdekeltek személyesen az osztály, a
+kórház fennmaradásban, ráadásul szavukkal nagy hatást tudnak elérni,
+pláne kisebb településeken.
 
 Félreértés ne essék, ez egy nagyon érzékeny, sok helyen összekötött
 rendszer, aminek nem lehet egy kiragadott eset alapján hentesbárddal
 nekiesni; a konkrét példánál maradva: a kis szülészetek bezárása a
 mentőszolgálat megerősítésével együtt képzelhető el.
 
-És még egyetlen gondolat ehhez. Emlékszik az olvasó, hogy melyik volt a
-legkisebb forgalmú szülészet? A Mezőtúri Kórház. Ha az ember felmegy a
-Nemzeti Népegészségügyi Központ (NNK) honlapjára, akkor megtalálja [azt
-a
+És még egyetlen gondolat ehhez. Hadd hozzak fel egy 2022-es, tehát
+kicsit régebbi, de a kérdést tökéletesen szemléltető példát ehhez. Abban
+az évben a legkisebb forgalmú szülészet a Mezőtúri Kórházé volt. Ha az
+ember felmegy a Nemzeti Népegészségügyi Központ (NNK) honlapjára, akkor
+megtalálja [azt a
 részt](https://www.nnk.gov.hu/index.php/egeszsegugyi-igazgatasi-foosztaly/nyilvantartasok/ellatasi-teruletek-nyilvantartasai/kijeloles),
 ami az úgynevezett kijelölő határozatokat tartalmazza: az NNK akkor ad
 ki ilyet, ha egy kórház valamilyen okból akadályozott egy
@@ -1155,8 +1163,8 @@ esetleg mondjuk működik is. Mert, ugye, ahhoz valamit be kellene zárni.
 Ne legyenek illúziónk arról, hogy ebbe a helyzetbe nem halhatnak-e bele
 emberek. (Csak reflektálva arra a gyakran felmerülő szempontra, hogy a
 kórházbezárások, általában, átalakítások egy ideig káosszal járnak, és
-abba „emberek halhatnak bele”.) Az NNK honlapján e pillanatban 225
-kijelölő határozat van 2022-ből.
+abba „emberek halhatnak bele”.) Az NNK honlapján *több száz* kijelölő
+határozat található.
 
 (Hogy akkor most összeomlott a magyar egészségügy? Népszerű toposz az
 egészségügy összeomlása, általában az aktuális ellenzék prognosztizálja
@@ -1174,10 +1182,10 @@ szürke vonalak az egyes osztályok forgalmai, a piros vonal az átlaguk
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = Ev, y = ElbocsatottBetegSzam, group = KorhazRovid)) +
-    facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-    geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-        , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
-        aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
+    aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Elbocsátott betegszám [fő]") + scale_x_continuous(limits = range(res$Ev))
 ```
 
@@ -1193,9 +1201,9 @@ egészségügy teljesítményének:
 
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-        , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
-       aes(x = Ev, y = ElbocsatottBetegSzam)) +
-    facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
+  , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
+  aes(x = Ev, y = ElbocsatottBetegSzam)) +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
   labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]") + scale_x_continuous(limits = range(res$Ev))
 ```
 
@@ -1204,7 +1212,7 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
 Az ábra több szempontból érdekes, hiszen egyszerre tükrözi a
 megbetegedési viszonyok alakulását és az egészségpolitikai
 prioritásokat, döntéseket. Ez utóbbiról még sok szó lesz; most csak az
-előbbi kapcsán hívnám fel a figyelmet egy elég látványos dologra: az új
+előbbi kapcsán hívnám fel a figyelmet egy elég látványos dologra: a
 koronavírus-járvány hatására. Egyrészt látszik, ahogy egy-két szakma
 forgalma drámaian megugrott (infektológia, természetesen, intenzív
 ellátás), de ami talán kevésbé közismert, hogy milyen hihetetlen
@@ -1280,7 +1288,9 @@ esetén az egynapos ellátásban végzettek aránya (szürke vonalak az
 európai országokat jelentik, piros Magyarország):
 
 ``` r
-res2 <- as.data.table(eurostat::get_eurostat("hlth_co_proc2", use.data.table = TRUE))
+res2 <- unique(rbind(
+  data.table(eurostat::get_eurostat("hlth_co_proc2")),
+  data.table(eurostat::get_eurostat("hlth_co_proc3"))))
 res2 <- res2[unit=="NR"]
 ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
             .(icd9cm, geo, TIME_PERIOD)],
@@ -1301,6 +1311,14 @@ hogy miközben máshol egyre megszokottabb – sőt, adott esetben akár
 domináns! – az egynapos ellátás keretében történő megoldás, addig nálunk
 ez gyakorlatilag nem létezik (CM282-284: mandulaeltávolítás, CM5123:
 laparoszkópos epehólyag-műtét).
+
+Természetesen nem lehet teljes egészében az egészségügyi
+ellátórendszeren elverni a port az egynapos ellátások terén mutatkozó
+lemaradásunk miatt: ebben nem csak az elérhető eszközök, technikák,
+személyzet stb. játszik szerepet, hanem erősen benne van a betegek
+állapota is – ez egyáltalán nem ugyanolyan itt, mint Ausztriában,
+márpedig ez befolyásolhatja az egynapos ellátásra való alkalmasságot
+(mind a beavatkozást, mind az utógondozás lehetőségeit illetően).
 
 Mindezt megnézhetjük a hazai adatbázisunk alapján is, hiszen szerencsére
 meg van adva az egynapos esetek száma, így könnyen meg tudjuk az
@@ -1323,7 +1341,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
 Látszik, hogy a fejlődés nagyon eltérő az egyes szakmák között (ez
 persze nem pusztán egészségpolitikai kérdés, az orvosi lehetőségek is
 nagyon mások, az intenzív terápia nem igen fog tudni „egynapos ellátást”
-nyújtani).
+nyújtani). Kiemelhető, ahogy a szemészet szinte egy-két évtized alatt
+teljesen átalakult ilyen szempontból.
 
 Itt csak egyetlen bekezdés erejéig tudok kitérni rá, de természetesen a
 kórházakat, a fekvőbeteg-ellátást nem lehet izoláltan nézni, az egész
@@ -1332,8 +1351,8 @@ hármas tagozódásban (alapellátás – járóbeteg-szakellátás –
 fekvőbeteg-szakellátás, pongyolán, de hétköznapi kifejezésekkel élve:
 háziorvos – szakrendelő – kórház) minden lejjebb lévő szint szűrő
 szerepet valósít meg, és a beteg csak akkor kerül feljebb, ha alsóbb
-szinten nem oldható meg a problémája, a valóságban ez minimálisan
-valósul meg. Ennek csak az lehet az eredménye, hogy olyanok is fekszenek
+szinten nem oldható meg a problémája, a valóságban ez nem valósul meg
+jól. Ennek csak az lehet az eredménye, hogy olyanok is fekszenek
 kórházban, akiknek nem kellene. Jól ismert, hogy a „kapuőri” háziorvosok
 valójában annyira túlterheltek, hogy esélyük sincs ezt érdemben
 megoldani, gúzsba van kötve a kezük abban is, hogy milyen terápiákat
@@ -1344,11 +1363,11 @@ beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
 alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!
 Ehhez képest a háziorvosok száma [folyamatosan
 csökken](https://www.ksh.hu/stadat_files/ege/hu/ege0046.html), jelenleg
-607 tartósan betöltetlen háziorvosi praxis [van az
+864 tartósan betöltetlen háziorvosi praxis [van az
 országban](https://alapellatas.okfo.gov.hu/tajekoztato-a-tartosan-betoltetlen-haziorvosi-korzetekrol/),
 és valószínűleg az sem tesz jót, hogy a háziorvosok
-[átlagéletkora](https://www.parlament.hu/irom41/17188/T_17188_09.pdf)
-már majdnem 60 év.) A helyzet ráadásul egyre romlik, csak egyetlen
+[átlagéletkora](https://www.parlament.hu/irom42/09346/09346KIEGSZ008.pdf)
+60 év.) A helyzet ráadásul egyre romlik, csak egyetlen
 [számadat](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/egeszsegugyi_evkonyv_2014.pdf)
 ennek érzékeltetésére: 1990-ben még a háziorvosi ellátásban megjelentek
 7,2%-át utalták tovább szakrendelésre, 2000-ben 12,1%-át, 2010-ben
@@ -1398,11 +1417,11 @@ eljárások, terápiák legjobb elérhető bizonyítékokra alapozottságát.
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat
 erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben:
 mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A legfrissebb
-adat 2019-es:
+adat 2021-es:
 
 ``` r
-res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds", use.data.table = TRUE))
-res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2019-01-01"&nchar(geo)==2]
+res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
+res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nchar(geo)==2 & hlthcare == "TOTAL"]
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
        aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
@@ -1416,21 +1435,22 @@ mennyire szépen megjelenik a szocialista örökség máshol is, illetve,
 hogy mennyire fals az a kép, hogy a magas ágyszám automatikusan azt
 jelenti, hogy jobb a helyzet – amit elvileg jelent az az hozzáállás, ami
 szerint az ágyszám-csökkentés automatikusan rossz). *Még most is* a
-lista tetején vagyunk.
+lista elején vagyunk.
 
 Egyébként pont a járvány elején merült fel gondolatként, hogy bár a
 magyar egészségügyi rendszer kórházcentrikussága általában rossz hír, de
-most, egy ilyen helyzetben kivételesen pont jól jön. Ahogy telt az idő,
-kiderült, hogy valójában még ez sem igazán valósul meg: az elsődleges
-szűk keresztmetszet ugyanis ilyen helyzetben sem az ágy, vagy épp az
-orvostechnikai berendezés, legyen az lélegeztetőgép vagy bármi más volt
-Magyarországon, hanem egész egyszerűen a szakember. Az orvos, de még
-inkább: az ápoló. (Sőt, még ez a kör is bővíthető: a szakember-hiány
-megjelenik a gazdasági-műszaki szolgálat terén is.)
+most, egy ilyen helyzetben kivételesen pont jól jön. (Ezt járványtól
+független is szokták mondani: hogy kell valamennyi tartalék a
+rendszerben; erre később még hosszan vissza fogok térni.) Ahogy telt az
+idő, kiderült, hogy valójában még ez sem igazán valósul meg: az
+elsődleges szűk keresztmetszet ugyanis ilyen helyzetben sem az ágy, vagy
+épp az orvostechnikai berendezés, legyen az lélegeztetőgép vagy bármi
+más volt Magyarországon, hanem egész egyszerűen a szakember. Az orvos,
+de még inkább: az ápoló. (Sőt, még ez a kör is bővíthető: a
+szakember-hiány megjelenik a gazdasági-műszaki szolgálat terén is.)
 
 Vegyük példának Dániát: miközben ott kórházi ágyból 40%-kal kevesebb van
-lakosságarányosan mint nálunk, ahogy a fenti ábra is mutatja, addig
-orvosból mégis [ott van
+lakosságarányosan mint nálunk, addig orvosból mégis [ott van
 több](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRS1/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff),
 ha csak a kórházban dolgozó orvosokat nézzük, [akkor
 pláne](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRSHP1/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff).
@@ -1439,13 +1459,13 @@ szakdolgozóknál](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRSHP1
 ápolóból lakosságarányosan több mint kétszer (!) annyi van Dániában,
 mint Magyarországon!
 
-Visszatérve a magyar adatokhoz, ássunk most kicsit mélyebbre! Kezdjük a
-2022-es évvel. Elsőként nézzük meg az ágyszámok eloszlását (itt és a
-továbbiakban csak azokkal az intézményekkel foglalkozunk, ahol van
-egyáltalán működő ágy), az átlagos működő ágyszámot alapul véve:
+Visszatérve a magyar adatokhoz, ássunk most kicsit mélyebbre! Elsőként
+nézzük meg az ágyszámok eloszlását 2024-ben (itt és a továbbiakban csak
+azokkal az intézményekkel foglalkozunk, ahol van egyáltalán működő ágy),
+az átlagos működő ágyszámot alapul véve:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
   geom_histogram(boundary = 0, bins = 30) + labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]")
 ```
 
@@ -1457,7 +1477,7 @@ szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes,
 úgyhogy készítsünk róla egy ábrát:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos ágyszám", y = "")
 ```
@@ -1471,7 +1491,7 @@ osztályokat:
 ``` r
 kableExtra::add_header_above(
   kableExtra::kable(
-    dcast(res[Ev==2022][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    dcast(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(MukodoAtlagAgy), which.max(MukodoAtlagAgy))]), .(SzakmaMegnev)],
       SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
@@ -1558,17 +1578,17 @@ Aneszt. és intenzív betegellátás
 
 <td style="text-align:left;">
 
-Szigetvári Kórház
+Országos Mozgásszervi Intézet
 </td>
 
 <td style="text-align:right;">
 
-103.0
+107.7
 </td>
 
 <td style="text-align:left;">
 
-Szegedi Tudományegyetem Szent-Györgyi Albert Klinikai Központ
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -1587,12 +1607,12 @@ Arc-, állcsont- és szájsebészet
 
 <td style="text-align:left;">
 
-Somogy Megyei Kaposi Mór Oktató Kórház
+Somogy Vármegyei Kaposi Mór Oktató Kórház
 </td>
 
 <td style="text-align:right;">
 
-25.0
+26.0
 </td>
 
 <td style="text-align:left;">
@@ -1621,12 +1641,12 @@ Budapesti Szent Ferenc Kórház
 
 <td style="text-align:right;">
 
-379.0
+446.0
 </td>
 
 <td style="text-align:left;">
 
-Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
+Debreceni Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -1640,7 +1660,7 @@ Bőr- és nemibeteg
 
 <td style="text-align:right;">
 
-9.0
+10.0
 </td>
 
 <td style="text-align:left;">
@@ -1655,7 +1675,7 @@ Semmelweis Egyetem Klinikai Központ
 
 <td style="text-align:left;">
 
-Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
+Borsod-Abaúj-Zemplén Vármegyei Központi Kórház és Egyetemi Oktatókórház
 </td>
 
 </tr>
@@ -1679,7 +1699,7 @@ Dél-budai Centrumkórház Szent Imre Egyetemi Oktatókórház
 
 <td style="text-align:right;">
 
-374.0
+343.2
 </td>
 
 <td style="text-align:left;">
@@ -1698,22 +1718,22 @@ Fül-orr-gégegyógyászat
 
 <td style="text-align:right;">
 
-4.4
+4.6
 </td>
 
 <td style="text-align:left;">
 
-Gróf Esterházy Kórház és Rendelőintézeti Szakrendelő, Pápa
+Soproni Erzsébet Oktató Kórház és Rehabilitációs Intézet
 </td>
 
 <td style="text-align:right;">
 
-52.0
+51.0
 </td>
 
 <td style="text-align:left;">
 
-Debreceni Egyetem Klinikai Központ
+Szabolcs-Szatmár-Bereg Vármegyei Oktatókh.
 </td>
 
 </tr>
@@ -1732,12 +1752,12 @@ Gyermek- és ifjúságpszichiátria
 
 <td style="text-align:left;">
 
-Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
+Szabolcs-Szatmár-Bereg Vármegyei Oktatókh.
 </td>
 
 <td style="text-align:right;">
 
-23.0
+30.0
 </td>
 
 <td style="text-align:left;">
@@ -1756,12 +1776,12 @@ Infektológia
 
 <td style="text-align:right;">
 
-20.0
+8.0
 </td>
 
 <td style="text-align:left;">
 
-Dr. Bugyi István Kórház, Szentes
+Győr-Moson-Sopron Vármegyei Petz Aladár Egyetemi Oktató Kórház
 </td>
 
 <td style="text-align:right;">
@@ -1785,17 +1805,17 @@ Kardiológia
 
 <td style="text-align:right;">
 
-3.1
+12.0
 </td>
 
 <td style="text-align:left;">
 
-Jávorszky Ödön Kórház, Vác
+Siófoki Kórház-Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-172.0
+176.0
 </td>
 
 <td style="text-align:left;">
@@ -1814,22 +1834,22 @@ Neurológia
 
 <td style="text-align:right;">
 
-11.7
+20.0
 </td>
 
 <td style="text-align:left;">
 
-Csongrád-Csanád Megyei Eü. Ellátó Közp. Hódmezővásárhely-Makó
+Budapesti Péterfy Sándor utcai Kórház-Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-116.0
+143.3
 </td>
 
 <td style="text-align:left;">
 
-Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -1848,12 +1868,12 @@ Onkológia, onkoradiológia
 
 <td style="text-align:left;">
 
-Bajcsy-Zsilinszky Kórház és Rendelőintézet
+Budapesti Bajcsy-Zsilinszky Kórház és Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-186.0
+193.0
 </td>
 
 <td style="text-align:left;">
@@ -1872,12 +1892,12 @@ Ortopédia-traumatológia
 
 <td style="text-align:right;">
 
-10.9
+3.3
 </td>
 
 <td style="text-align:left;">
 
-Dr. László Elek Kórház és Rendelőintézet, Orosháza
+Országos Mozgásszervi Intézet
 </td>
 
 <td style="text-align:right;">
@@ -1887,7 +1907,7 @@ Dr. László Elek Kórház és Rendelőintézet, Orosháza
 
 <td style="text-align:left;">
 
-Dr. Manninger Jenő Baleseti Központ
+Budapesti Dr. Manninger Jenő Baleseti Központ
 </td>
 
 </tr>
@@ -1901,12 +1921,12 @@ Plasztikai- és égéssebészet
 
 <td style="text-align:right;">
 
-2.5
+4.3
 </td>
 
 <td style="text-align:left;">
 
-Országos Onkológiai Intézet
+Dél-pesti Centrumkórház - Országos Hematológiai és Infektológiai Intézet
 </td>
 
 <td style="text-align:right;">
@@ -1916,7 +1936,7 @@ Országos Onkológiai Intézet
 
 <td style="text-align:left;">
 
-Magyar Honvédség Egészségügyi Központ
+Észak-Pesti Centrumkórház - Honvédkórház
 </td>
 
 </tr>
@@ -1930,22 +1950,22 @@ Pszichiátria
 
 <td style="text-align:right;">
 
-20.0
+19.9
 </td>
 
 <td style="text-align:left;">
 
-Dr. Bugyi István Kórház, Szentes
+Dél-budai Centrumkórház Szent Imre Egyetemi Oktatókórház
 </td>
 
 <td style="text-align:right;">
 
-199.3
+182.0
 </td>
 
 <td style="text-align:left;">
 
-Szabolcs-Szatmár-Bereg Megyei Kórházak és Egyetemi Oktatókórház
+Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet
 </td>
 
 </tr>
@@ -1959,12 +1979,12 @@ Reumatológia
 
 <td style="text-align:right;">
 
-9.9
+13.7
 </td>
 
 <td style="text-align:left;">
 
-Csongrád-Csanád Megyei Eü. Ellátó Közp. Hódmezővásárhely-Makó
+Veszprém Vármegyei Csolnoky Ferenc Kórház
 </td>
 
 <td style="text-align:right;">
@@ -1988,22 +2008,22 @@ Sebészet
 
 <td style="text-align:right;">
 
-13.0
+3.3
 </td>
 
 <td style="text-align:left;">
 
-Keszthelyi Kórház
+Országos Mozgásszervi Intézet
 </td>
 
 <td style="text-align:right;">
 
-253.0
+341.0
 </td>
 
 <td style="text-align:left;">
 
-Borsod-Abaúj-Zemplén Megyei Központi Kórház és Egyetemi Oktatókórház
+Semmelweis Egyetem Klinikai Központ
 </td>
 
 </tr>
@@ -2017,7 +2037,7 @@ Szemészet
 
 <td style="text-align:right;">
 
-9.0
+10.0
 </td>
 
 <td style="text-align:left;">
@@ -2027,7 +2047,7 @@ Pécsi Tudományegyetem Klinikai Központ
 
 <td style="text-align:right;">
 
-59.0
+60.0
 </td>
 
 <td style="text-align:left;">
@@ -2046,17 +2066,17 @@ Szülészet-nőgyógyászat
 
 <td style="text-align:right;">
 
-9.1
+2.0
 </td>
 
 <td style="text-align:left;">
 
-Mohácsi Kórház
+Gottsegen György Országos Kardiovaszkuláris Intézet
 </td>
 
 <td style="text-align:right;">
 
-196.0
+200.0
 </td>
 
 <td style="text-align:left;">
@@ -2080,12 +2100,12 @@ Sürgősségi betegellátás
 
 <td style="text-align:left;">
 
-Bajcsy-Zsilinszky Kórház és Rendelőintézet
+Budapesti Bajcsy-Zsilinszky Kórház és Rendelőintézet
 </td>
 
 <td style="text-align:right;">
 
-69.0
+76.0
 </td>
 
 <td style="text-align:left;">
@@ -2104,7 +2124,7 @@ Tüdőgyógyászat
 
 <td style="text-align:right;">
 
-12.5
+15.0
 </td>
 
 <td style="text-align:left;">
@@ -2133,17 +2153,17 @@ Urológia
 
 <td style="text-align:right;">
 
-15.2
+8.3
 </td>
 
 <td style="text-align:left;">
 
-Bajcsy-Zsilinszky Kórház és Rendelőintézet
+Veszprém Vármegyei Csolnoky Ferenc Kórház
 </td>
 
 <td style="text-align:right;">
 
-78.0
+80.0
 </td>
 
 <td style="text-align:left;">
@@ -2162,7 +2182,7 @@ Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú
 meg. Ez így néz ki 2022-ben:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
   order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító")
@@ -2177,28 +2197,28 @@ szó):
 
 ``` r
 knitr::kable(
-  res[Ev==2022][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
+  res[Ev==2024][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
     , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
       order(`Működő átlagos aktív ágyszám`)][1:15])
 ```
 
 | Kórház | Működő átlagos aktív ágyszám |
 |:---|---:|
-| Selye János Kórház, Komárom | 21.0 |
-| Állami Szívkórház, Balatonfüred | 34.0 |
-| Komlói Egészségcentrum, Bányászati Utókezelő és Éjjeli Szanatórium Egészségügyi Központ | 35.0 |
+| Komáromi Selye János Kórház | 23.0 |
+| Balatonfüredi Állami Szívkórház | 34.0 |
 | Szaplonczay Manó Marcali Kórház | 39.0 |
-| Hévízgyógyfürdő és Szent András Reumakórház | 39.0 |
+| Hévízi Szent András Reumakórház és Gyógyfürdő | 39.0 |
 | Országos Sportegészségügyi Intézet | 40.0 |
 | Mezőtúri Kórház és Rendelőintézet | 54.0 |
 | Kazincbarcikai Kórház | 55.0 |
-| MÁV Kórház és Rendelőintézet, Szolnok | 88.0 |
-| Veszprém Megyei Tüdőgyógyintézet, Farkasgyepű | 95.0 |
-| Keszthelyi Kórház | 96.0 |
-| Csongrád-Csanád Megyei Mellkasi Betegségek Szakkórháza | 102.0 |
+| Mosonmagyaróvári Karolina Kórház-Rendelőintézet | 61.0 |
+| Szolnoki MÁV Kórház és Rendelőintézet | 88.0 |
+| Keszthelyi Kórház | 93.2 |
+| Farkasgyepűi Tüdőgyógyintézet | 95.0 |
 | Mátrai Gyógyintézet | 105.0 |
+| Dombóvári Szent Lukács Kórház | 115.0 |
 | Nagyatádi Kórház | 117.0 |
-| Dombóvári Szent Lukács Kórház | 117.5 |
+| Pápai Gróf Esterházy Kórház és Rendelőintézeti Szakrendelő | 129.0 |
 
 Ezeket látva is felmerülhet kérdés az ilyen intézmények fenntartásának
 racionalitását illetően. Elmondható minden, amit korábban elmondtam, ott
@@ -2249,14 +2269,15 @@ fontosabb számukra.
 (Mindazonáltal attól is óvnék, hogy átessünk a ló túloldalára: nehogy
 valaki azt gondolja, hogy pusztán egy fentihez hasonló lista alapján
 eldönthető a kérdés. Lehetnek nagyon speciális területű intézmény, amik
-a jellegükből adódóan kicsik. Számíthat a távolság, az elérhetőség:
+a jellegükből adódóan kicsik. Számíthat a távolság, az
+[elérhetőség](https://github.com/ferenci-tamas/MagyarorszagKozutiElerhetoseg):
 hiába is kicsi egy kórház, lehet, hogy nagy a jelentősége, ha a
 környékén sincs másik. Ez a dolog persze fordítva is működik: ha egy
 kórház kicsi *és* ráadásul még mellette van egy nagy, az pláne
 megkérdőjelezi a racionalitását; ezt a vetületet a szülészeti osztályok
 kapcsán érintettem is.)
 
-Egészen idáig csak a 2022-es évet elemeztük. Ha visszamegyünk időben,
+Egészen idáig csak a 2024-es évet elemeztük. Ha visszamegyünk időben,
 akkor is érdekes lehet a kórházankénti, szakmai osztályonkénti lebontás
 vizsgálata, de elsőként nézzünk inkább egy összképet. Így alakult az
 évek alatt az aktív kórházi ágyak száma (itt is a működő átlagos
@@ -2304,19 +2325,19 @@ háttér mellett próbálták megcsinálni, de ez már egy másik, nem
 idetartozó kérdés.) És mindezt hergelték olyan politikusok, akiknek
 viszont nagyon is pontosan tudták, hogy ez – ha részleteiben volt is
 vitatható elem – de fundamentálisan tökéletesen indokolt, szükséges és
-jó döntés volt. Hogy mivel bizonyítom, hogy ez ők is tudták? A fenti
-ábrával. Ugyanis azok a politikai erők, amelyek 2007-ben ezt a kampányt
-végigvitték népirtástól Mengeléig, azok 2010-ben kormányra kerültek
-(úgy, hogy még a kampány utolsó napjaiban is olyan szórólapot
-osztogattak, mely azt mutatatta, hogy a kormány hány ágyat szüntetett
-meg), majd azután, hogy kormányra kerültek, vajon hány ágyat nyitottak
-újra azok közül, amelyek megszüntetése *ugyebár* népirtás volt? Igen,
-pontosan annyit. Az egyetlen, amit tettek, hogy két évvel később,
-2012-ben *még további* 2000 ágyat megszüntettek (nagyon helyesen!). A
-probléma inkább morális: egy nem volt az akkor kormányra kerültek közül
-(legjobb tudomásom szerint), aki annyit mondott volna, legalább utólag,
-hogy „az ágyszám-csökkentés nem halálos döfés meg aktív eutanázia volt,
-hanem egy helyes döntés, tényleg ezt kellett tenni”.
+jó döntés volt az ágyszám-csökkentés. Hogy mivel bizonyítom, hogy ezt ők
+is tudták? A fenti ábrával. Ugyanis azok a politikai erők, amelyek
+2007-ben ezt a kampányt végigvitték népirtástól Mengeléig, azok 2010-ben
+kormányra kerültek (úgy, hogy még a kampány utolsó napjaiban is olyan
+szórólapot osztogattak, mely azt mutatatta, hogy a kormány hány ágyat
+szüntetett meg), majd azután, hogy kormányra kerültek, vajon hány ágyat
+nyitottak újra azok közül, amelyek megszüntetése *ugyebár* népirtás
+volt? Igen, pontosan annyit. Az egyetlen, amit tettek, hogy két évvel
+később, 2012-ben *még további* 2000 ágyat megszüntettek (nagyon
+helyesen!). A probléma inkább morális: egy nem volt az akkor kormányra
+kerültek közül (legjobb tudomásom szerint), aki annyit mondott volna,
+legalább utólag, hogy „az ágyszám-csökkentés nem halálos döfés meg aktív
+eutanázia volt, hanem egy helyes döntés, tényleg ezt kellett tenni”.
 
 Molnár Lajos 2015-ben halt meg, még ekkor sem volt senki közülük, aki
 legalább ebben a pillanatban úgy érezte volna, hogy elnézést kell
@@ -2346,6 +2367,9 @@ volt), egy történet kivételével. Érdekes módon arra az egy történetre
 viszont 15 év távlatából is tökéletesen tisztán emlékszem, egyedül a
 pontos számok miatt néztem most bele [a
 tankönyvbe](https://www.pearson.com/en-gb/subject-catalog/p/international-economics-theory-and-policy-global-edition/P200000007162/9781292409818).
+(Azt fenn kell tartanom, hogy nem tudom azóta hogyan változott a
+helyzet, úgyhogy a lent leírtak nem biztos, hogy aktuálisak, de a
+mondanovalóm illusztrálása szempontjából ez mindegy is.)
 
 A sztori az amerikai cukoriparhoz kapcsolódik. Tudni kell, hogy az
 Egyesült Államok különféle vámokkal és kvótákkal korlátozza a külföldi
@@ -2379,7 +2403,7 @@ dollárokat költ minden évben lobbizásra a kongresszusban, hogy
 fenntartsák az import-korlátozásokat.
 
 Egyszóval, ha minden amerikai tisztában lenne a helyzettel, akkor ez a
-korlátozás valószínűleg egy másodpercet nem élne túl – csakhogy nem ez a
+korlátozás valószínűleg egy napot nem élne túl – csakhogy nem ez a
 helyzet. És egy dolgot hadd hangsúlyozzak: nem azért, mert az emberek
 „buták”, „tudatlanok” vagy „érdektelenek”: bizonyos szempontból teljesen
 racionális a viselkedésük, hiszen 30 dollárért *tényleg* nem éri meg még
@@ -2418,12 +2442,13 @@ hatással tudja megjeleníteni a szempontját a diskurzusban.
 Van azonban még egy szempont szerintem: a status quo-hatás (ezt a
 kifejezést most találtam ki, fogalmam sincs hogy hívják igazából). Azt
 értem alatta, hogy a szülőnők vesztesége bizonyos értelemben egy
-*láthatatlan* veszteség: igen, minden szülésnél van valamennyi kicsi
-veszteség, de mivel ez emberemlékezet óta így van, ezért az emberek
-fejében nem jelenik meg veszteségként. Ezzel szemben a változtatás
-veszteseinek nagyon is látható és egyértelműen megjelenő veszteségük
-lenne az osztály bezárásával; ez megint nehezíti az érdekeltségek reális
-megjelenését.
+*láthatatlan* veszteség: igen, minden szülésnél van valamennyi
+veszteség, de ez egyrészt nagyon kicsi, másrészt, és talán ez a még
+fontosabb, egy olyan helyzethez mért veszteség, amely helyzetet nem
+láttuk, nem tudunk hozzá viszonyítani. Ezt neveztem láthatatlan
+veszteségnek. Ezzel szemben a változtatás veszteseinek nagyon is látható
+és egyértelműen megjelenő veszteségük lenne az osztály bezárásával; ez
+megint nehezíti az érdekeltségek reális megjelenését.
 
 Felvethető a kérdés, hogy mit lehet mindezzel kezdeni.
 
@@ -2450,7 +2475,7 @@ a biztosítási jogviszony ellenőrzése az egészségügyi ellátás során
 (közkeletű nevén: a „potyautasok” kiszűrése). Azt gondolom, hogy ez
 vitán felül egy pozitív, előremutató és szükséges lépés. Két alkalommal
 futottak neki, először 2006/2007-ben, aztán 2019-ben. Hihetetlen
-tanulságos megnézni, hogy ugyanazon politikusok vagy sajtótermékek
+tanulságos megnézni, hogy *ugyanazon* politikusok vagy sajtótermékek
 hogyan reagáltak erre a – még egyszer mondom: *teljesen azonos*! –
 intézkedésre 2006/2007-ben
 ([HVG](https://hvg.hu/itthon/20071210_egeszsegugy_apeh_tb): „Az idén
@@ -2513,23 +2538,21 @@ fordulni adott idő alatt.
 
 De legyünk kicsit szisztematikusabbak, ez a dolog ugyanis könnyen
 „meg-matematizálható”! (Ígérem, hogy a négy alapműveleten túl másra nem
-lesz szükség.) Lényegében azt az okfejtést kell megismételni, amit az
-adatvalidációnál használtunk, csak most általánosan. Ha az átlagos
-ápolási időtartam jele $AtlApTartam$, akkor egy év alatt
-$\frac{365}{AtlApTartam}$ beteg tud legfeljebb megfordulni egy ágyon,
-így $AgySzam$ számú ágyon legfeljebb
+lesz szükség.) Ha az átlagos ápolási időtartam jele $AtlApTartam$, akkor
+egy év alatt $\frac{365}{AtlApTartam}$ beteg tud legfeljebb megfordulni
+egy ágyon, így $AgySzam$ számú ágyon legfeljebb
 $\frac{365}{AtlApTartam} \cdot AgySzam$ beteg fordulhat meg. Ha ehhez
 képest ténylegesen $EllatottBeteg$ számú beteget láttak el, akkor az
 ágykihasználás:
 
 $$
-  AgyKihasznalas = \frac{EllatottBeteg}{\frac{365}{AtlApTartam} \cdot AgySzam}.
+AgyKihasznalas = \frac{EllatottBeteg}{\frac{365}{AtlApTartam} \cdot AgySzam}.
 $$
 
 Ezt a képletet kissé átrendezve:
 
 $$
-  EllatottBeteg = \frac{365 \cdot AgyKihasznalas}{AtlApTartam}\cdot AgySzam.
+EllatottBeteg = \frac{365 \cdot AgyKihasznalas}{AtlApTartam}\cdot AgySzam.
 $$
 
 Azaz azt kaptuk, hogy az ellátott betegek száma valóban az ágyszámtól
@@ -2540,11 +2563,11 @@ akkor tudjuk növelni adott ágyszám mellett az ellátott betegek számát,
 ha vagy az ágykihasználást javítjuk, vagy az átlagos ápolási időtartamot
 csökkentjük (vagy mindkettő).
 
-Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2022-es
+Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
 magyar adatokon:
 
 ``` r
-ggplot(res[Ev==2022][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
+ggplot(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
   geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
   labs(x = "Működő ágyak átlagos száma", y = "Ellátott betegek száma")
@@ -2563,30 +2586,30 @@ fontos dolog: a behúzott egyenes meredeksége az összes magyar kórház
 megmutatja, hogy ebben a két tényezőben – ágykihasználás és átlagos
 ápolási idő – mekkora eltérések vannak az országban. Látható, hogy
 például sebészetben nincs nagy szóródás, addig mondjuk kardiológiában
-jóval nagyobbak az eltérések (van olyan osztály, Jahn Ferenc, ami 56
-ággyal 1365 beteget látott el és van olyan, SOTE, ami 65-tel 9790-et).
-Ez persze abból adódik jó eséllyel, hogy kardiológián belül is nagyon
-mást csináltak (a különbséget az ápolási idő táplálja elsősorban, nem az
-ágykihasználás: előbbiben ez átlagosan 8,0 nap, utóbbiban 1,8). Az ilyen
-és ehhez hasonló helyzetek megértéséhez fontos lenne a betegút-elemzés
-is, hiszen jó eséllyel a későbbi pályája is eltér az itt kezelt
-betegeknek, de ezt sajnos ebből az adatbázisból nem tudjuk vizsgálni.
+jóval nagyobbak az eltérések (a Szent Margit 49 ággyal 2171 beteget
+látott el, a SOTE alig több, 65-tel 12404-et). Ez persze abból adódik jó
+eséllyel, hogy kardiológián belül is nagyon mást csináltak (a
+különbséget az ápolási idő táplálja elsősorban, nem az ágykihasználás:
+előbbiben ez átlagosan 8,1 nap, utóbbiban 1,9). Az ilyen és ehhez
+hasonló helyzetek megértéséhez fontos lenne a betegút-elemzés is, hiszen
+jó eséllyel a későbbi pályája is eltér az itt kezelt betegeknek, de ezt
+sajnos ebből az adatbázisból nem tudjuk vizsgálni.
 
 Nézzük meg most e két tényezőt külön-külön! Kezdjük az
-ágykihasználással. Így néz ki a 2022-es helyzet:
+ágykihasználással. Így néz ki a 2024-es helyzet:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Ágykihasználás [%]", y = "")
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-Egyrészt látszanak a 100% feletti ágykihasználások, amit az
-adatvalidálásról szóló pontban már érintettem. Az okát nem tudván ezt
-most figyelmen kívül hagyom, így az látszik jól, hogy milyen különbségek
-vannak az egyes szakterületek között.
+Egyrészt látszanak 100% feletti ágykihasználások; ezekre az
+adatvalidálásról szóló pontban vissza fogok térni. Az okát nem tudván
+ezt most figyelmen kívül hagyom, így az látszik jól, hogy milyen
+különbségek vannak az egyes szakterületek között.
 
 Ez utóbbi aspektus talán még érdekesebbé tehető, ha az időbeli trendeket
 is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
@@ -2595,10 +2618,10 @@ adata, a vastag piros pedig az országos átlag adott szakmában):
 ``` r
 ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = Ev, y = Agykihasznalas, group = KorhazRovid)) +
-    facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-    geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-        ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
-        aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
+    aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Ágykihasználás [%]") + scale_x_continuous(limits = range(res$Ev))
 ```
 
@@ -2656,10 +2679,10 @@ természetesen, ha kevesebbet van kórházban. Ezt a technikai fejlődés is
 elősegíti, de Magyarországon sajnos az egyéb érdekek ezt néha
 ellensúlyozzák. Vajon mi mindezek összhatása?
 
-Elsőként nézzük meg itt is a 2022-es adatokat:
+Elsőként nézzük meg itt is a 2024-es adatokat:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Átlagos ápolási időtartam [nap]", y = "")
 ```
@@ -2680,7 +2703,7 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam)) , .(Ev, SzakmaMegnev)],
+    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Átlagos ápolási időtartam [nap]") + scale_x_continuous(limits = range(res$Ev))
 ```
@@ -3106,11 +3129,11 @@ teljesítményvizsgálat elvégzését. Mindazonáltal a többitől lényegesen
 eltérő adatok, valamint az időbeli trendek még így is érdekesek
 lehetnek.
 
-Elsőként nézzük meg, hogy hogyan alakult 2022-ben a kórházi halálozás,
+Elsőként nézzük meg, hogy hogyan alakult 2024-ben a kórházi halálozás,
 szakmaosztályonként lebontva:
 
 ``` r
-ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Halálozási arány [%]", y = "")
 ```
@@ -3120,14 +3143,13 @@ ggplot(res[Ev==2022][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
 Első ránézésre elég logikus az ábra, ha a különböző szakmákra gondolunk,
 de azért vannak meglepő dolgok is. Például mik azok a pontok jobb szélen
 a sürgősségi betegellátásnál? Csakugyan, a karcagi Kátai Gábor Kórház
-sürgősségi osztálya elvileg 66 beteg látott el (egész évben összesen!),
+sürgősségi osztálya elvileg 70 beteg látott el (egész évben összesen!),
 ami önmagában is hihetetlen, de ami még inkább az, hogy a statisztika
-szerint közülük 66 meghalt! Ugyanez a helyzet – elvileg – a ceglédi
-Toldy Ferenc Kórház SBO-ján: 45 ellátott beteg az évben, közülük 45
-meghalt. Nem tudom mi e jelenség oka, de szinte biztosnak tűnik, hogy
-valamiféle adminisztratív hiba áll a hátterében. (A harmadik legnagyobb
-halálozási adat is „csak” 75%-os, utána pedig már 50%-ok jönnek, amik
-intenzív osztályról kerültek ki, ami máris sokkal hihetőbb.)
+szerint közülük 69 meghalt! Nem tudom mi e jelenség oka, de szinte
+biztosnak tűnik, hogy valamiféle adminisztratív hiba áll a hátterében.
+(A második legnagyobb halálozási adat is „csak” 58%-os, utána pedig már
+50%-ok jönnek, amik intenzív osztályról kerültek ki, ami máris sokkal
+hihetőbb.)
 
 Ennél finomabb elemzést igényel, de azért vannak még meglepő dolgok az
 ábrán. Ugyanazt a lépést kell megtennünk a korrekt elemzés érdekében itt
@@ -3162,7 +3184,7 @@ fel, ahol legalább 30 beteget elláttak):
 ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
-       aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
+  aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
   geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
 ```
 
@@ -3234,10 +3256,11 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&Mukod
 
 A sok szakma miatt kevésbé áttekinthető, de azért megnézhetjük az
 összeset egyben is (vigyázzunk, hogy a vízszintes tengely skálázása mind
-különböző!):
+különböző!), illetve térjünk át a legfrissebb, 2024-es adatokra, itt is
+lesznek hasonló furcsaságok:
 
 ``` r
-ggplot(res[Ev==2021][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
+ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
   , .(Halalozas, KorhazRovid, SzakmaMegnev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam,
                                                                 ElbocsatottBetegSzam)))],
@@ -3290,7 +3313,7 @@ politikai szféra támogatása.
 
 ------------------------------------------------------------------------
 
-(Az írás a 2023. december 27-én érvényes állapotot tükrözi.)
+(Az írás a 2025. június 17-én érvényes állapotot tükrözi.)
 
 A [szerző](http://www.medstat.hu/) klinikai biostatisztikus,
 orvosbiológiai mérnök. A fent leírtak teljes egészében a magánvéleményét
@@ -3368,7 +3391,7 @@ if(!file.exists("res.rds")) {
   
   res <- res[order(Ev)]
   res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
-                        substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
+                          substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
   
   saveRDS(res, "res.rds")
 } else res <- readRDS("res.rds")
@@ -3572,14 +3595,12 @@ feldolgozható formátumokban lementeni az adatokat:
 saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
 fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
        sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-openxlsx::write.xlsx(
+openxlsx2::write_xlsx(
   res, "ferenci-tamas-korhaz-agyszam-betegforgalom.xlsx")
 ```
 
-Most már nekiláthatunk az elemzésnek! Ahogy mondtam is, a dolog inkább
-illusztratív lesz, de remélem néhány érdekes dolgot meg fogok tudni
-mutatni. Az adatok feldolgozásához a `data.table`, a vizualizációhoz a
-`ggplot2` csomagot használtam.
+Most már nekiláthatunk az elemzésnek! Az adatok feldolgozásához a
+`data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
 
 ### Adatvalidáció
 
