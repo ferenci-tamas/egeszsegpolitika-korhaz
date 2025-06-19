@@ -227,7 +227,7 @@ Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
   geom_histogram(boundary = 0, bins = 30) +
   labs(x = "Elbocsátott betegek száma [fő]",
-       y = "Gyakoriság [db]")
+       y = "Gyakoriság [db]", caption = captionlab)
 ```
 
 </details>
@@ -245,7 +245,8 @@ ggplot(res[Ev==2024],
        aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) +
   scale_y_discrete(limits=rev) +
-  labs(x = "Elbocsátott betegszám [fő]", y = "")
+  labs(x = "Elbocsátott betegszám [fő]", y = "",
+       caption = captionlab)
 ```
 
 </details>
@@ -1201,7 +1202,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Elbocsátott betegszám [fő]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Elbocsátott betegszám [fő]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 </details>
@@ -1223,7 +1226,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
   , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
   aes(x = Ev, y = ElbocsatottBetegSzam)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
-  labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 </details>
@@ -1331,7 +1336,10 @@ ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
        aes(x = TIME_PERIOD, y = V1, group = forcats::fct_reorder(geo, geo=="HU", .fun = first),
            color = geo=="HU")) + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
   guides(color = "none") + facet_wrap(~icd9cm) + geom_line() +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]")
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_proc2 és hlth_co_proc3"))
 ```
 
 </details>
@@ -1370,7 +1378,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(EgynaposArany = sum(EgynaposEsetSzam)/sum(ElbocsatottBetegSzam)*100) , .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = EgynaposArany), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]") +
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
 ```
 
@@ -1467,7 +1476,11 @@ res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nch
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
        aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
-  geom_col() + guides(fill = "none") + labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "")
+  geom_col() + guides(fill = "none") +
+  labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_rd_bds1"))
 ```
 
 </details>
@@ -1512,7 +1525,9 @@ az átlagos működő ágyszámot alapul véve:
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
-  geom_histogram(boundary = 0, bins = 30) + labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]")
+  geom_histogram(boundary = 0, bins = 30) +
+  labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
+       caption = captionlab)
 ```
 
 </details>
@@ -1529,7 +1544,7 @@ szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes,
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Működő átlagos ágyszám", y = "")
+  labs(x = "Működő átlagos ágyszám", y = "", caption = captionlab)
 ```
 
 </details>
@@ -2243,7 +2258,8 @@ meg. Ez így néz ki 2022-ben:
 ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
   order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító")
+  labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
+       caption = captionlab)
 ```
 
 </details>
@@ -2351,8 +2367,9 @@ vizsgálata, de elsőként nézzünk inkább egy összképet. Így alakult az
 
 ``` r
 ggplot(res[,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(Ev)],
-       aes(x = Ev, y = MukodoAtlagAgy)) + geom_point() + geom_line() + lims(y = c(0, NA)) +
-  labs(x = "Év", y = "Ágyszám")
+       aes(x = Ev, y = MukodoAtlagAgy)) + geom_point() +
+  geom_line() + lims(y = c(0, NA)) +
+  labs(x = "Év", y = "Ágyszám", caption = captionlab)
 ```
 
 </details>
@@ -2640,7 +2657,9 @@ magyar adatokon:
 ggplot(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
   geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
-  labs(x = "Működő ágyak átlagos száma", y = "Ellátott betegek száma")
+  labs(x = "Működő ágyak átlagos száma",
+       y = "Ellátott betegek száma",
+       caption = captionlab)
 ```
 
 </details>
@@ -2675,7 +2694,7 @@ Nézzük meg most e két tényezőt külön-külön! Kezdjük az
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Ágykihasználás [%]", y = "")
+  labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -2700,7 +2719,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Ágykihasználás [%]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Ágykihasználás [%]", caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 </details>
@@ -2766,7 +2786,8 @@ Elsőként nézzük meg itt is a 2024-es adatokat:
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Átlagos ápolási időtartam [nap]", y = "")
+  labs(x = "Átlagos ápolási időtartam [nap]", y = "",
+       caption = captionlab)
 ```
 
 </details>
@@ -2791,7 +2812,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 </details>
@@ -2819,7 +2842,11 @@ res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
   geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
-  guides(color = "none") + labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]")
+  guides(color = "none") +
+  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_inpst"))
 ```
 
 </details>
@@ -3229,7 +3256,7 @@ szakmaosztályonként lebontva:
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -3283,7 +3310,8 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBeteg
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
-  geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
+  geom_errorbar(linewidth = 0.5) +
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -3339,7 +3367,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -3355,7 +3383,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&Mukod
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -3376,7 +3404,7 @@ ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
                                                                 ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 </details>
@@ -3391,7 +3419,8 @@ is, itt minden vonal egy kórházat jelöl:
 ``` r
 ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)) +
   geom_line(alpha = 0.2) + facet_wrap(~SzakmaMegnev, scales = "free") + guides(color = "none") +
-  labs(x = "Év", y = "Halálozási arány [%]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Halálozási arány [%]", caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 </details>

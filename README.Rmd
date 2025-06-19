@@ -21,6 +21,10 @@ knitr::knit_hooks$set(source = function(x, options) {
   )
 })
 
+captionlab <- paste0(
+  "Ferenci Tamás, https://www.medstat.hu/\n",
+  "Adatok forrása: Kórházi ágyszám- és betegforgalmi kimutatás")
+
 library(data.table)
 library(ggplot2)
 
@@ -134,7 +138,7 @@ Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
   geom_histogram(boundary = 0, bins = 30) +
   labs(x = "Elbocsátott betegek száma [fő]",
-       y = "Gyakoriság [db]")
+       y = "Gyakoriság [db]", caption = captionlab)
 ```
 
 Ez önmagában még nem túl informatív, hiszen a különböző szakmák, különböző kórházak nagyon eltérően viselkednek. Érdemes ezért az eloszlást szakmánként ábrázolni:
@@ -144,7 +148,8 @@ ggplot(res[Ev==2024],
        aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) +
   scale_y_discrete(limits=rev) +
-  labs(x = "Elbocsátott betegszám [fő]", y = "")
+  labs(x = "Elbocsátott betegszám [fő]", y = "",
+       caption = captionlab)
 ```
 
 Nézzük meg a 2024-ben legkisebb és legnagyobb forgalmú osztályokat szakmánként számszerűen is (ez persze elég kiragadott, hiszen egy-egy osztály nem mond sokat a rendszer egészéről, de azért nagyon illusztratív lesz):
@@ -203,7 +208,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Elbocsátott betegszám [fő]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Elbocsátott betegszám [fő]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 A feltüntett piros görbe releváns akkor, ha egy átlagos osztályról akarunk nyilatkozni, érdekes lehet azonban az átlag helyett az összeg is (az átlag görbe ennek megítéléséhez nem túl informatív, mert időközben könnyen megváltozhatott az osztályok darabszáma is az országban). Ez az összeg magyarán a fekvőbeteg-ellátás által -- adott szakmában -- ellátott betegek össz-száma, egyfajta mennyiségi, nem minőségi mutatója a magyar egészségügy teljesítményének:
@@ -213,7 +220,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
   , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
   aes(x = Ev, y = ElbocsatottBetegSzam)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
-  labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 Az ábra több szempontból érdekes, hiszen egyszerre tükrözi a megbetegedési viszonyok alakulását és az egészségpolitikai prioritásokat, döntéseket. Ez utóbbiról még sok szó lesz; most csak az előbbi kapcsán hívnám fel a figyelmet egy elég látványos dologra: a koronavírus-járvány hatására. Egyrészt látszik, ahogy egy-két szakma forgalma drámaian megugrott (infektológia, természetesen, intenzív ellátás), de ami talán kevésbé közismert, hogy milyen hihetetlen mértékben esett le más szakmák esetszáma: szemészet, kardiológia, neurológia, reumatológia, szinte minden szakmában látszik a hatás, de van ahol egészen drámai mértékű (a szemészet esetszáma harmadával esett, a reumatológia megfeleződött). Ebben természetesen egyszerre van benne az egészségügy szűkebb kapacitása, és a betegek viselkedése. Ez egy teljesen külön írás témája lehetne, de biztos vagyok benne, hogy a későbbiekben nagy -- és félő, hogy nem épp pozitív -- jelentősége lesz.
@@ -242,7 +251,10 @@ ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
        aes(x = TIME_PERIOD, y = V1, group = forcats::fct_reorder(geo, geo=="HU", .fun = first),
            color = geo=="HU")) + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
   guides(color = "none") + facet_wrap(~icd9cm) + geom_line() +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]")
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_proc2 és hlth_co_proc3"))
 ```
 
 Az ábra rendkívül izgalmas. Látszik, hogy bizonyos esetekben érdemben tudtunk javítani az arányon és tartjuk a lépést a nemzetközi fejlődéssel (CM131-138: szürkehályog-műtét), van, hogy mutatkozik egy pici javulás, de más országoktól nagyon lényegesen elmaradó mértékben (CM530-531: lágyéksérv-műtét), viszont a legmeglepőbb, hogy egy sor esetben igaz, hogy miközben máshol egyre megszokottabb -- sőt, adott esetben akár domináns! -- az egynapos ellátás keretében történő megoldás, addig nálunk ez gyakorlatilag nem létezik (CM282-284: mandulaeltávolítás, CM5123: laparoszkópos epehólyag-műtét).
@@ -258,7 +270,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(EgynaposArany = sum(EgynaposEsetSzam)/sum(ElbocsatottBetegSzam)*100) , .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = EgynaposArany), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]") +
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
 ```
 
@@ -278,7 +291,11 @@ res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nch
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
        aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
-  geom_col() + guides(fill = "none") + labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "")
+  geom_col() + guides(fill = "none") +
+  labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_rd_bds1"))
 ```
 
 A dolog sok kommentárt nem igényel (érdemes azt is megnézni, hogy mennyire szépen megjelenik a szocialista örökség máshol is, illetve, hogy mennyire fals az a kép, hogy a magas ágyszám automatikusan azt jelenti, hogy jobb a helyzet -- amit elvileg jelent az az hozzáállás, ami szerint az ágyszám-csökkentés automatikusan rossz). _Még most is_ a lista elején vagyunk.
@@ -291,7 +308,9 @@ Visszatérve a magyar adatokhoz, ássunk most kicsit mélyebbre! Elsőként néz
 
 ```{r}
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
-  geom_histogram(boundary = 0, bins = 30) + labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]")
+  geom_histogram(boundary = 0, bins = 30) +
+  labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
+       caption = captionlab)
 ```
 
 Adná magát a gondolat, hogy foglalkozzunk a legkisebb vagy épp legnagyobb osztályokkal, de ez nagyon félrevezető lenne, mert az egyes szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes, úgyhogy készítsünk róla egy ábrát:
@@ -299,7 +318,7 @@ Adná magát a gondolat, hogy foglalkozzunk a legkisebb vagy épp legnagyobb osz
 ```{r, fig.height = 8}
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Működő átlagos ágyszám", y = "")
+  labs(x = "Működő átlagos ágyszám", y = "", caption = captionlab)
 ```
 
 Itt már látszanak a különbségek! Az önmagában vett érdekességen túl itt is nézzük meg szakmánként is a legkisebb és legnagyobb (ágyszámú) osztályokat:
@@ -321,7 +340,8 @@ Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú �
 ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
   order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító")
+  labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
+       caption = captionlab)
 ```
 
 Itt már részletesebb elemzés nélkül is látszanak meglepő eredmények; íme a legkisebb kórházak listája (ezt most csak a központi egészségügyi intézményekre szűkítve, illetve ne felejtsük, csak az aktív ágyakról van szó):
@@ -345,8 +365,9 @@ Egészen idáig csak a 2024-es évet elemeztük. Ha visszamegyünk időben, akko
 
 ```{r}
 ggplot(res[,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(Ev)],
-       aes(x = Ev, y = MukodoAtlagAgy)) + geom_point() + geom_line() + lims(y = c(0, NA)) +
-  labs(x = "Év", y = "Ágyszám")
+       aes(x = Ev, y = MukodoAtlagAgy)) + geom_point() +
+  geom_line() + lims(y = c(0, NA)) +
+  labs(x = "Év", y = "Ágyszám", caption = captionlab)
 ```
 
 Az elmúlt 15-20 évben újságot olvasó állampolgár számára nem kell sokat magyaráznom, hogy mit látunk a grafikonon. A 2006/2007-ben végrehajtott, nagyon sok elemből álló [egészségügyi reform](https://www.libri.hu/talalati_lista/?text=mi%C3%A9rt+lettem+antipatikus) egyik, és talán legtöbbet emlegetett része volt 16 ezer aktív kórházi ágy megszüntetése. (A _teljes_ ágyszám nem csökkent ennyivel, ugyanis az aktív ágyak csökkentése mellett a krónikus, rehabilitációs ágyak száma nőtt egyidejűleg. Ezek alacsony száma szintén régóta húzódó hiányosság volt, aminek a hátterében állt az is, hogy az évtizedek alatt a krónikus ellátás mindig hátrányban volt, mert az aktív ellátás jobban szem előtt van, a közvélemény számára fontosabb -- és innentől a demagógok számára is fontosabb --, az aktív intézmények vezetői jobban összekötöttek a politikai szférában, pont az előbbiek miatt is nagyobb befolyásúak, stb.)
@@ -403,7 +424,9 @@ Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
 ggplot(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
        aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
   geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
-  labs(x = "Működő ágyak átlagos száma", y = "Ellátott betegek száma")
+  labs(x = "Működő ágyak átlagos száma",
+       y = "Ellátott betegek száma",
+       caption = captionlab)
 ```
 
 Az ábrán kékkel behúztam a pontokra legjobban illeszkedő, origón átmenő egyenest. Ebből két dolog látszik: egyrészt, hogy a meredekség a már emlegetett $\frac{365 \cdot AgyKihasznalas}{AtlApTartam}$ faktor: amelyik szakmában meredekebb az egyenes, tehát adott ágyszámon több beteget látnak el, ott vagy az ágykihasználás jobb, vagy az ápolási időtartam rövidebb átlagosan (vagy mindkettő). Van azonban még egy fontos dolog: a behúzott egyenes meredeksége az összes magyar kórház _átlagát_ adja meg, de érdemes a pontokat is nézni, mert azok szóródása megmutatja, hogy ebben a két tényezőben -- ágykihasználás és átlagos ápolási idő -- mekkora eltérések vannak az országban. Látható, hogy például sebészetben nincs nagy szóródás, addig mondjuk kardiológiában jóval nagyobbak az eltérések (a Szent Margit 49 ággyal 2171 beteget látott el, a SOTE alig több, 65-tel 12404-et). Ez persze abból adódik jó eséllyel, hogy kardiológián belül is nagyon mást csináltak (a különbséget az ápolási idő táplálja elsősorban, nem az ágykihasználás: előbbiben ez átlagosan 8,1 nap, utóbbiban 1,9). Az ilyen és ehhez hasonló helyzetek megértéséhez fontos lenne a betegút-elemzés is, hiszen jó eséllyel a későbbi pályája is eltér az itt kezelt betegeknek, de ezt sajnos ebből az adatbázisból nem tudjuk vizsgálni.
@@ -413,7 +436,7 @@ Nézzük meg most e két tényezőt külön-külön! Kezdjük az ágykihasznál�
 ```{r, fig.height = 8}
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Ágykihasználás [%]", y = "")
+  labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
 ```
 
 Egyrészt látszanak 100% feletti ágykihasználások; ezekre az adatvalidálásról szóló pontban vissza fogok térni. Az okát nem tudván ezt most figyelmen kívül hagyom, így az látszik jól, hogy milyen különbségek vannak az egyes szakterületek között.
@@ -427,7 +450,8 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Ágykihasználás [%]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Ágykihasználás [%]", caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 Ezt az ábrát is érdemes tanulmányozni. Tökéletesen látszik rajta a koronavírus-járvány hatása (abban is, ahogy bizonyos osztályok, például reumatológia kihasználása hogyan esett le, és abban is, hogy másoké, mint az infektológia hogy ugrott meg). Jól látható, hogy a 2006/2007-es reform, ha csak nagyon kicsit is, de helyenként tudta érzékelhetően javítani az ágykihasználást. Ami a legfontosabb azonban az összkép: egyrészt, hogy hol mekkora az ágykihasználás (mennyivel marad el a 100%-tól), valamint, hogy ebben mekkora szóródás van az egyes kórházak között.
@@ -443,7 +467,8 @@ Elsőként nézzük meg itt is a 2024-es adatokat:
 ```{r, warning = FALSE, fig.height = 8}
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Átlagos ápolási időtartam [nap]", y = "")
+  labs(x = "Átlagos ápolási időtartam [nap]", y = "",
+       caption = captionlab)
 ```
 
 Jól látszanak a területenkénti eltérések, de ennyi adat alapján mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése, nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán minden halvány vonal egy kórház adata, a vastag piros pedig az országos átlag adott szakmában:
@@ -455,7 +480,9 @@ ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
   geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
     ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol nem nagyon változott -- ilyen szempontból -- a helyzet az évek alatt, van ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a leglátványosabb példa -- emlékezzünk vissza az egynapos ellátások ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni több területen is az ápolási időtartam érzékelhető csökkenését: a fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont az igen nagy forgalmú területeken nem volt érdemi fejlődés, így végeredményben alig sikerült ebben előrelépni az évek alatt. Így néz ki a befektetett betegek átlagos kórházban töltött időtartama az egyes európai országokban; piros jelöli Magyarországot:
@@ -466,7 +493,11 @@ res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
   geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
-  guides(color = "none") + labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]")
+  guides(color = "none") +
+  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_inpst"))
 ```
 
 Nem csak arról van szó, hogy a magyar adat nagyon magas, hanem arról is, hogy -- egészen párját ritkítóan -- _még nő is_ az évek alatt. Azaz: nagyon sokáig tartjuk ott az embereket, ahol a legkevésbé kellene. És az orvosi lehetőségek meg is engednék, hogy ezt ne tegyük -- "csak" változtatni kellene a rendszer egészén.
@@ -538,7 +569,7 @@ Elsőként nézzük meg, hogy hogyan alakult 2024-ben a kórházi halálozás, s
 ```{r, warning = FALSE, fig.height = 8}
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 Első ránézésre elég logikus az ábra, ha a különböző szakmákra gondolunk, de azért vannak meglepő dolgok is. Például mik azok a pontok jobb szélen a sürgősségi betegellátásnál? Csakugyan, a karcagi Kátai Gábor Kórház sürgősségi osztálya elvileg 70 beteg látott el (egész évben összesen!), ami önmagában is hihetetlen, de ami még inkább az, hogy a statisztika szerint közülük 69 meghalt! Nem tudom mi e jelenség oka, de szinte biztosnak tűnik, hogy valamiféle adminisztratív hiba áll a hátterében. (A második legnagyobb halálozási adat is "csak" 58%-os, utána pedig már 50%-ok jönnek, amik intenzív osztályról kerültek ki, ami máris sokkal hihetőbb.)
@@ -556,7 +587,8 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBeteg
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() +
-  geom_errorbar(linewidth = 0.5) + labs(x = "Halálozási arány [%]", y = "")
+  geom_errorbar(linewidth = 0.5) +
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 A vízszintes sávok az úgynevezett 95%-os konfidenciaintervallumok. Leegyszerűsítve: azt jelzik, hogy a véletlen ingadozás miatt mekkora bizonytalanság van a közölt számban. Mi az, hogy véletlen ingadozás? Mondjuk, hogy egy adott osztály halálozása pontosan 50%. (Ez semmit nem mond az osztály teljesítményéről, hiszen ha a beteg olyan állapotban vannak, hogy máshol 60% lenne, akkor ez jó, ha egyébként 40% lenne, akkor rossz, de most nem ez lesz számunkra az érdekes.) Ez akkor azt jelenti, hogy kívülről nézve a dolog olyan, mintha minden beteg gyógyulása egy _szabályos_ pénzérme feldobásának az eredménye lenne. (Ez elég szörnyen hangzik, mert rossz csengése van annak, hogy "véletlenszerű", hogy meggyógyulok-e, de újra mondom, ez akár jó hír is lehet -- ha egyébként 60% lenne a halálozási arány.) Kérdés: vajon hány beteg fog meghalni, ha 100-at láttak el egy év alatt? Az ember hajlamos rávágni, hogy 50 (hiszen 50% a halálozási arány), de legyünk óvatosabbak: ha feldobunk egy szabályos pénzérmét 100-szor, biztos, hogy pont 50 fejet kapunk? Természetesen nem, simán lehet 49 vagy 51, akár még 45 vagy 55 is -- noha a pénzérme tökéletesen szabályos volt. Hát ez a véletlen ingadozás. Nekünk a dolog igazán fordítva lesz érdekes: ha 100 betegből 45 halt meg, akkor még nem biztos, hogy $45/100 = 45$% a valódi halálozási arány, hiszen épp az előbbi példa mutatja, hogy éppenséggel akár 50% is lehet. Ezért mondhatjuk, hogy a kapott számban bizonytalanság van: igen, 100-ból 45 halála esetén 45% a legjobb tippünk, de ez nem biztos, a valóság lehet kicsit nagyobb vagy épp kisebb is. A konfidenciaintervallum ezt adja meg: mik azok a valódi értékek, amelyek mellett még "kényelmesen" (megfelelően definiált értelemben) kaphattuk azt, pusztán a véletlen ingadozás miatt, amit ténylegesen kaptunk is. Mondhatjuk, hogy ezek azok a valódi halálozási arányok, amik kompatibilisek a kapott számmal.
@@ -570,7 +602,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 Vagy épp a pszichiátriánál:
@@ -580,7 +612,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&Mukod
   , .(Halalozas, KorhazNev,
       t(Vectorize(function(x, n) binom.test(x, n)$conf.int*100)(MeghaltBetegSzam, ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazNev)) + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 A sok szakma miatt kevésbé áttekinthető, de azért megnézhetjük az összeset egyben is (vigyázzunk, hogy a vízszintes tengely skálázása mind különböző!), illetve térjünk át a legfrissebb, 2024-es adatokra, itt is lesznek hasonló furcsaságok:
@@ -592,7 +624,7 @@ ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
                                                                 ElbocsatottBetegSzam)))],
   aes(x = Halalozas, xmin = V1, xmax = V2, y = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_point() + geom_errorbar(linewidth = 0.5) +
-  labs(x = "Halálozási arány [%]", y = "")
+  labs(x = "Halálozási arány [%]", y = "", caption = captionlab)
 ```
 
 Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben is, itt minden vonal egy kórházat jelöl:
@@ -600,7 +632,8 @@ Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben 
 ```{r warning = FALSE, fig.height = 10}
 ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)) +
   geom_line(alpha = 0.2) + facet_wrap(~SzakmaMegnev, scales = "free") + guides(color = "none") +
-  labs(x = "Év", y = "Halálozási arány [%]") + scale_x_continuous(limits = range(res$Ev))
+  labs(x = "Év", y = "Halálozási arány [%]", caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
 ```
 
 A rejtélyeket nem igazán oldja fel a dolog, sőt, az bizonyos tekintetben inkább csak fokozódik: látszik, hogy a pszichiátrián a kilógó érték nem egy egyszeri történés volt, hanem egy több éven át tartó tendencia. Erre végképp nincsen magyarázatom (hacsak nem a betegösszetétel tényleg ennyire extrém).
