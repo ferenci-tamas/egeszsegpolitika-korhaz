@@ -3072,7 +3072,7 @@ is különbséget a kimenetben, nem tudhatjuk, hogy az mennyiben a vizsgált
 szempont hatása, és mennyiben az egyéb eltéréseké. Azt gondolom, hogy a
 teljesítményértékelésre (is!) igaz, hogy nem csak annak fontos [ezt a
 kérdéskört
-ismernie](https://tamas-ferenci.github.io/FerenciTamas_AzOrvosiMegismeresModszertanaEsAzOrvosiKutatasokKritikusErtekelese/),
+ismernie](https://ferenci-tamas.github.io/orvosi-megismeres-modszertan/),
 aki a számokat gyártja, hanem mindenkinek hasznos, aki ilyen
 eredményeket olvas. Egy [korábbi
 írásomban](https://github.com/ferenci-tamas/GondolatokAJarvanyElleniVedekezesErtekeleserolEsAJarvanyHatasanakVizsgalatarol)
