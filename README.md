@@ -10,19 +10,7 @@ még rosszabbat.”*
 
 ------------------------------------------------------------------------
 
-Korábbi írásaim:
-
-- [Gondolatok a járványügyi adatok
-  közléséről](https://github.com/ferenci-tamas/GondolatokAJarvanyugyiAdatokKozleserol)
-- [Gondolatok a favipiravir hatásosságáról, és a tudományos
-  véleménynyilvánítás
-  szabadságáról](https://github.com/ferenci-tamas/GondolatokAFavipiravirHatasossagarolEsATudomanyosVelemenynyilvanitasSzabadsagarol)
-- [Gondolatok a járvány elleni védekezés értékeléséről, és a járvány
-  hatásának
-  vizsgálatáról](https://github.com/ferenci-tamas/GondolatokAJarvanyElleniVedekezesErtekeleserolEsAJarvanyHatasanakVizsgalatarol)
-- [Gondolatok a védőoltásokkal kapcsolatos bizonytalanság megértéséről,
-  és a saját portánk előtt
-  söprögetésről](https://github.com/ferenci-tamas/GondolatokAVedooltasokkalKapcsolatosBizonytalansagMegerteserol)
+További esszéim: <https://www.medstat.hu/#esszek>
 
 ------------------------------------------------------------------------
 
@@ -50,22 +38,23 @@ országokkal összevetve. Létezik ugyan egy évente közzétett, úgynevezett
 ágyszám- és betegforgalmi kimutatás, ami bár kevés információt
 tartalmaz, de szerencsére ehhez a kérdéshez pont nagyon jól jönne – csak
 ezt sajnos szinte feldolgozhatatlan formában közlik (300 oldalas
-szövegfájl, össze-vissza széttördelt táblázatokkal).
-
-Éppen ezért célul tűztem ki, hogy e kimutatások adatait feldolgozzam,
-összefűzzem (2003-ig sikerült visszamennem az időben) és további
-elemzésre alkalmas formátumban, nyilvánosan közzétegyem. A legkevésbé
-sem titkolt célom ezzel, hogy további kutatásokat inspiráljak, és tegyek
-lehetővé ezáltal.
+szövegfájl, össze-vissza széttördelt táblázatokkal). Egy [másik
+hobbi-projektem](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas)
+keretében azonban szerencsére sikerült ezeket az adatokat összegyűjtenem
+és gépi úton feldolgozható formátumúra alakítanom; az eredményeket
+nyilvánosan közzé is tettem.
 
 Miután az adatok feldolgozhatóvá váltak, elvégeztem – mintegy példaként
-is – néhány egyszerű elemzést, melyek a fenti kérdések körül
-csoportosulnak: tényleg sok kórház van? Tényleg sok osztály van? Tényleg
-vannak túl kis osztályok? Az így elemezhetővé tett adatbázisnak
-köszönhetően már meg tudom próbálni az e kérdések kapcsán releváns
-tények bemutatását, majd – ahol szükséges, felvetve pár szempontot a
-szakirodalomból és nemzetközi összehasonlítást téve – megpróbálom
-megadni a saját válaszaimat e kérdésekre.
+is, demonstrálva az így elérhetővé váló lehetőségeket – néhány egyszerű
+elemzést, melyek a fenti kérdések körül csoportosulnak: tényleg sok
+kórház van? Tényleg sok osztály van? Tényleg vannak túl kis osztályok?
+Az így elemezhetővé tett adatbázisnak köszönhetően már meg tudom
+próbálni az e kérdések kapcsán releváns tények bemutatását, majd – ahol
+szükséges, felvetve pár szempontot a szakirodalomból és nemzetközi
+összehasonlítást téve – megpróbálom megadni a saját válaszaimat e
+kérdésekre. E vizsgálatokat tartalmazza a jelen dolgozat. Pár kommentárt
+általában is teszek a magyar fekvőbeteg-ellátás szervezése (nagyképű
+szóval élve: egészségpolitika) kapcsán.
 
 Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E
 mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis,
@@ -77,8 +66,7 @@ is, hogy mire lehet mégis felhasználni ezeket a számokat; ki fog jönni
 pár nagyon is érdekes eredmény.
 
 Röviden érintem az ágyszámkihasználás és az átlagos ápolási idő kérdését
-is, melyek lehetővé tesznek néhány egyszerű adatvalidációt: találunk
-olyan adatokat a kimutatásban, amik matematikailag lehetetlennek tűnnek.
+is.
 
 Mindezzel a munkával szeretnék hozzájárulni a racionális, adatokon
 alapuló diskurzushoz a magyar egészségpolitikában. Hitem szerint ez a
@@ -88,135 +76,34 @@ döntéshozatal jobbításához.
 Munkámat transzparensen, mindent részletében reprodukálhatóan közlöm a
 következőkben.
 
-## A GYÓGYINFOK/OEP/NEAK kórházi ágyszám- és betegforgalmi kimutatása
-
-A járványügyi adatok kapcsán korábban [már írtam
-arról](https://github.com/ferenci-tamas/GondolatokAJarvanyugyiAdatokKozleserol),
-hogy milyen a magyar adatközlési – vagy inkább adat nem közlési… –
-rendszer, és hogy ez milyen iszonyatos károkat okoz véleményem szerint
-az egész magyar egészségügynek. Sajnos a transzparencia hiánya, az
-adatok visszatartása közel nem csak a járványügyre igaz a magyar
-egészségügyön belül; ennek egy másik példájáról fogok most írni: a
-kórházakra vonatkozó adatközlésről.
-
-A nagyon kevés, nyilvánosan elérhető, kórházak működésére és
-teljesítményére vonatkozó magyar adatforrás egyike az ún. ágyszám- és
-betegforgalmi kimutatás. Ezt évente közzéteszik, eleinte a
-[GYÓGYINFOK](https://itf.njszt.hu/324rtr4/uploads/2020/10/a_szekszardi_gyogyinfok_rovid_tortenete.pdf)
-készítette, majd 2004-től az Országos Egészségbiztosítási Pénztár (OEP),
-mai nevén Nemzeti Egészségbiztosítási Alapkezelő (NEAK). Az adatok
-2003-ig visszamenőleg [érhetőek
-el](http://neak.gov.hu/felso_menu/szakmai_oldalak/publikus_forgalmi_adatok/gyogyito_megelozo_forgalmi_adat/fekvobeteg_szakellatas_stat/korhazi_agyszam)
-nyilvánosan. (2003 előtti adatok létének könyvtárban [találtam
-nyomát](https://nektar.oszk.hu/peldinfo_spring/peldinfo.htm?id=1013300&language=hu&view=1),
-de elektronikusan nem sikerült fellelnem, pedig jó lenne még tágabbra
-venni az elemzés időbeli átfogását.)
-
-Ezek a kimutatások alapvetően három típusú adatot tartalmaznak: egyrészt
-a kórházak ágyszámait (lebontva a szerint, hogy működő vagy szünetelő)
-az év utolsó napján és egész éves átlagban, másrészt az elbocsátott
-betegek számát, és lebontásukat meghalt, más osztályra áthelyezett,
-otthonába távozott csoportok szerint (ez lehetővé teszi halálozási arány
-számolását), harmadrészt az átlagos ápolási időtartamot (ezek együtt
-lehetővé teszik ágykihasználás számolását). Ezeket az adatokat
-megyénként, és szerencsére kórházanként is közlik, valamint alábontják
-szakmai osztályonként is. Összességében tehát adott kórház adott
-szakmájához lehet leásni. (A „szakma” itt nem azt jelenti, mint a
-hétköznapi szóhasználatban, mondjuk, hogy orvos vagy ápoló, hanem azt,
-amit szakterületnek szoktak hívni: urológia, szemészet, aneszteziológia
-és intenzív betegellátás stb.) Fontos hiányossága még ennek az
-adatközlésnek is, hogy a „szakmai osztály” nem ugyanaz, mint a kórházi
-osztály: van kórház amelyik három különböző, adott esetben lényegesen
-eltérő betegösszetételű és profilú intenzív osztályt is működtet, ám
-ebben az adatközlésben ezek elkülönítése nem lehetséges. Az ilyen
-különbségeket tehát még ez a relatíve finom felbontású adat is össze
-fogja mosni, erre tekintettel kell lenni. A másik fontos limitáció, hogy
-betegutat nem tudunk vizsgálni, még annak legszűkebb értelmében sem: az
-kiderül, hogy hány beteg van az adott osztályról elbocsátottak között,
-akit más osztályra helyeztek át, de arról nincs semmilyen információnk,
-hogy ez a másik osztály mi volt. Végképp lehetetlen hosszabb
-betegpályákat rekonstruálni, pedig sok esetben ez is nagyon izgalmas és
-fontos lenne.
-
-Bár azt írtam, hogy „nyilvánosan elérhető”, természetesen ebben is van
-csavar: igen, nyilvánosan elérhető – csak épp egy nagyon nehezen
-feldolgozható formában. (Persze már annak is örülni kell, hogy legalább
-nem kinyomtatott, majd beszkennelt papíron [teszik
-közzé](https://drive.google.com/file/d/1NUPx6DfgDlQmsImDFfrDM7RjQSBa2MHE/edit)…)
-Jelesül, egy – több mint 300 oldalas! – PDF-fájlt valamint egy DOC-fájlt
-tesznek közzé, amelyekben a számok szerencsére táblázatokban, de sajnos
-össze-vissza szerepelnek: a táblázatokat megtörik különböző
-kommentár-szövegek, több fejezetbe vannak szétosztva, véget érnek az
-egyik oldalon, majd folytatódnak a következőn, stb.
-
-Jelen projekt *elsődleges* célja ezeknek az adatoknak a beolvasása a
-fenti nehézségek ellenére, majd összeállításuk és elérhetővé tételük egy
-gépi úton is feldolgozható, további elemzéseket is kényelmesen lehetővé
-tevő formában. *Másodlagos* célja a munkámnak néhány alapvető
-adatvalidáció elvégzése, egy-két elemzés lefuttatása az immár
-feldolgozható adatbázison, demonstrálva az így elérhetővé váló
-lehetőségeket. Mindezek ürügyén fogok tenni pár kommentárt általában is
-a magyar fekvőbeteg-ellátás szervezése (nagyképű szóval élve:
-egészségpolitika) kapcsán.
-
 ## Technikai részletek
 
-Fontosnak tartom az adatok feldolgozható formára való hozásának
-technikai részleteit is közölni, részint mert talán önmagában is érdekes
-lehet, emiatt igyekszem kommentálni is, illetve rámutatni a
-nehézségekre, részint, hogy a munkám teljesen transzparens, bárki
-számára reprodukálható legyen. Akit a technikai részletek nem
-érdekelnek, de a számszerű eredményeket szeretné használni, itt
-letöltheti feldolgozható, letisztított és egységes formában a magyar
-aktív fekvőbeteg-ellátás 2003 és 2022 közötti ágyszám- és betegforgalmi
-adatait: [CSV
-formátum](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas-egeszsegpolitika/raw/main/ferenci-tamas-korhaz-agyszam-betegforgalom.csv),
-illetve [XLSX (Excel)
-formátum](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas-egeszsegpolitika/raw/main/ferenci-tamas-korhaz-agyszam-betegforgalom.xlsx).
+A felhasznált forrásadatok – valamint az előállításuk részletei – a már
+említett projektem
+[oldalán](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas)
+teljes részletességgel megtalálhatóak. Az adatgyűjtés technikai
+megoldása miatt – illetve mert amúgy is ez volt most a fókuszomban – az
+egész elemzés kizárólag az aktív ellátásokra vonatkozik.
 
-A további elemzés – csakúgy mint a letöltés és adatfeldolgozás – [R
-statisztikai
-környezet](https://www.youtube.com/@FerenciTamas/playlists?view=50&sort=dd&shelf_id=2)
-alatt történt; az ehhez szükséges kódokat a transzparencia és a nyílt
-tudomány okán az eredményt közlő pontokban is megadom, egyesével minden
-eredményhez (alapból elrejtve; az „R kód megjelenítése” felirat melletti
-háromszögre kattintva nyithatóak le).
-
-A további részletek [a függelékben](#technikai-részletek-1) olvashatóak.
-Egy dolgot fontos itt is kiemelni: az adatgyűjtés technikai megoldása
-miatt – illetve mert amúgy is ez volt most a fókuszomban – az egész
-elemzés kizárólag az aktív ellátásokra vonatkozik.
-
-## Adatvalidáció
-
-Az adatok validitása alatt alatt nem azt értem, hogy melyik adat
-„gyanús” vagy akár „szinte irreális” (fogunk ilyet is látni), hanem azt,
-ami *matematikailag* lehetetlen, hogy jó legyen.
-
-Két ilyen ellenőrzési lehetőséget találtam:
-
-- Az ágykihasználás visszaellenőrzése: több esetet találtam, amikor az
-  elbocsátott betegek száma nagyobb, mint ami 100%-os ágykihasználásnál
-  lehetne (figyelembe véve az átlagos ápolási időtartamot).
-- Elbocsátott betegek számának visszaellenőrzése: több esetet találtam,
-  hogy ággyal nem rendelkező osztályok több beteget láttak el, mint
-  ahány egynapos esetük volt.
-
-Sajnos a fenti jelenségekre nem találtam magyarázatot.
-
-Mivel ez most számunkra nem kulcsponti kérdés, a részleteket és az
-eredményeket [a függelékben](#adatvalidáció-1) közlöm.
+A mostani elemzés [R statisztikai
+környezet](https://ferenci-tamas.github.io/r-nyelv/) alatt történt; az
+ehhez szükséges kódokat a transzparencia és a nyílt tudomány jegyében az
+eredményt közlő pontokban is megadom, egyesével minden eredményhez
+(alapból elrejtve; az „R kód megjelenítése” felirat melletti háromszögre
+kattintva nyithatóak le). Az adatok feldolgozásához a `data.table`, a
+vizualizációhoz a `ggplot2` csomagot használtam.
 
 ## Betegforgalmi adatok
 
 A kórházak működésének egyik legközvetlenebb mutatója a betegforgalom,
 azaz a felvett majd elbocsátott betegek száma. (A kettő mindenképpen
-egyezik egy adott szakmaosztály esetében, ugyanis a magyar terminológia
-„elbocsátottnak” nevezi a más osztályra áthelyezett és a meghalt
-betegeket is.) Ez még persze nem olyan értelemben teljesítmény, ahogy a
-köznyelv hívja („mennyire jó hatásfokú a gyógyítás”), de mégis ez az
-első szintje a teljesítmény-vizsgálatnak. Egy további, második lépés
-lehet az ilyen jellegű szempontok bevonása, erre később fogok rátérni.
+egyezik egy adott szakmai osztály esetében, ugyanis a magyar
+terminológia „elbocsátottnak” nevezi a más osztályra áthelyezett és a
+meghalt betegeket is.) Ez még persze nem olyan értelemben teljesítmény,
+ahogy a köznyelv hívja („mennyire jó hatásfokú a gyógyítás”), de mégis
+ez az első szintje a teljesítmény-vizsgálatnak. Egy további, második
+lépés lehet az ilyen jellegű szempontok bevonása, erre később fogok
+rátérni.
 
 Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 által 2024-ben ellátott betegek számának eloszlását:
@@ -225,7 +112,7 @@ Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 
 ``` r
 ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
-  geom_histogram(boundary = 0, bins = 30) +
+  geom_histogram(boundary = 0, binwidth = 1000) +
   labs(x = "Elbocsátott betegek száma [fő]",
        y = "Gyakoriság [db]", caption = captionlab)
 ```
@@ -1492,7 +1379,7 @@ mennyire szépen megjelenik a szocialista örökség máshol is, illetve,
 hogy mennyire fals az a kép, hogy a magas ágyszám automatikusan azt
 jelenti, hogy jobb a helyzet – amit elvileg jelent az az hozzáállás, ami
 szerint az ágyszám-csökkentés automatikusan rossz). *Még most is* a
-lista elején vagyunk.
+lista első felében vagyunk.
 
 Egyébként pont a járvány elején merült fel gondolatként, hogy bár a
 magyar egészségügyi rendszer kórházcentrikussága általában rossz hír, de
@@ -1525,7 +1412,7 @@ az átlagos működő ágyszámot alapul véve:
 
 ``` r
 ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
-  geom_histogram(boundary = 0, bins = 30) +
+  geom_histogram(boundary = 0, binwidth = 10) +
   labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
        caption = captionlab)
 ```
@@ -2454,7 +2341,7 @@ pontos számok miatt néztem most bele [a
 tankönyvbe](https://www.pearson.com/en-gb/subject-catalog/p/international-economics-theory-and-policy-global-edition/P200000007162/9781292409818).
 (Azt fenn kell tartanom, hogy nem tudom azóta hogyan változott a
 helyzet, úgyhogy a lent leírtak nem biztos, hogy aktuálisak, de a
-mondanovalóm illusztrálása szempontjából ez mindegy is.)
+mondanivalóm illusztrálása szempontjából ez mindegy is.)
 
 A sztori az amerikai cukoriparhoz kapcsolódik. Tudni kell, hogy az
 Egyesült Államok különféle vámokkal és kvótákkal korlátozza a külföldi
@@ -2490,9 +2377,9 @@ fenntartsák az import-korlátozásokat.
 Egyszóval, ha minden amerikai tisztában lenne a helyzettel, akkor ez a
 korlátozás valószínűleg egy napot nem élne túl – csakhogy nem ez a
 helyzet. És egy dolgot hadd hangsúlyozzak: nem azért, mert az emberek
-„buták”, „tudatlanok” vagy „érdektelenek”: bizonyos szempontból teljesen
-racionális a viselkedésük, hiszen 30 dollárért *tényleg* nem éri meg még
-csak a tájékozódásba sem ölni túl nagy energiát, nem hogy a
+„buták”, „tudatlanok” vagy „érdektelenek”, sőt, bizonyos szempontból
+teljesen racionális a viselkedésük, hiszen 30 dollárért *tényleg* nem
+éri meg még csak a tájékozódásba sem ölni túl nagy energiát, nem hogy a
 tiltakozásba. Azaz: nagyon eltérő a felek érdekeltsége a szituációban.
 
 És talán ezen a ponton már látszik, hogy miért jutott ez a történet az
@@ -2701,10 +2588,12 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev
 
 ![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-Egyrészt látszanak 100% feletti ágykihasználások; ezekre az
-adatvalidálásról szóló pontban vissza fogok térni. Az okát nem tudván
-ezt most figyelmen kívül hagyom, így az látszik jól, hogy milyen
-különbségek vannak az egyes szakterületek között.
+Egyrészt látszanak 100% feletti ágykihasználások; ezek ügye
+[adatvalidációs
+kérdést](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas#adatvalid%C3%A1ci%C3%B3)
+jelent. Az okát nem tudván ezt most figyelmen kívül hagyom, így az
+látszik jól, hogy milyen különbségek vannak az egyes szakterületek
+között.
 
 Ez utóbbi aspektus talán még érdekesebbé tehető, ha az időbeli trendeket
 is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
@@ -2748,7 +2637,7 @@ Ez valóban igaz, és csakugyan törekedni kell a hatékonyság, és így az
 ennyire azért nem egyszerű, és nem lehet cél a 100%. Az első probléma,
 hogy bizonyos területeken, jellegükből adódóan fel kell készülni nagyon
 hirtelen, semmilyen módon előre nem jelezhető betegszám-megugrásra, amit
-el kell tudni látni. (Tömeges baleset, járvány-kitörés, időjárási
+el kell tudni látni. (Tömeges baleset, egy járvány kitörése, időjárási
 katasztrófa stb.) Tehát már csak ezért sem lehet 100%-ot megcélozni;
 természetesen ez nagyon szakterület-függő, intenzív ellátásban sokkal
 inkább lehet ilyenre szükség, reumatológián aligha. Ezt figyelembe kell
@@ -3001,10 +2890,10 @@ még külön nemzetközi szervezet is létezik
 ([ICHOM](https://www.ichom.org/)), mely az ilyen kimeneti indikátorokat
 vizsgálja, strukturálja és elkészíti az erre vonatkozó részletes,
 megvalósítást is támogató ajánlásait, melyeket – ingyen – elérhetővé is
-tesz (itt vannak például az ajánlásaik
-[pitvarfibrillációhoz](https://academic.oup.com/eurheartj/article/41/10/1132/5717382)
-vagy épp
-[tüdőrákhoz](https://erj.ersjournals.com/content/erj/48/3/852.full.pdf)).
+tesz (itt vannak például az ajánlásaik a
+[pitvarfibrillációtól](https://academic.oup.com/eurheartj/article/41/10/1132/5717382)
+a
+[tüdőrákig](https://erj.ersjournals.com/content/erj/48/3/852.full.pdf)).
 
 Megjegyzem, hogy valójában még a „halálozás” sem feltétlenül olyan
 egyértelműen definiált fogalom, mint azt az ember elsőre gondolhatná. Az
@@ -3102,8 +2991,8 @@ osztályra, szállítás más osztályra stb.), hogy átlagosan mennyi
 erőforrást – például mentőautót – kellett a helyszínre küldeni, hányszor
 volt szükség újraélesztésre stb., a nyers számokhoz
 [elérhetőek](https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2022/07/20220714-AQI-Stats-Note.pdf)
-magyarázattal ellátott vizualizációk, idősoros grafikonok, letölthető a
-– 2023-ig előre megadott – [adatközlési
+magyarázattal ellátott vizualizációk, idősoros grafikonok, letölthető az
+– egy évre előre megadott – [adatközlési
 naptár](https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2022/02/2022-23-AQI-Publication-Timetable-2.pdf),
 természetesen részletes
 [adatspecifikációkkal](https://www.england.nhs.uk/statistics/statistical-work-areas/ambulance-quality-indicators/),
@@ -3117,21 +3006,23 @@ másodperccel). *És még csak a mentőszolgálat teljesítménymérése volt…
 Vajon mi mikor fogunk ide eljutni?
 
 Másodsorban, érdemes megnézni a
-[betegségauditokat](https://digital.nhs.uk/data-and-information/data-insights-and-statistics/audits-and-registries-team),
+\[betegségauditokat\]<https://digital.nhs.uk/data-and-information/clinical-audits-and-registries>),
 egészen elképesztő mélységű adatok találhatóak a betegségekről
 (regiszter jelleggel – erről is lehetne Magyarországon beszélni…), de az
 ellátás teljesítmény-jellemzőiről is. Érdemes megnézni mondjuk a
-vastagbél-rák audit [oldalát](https://www.nboca.org.uk/), részletes
-tájékoztatók orvosoknak, betegeknek; [így néz
-ki](https://www.nboca.org.uk/content/uploads/2022/02/NBOCA-2021-AR-Final.pdf)
+vastagbél-rák audit [oldalát](https://www.natcan.org.uk/audits/bowel/),
+részletes tájékoztatók orvosoknak, betegeknek; [így néz
+ki](https://www.natcan.org.uk/wp-content/uploads/2025/10/NBOCA-State-of-the-Nation-Report-2025.pdf)
 például egy éves jelentés: betegút-elemzés, betegösszetétel-elemzés,
 különböző műtéti és gyógyszeres kezelések alkalmazásának gyakoriságai
 kórházanként lebontva, halálozási adatok kórházanként, kórházi ápolási
 idők megoszlása területenként, további minőségi mutatók (előre nem
 tervezett kórházi újra-felvételek aránya kórházanként), alkalmazott
-sebészeti technikák megoszlása és így tovább, és így tovább. Minden
-pontnál ajánlások, és az egész audithoz [külön
-rovat](https://www.nboca.org.uk/quality-improvement/) a
+sebészeti technikák megoszlása és így tovább, és így tovább. És ez még
+csak egy rák-típus volt…! Elérhető [hasonló
+oldal](https://www.natcan.org.uk/) egy sor más rák-típushoz is. Minden
+pontnál ajánlások, és [külön
+rovat](https://www.natcan.org.uk/quality-improvement/) a
 minőségfejlesztéshez.
 
 Az angoloknál annak is kialakított módszertana van, hogy az egyes
@@ -3180,7 +3071,7 @@ testreszabhatóan (még saját indikátorrendszert, vagy egyéni rangsort is
 lehetett gyártani). De mértek struktúra jellegű indikátorokat is,
 vizsgálták az egészségügyi dolgozók helyzetét, figyeltek betegbiztonsági
 mutatókat, a kórházi minőségfejlesztés működését; összesen [791
-indikátort](https://www.imeonline.hu/article.php?article=2011._X./98/az_interneten_elerheto_minosegugyi_informaciok_szerepe_a_betegtajekoztatasban_tanulsagok_a_minosegi_indikatorrendszer_eddigi_mukodese_alapjan)
+indikátort](https://ime.memt.hu/cikk/2011/egeszseg-gazdasagtani-kulonszam-2011/az-interneten-elerheto-minosegugyi-informaciok-szerepe-a-betegtajekoztatasban-tanulsagok-a-minosegi-indikatorrendszer-eddigi-mukodese-alapjan/)
 definiáltak, mértek és közöltek transzparensen.
 
 Az EBF-et 2007-ben hozták létre, 2010 nyarán megszüntették – miután
@@ -3212,10 +3103,15 @@ egészségpénztárak felügyeletét és évi mintegy 2000 betegjogi ellenőrzé
 folytattak le. Ez utóbbi miatt lejáratták és gáncsolták is érte eleget
 azok a hatalmasságok az egészségügyben, akik nem voltak hozzászokva
 ahhoz, hogy fiatal, az egészségügyi hierarchiába nem beletört ellenőrök
-érkeznek bejelentés nélkül az intézményükbe.)
+érkeznek az intézményükbe. Emlékszem még milyen lejárató cikkeket
+írattak az EBF-ről, hogy milyen felháborító, hogy előzetes bejelentés
+nélkül törnek be a kórházba, meg hogy intézményeket bírságolnak meg… ma
+meg egyes orvosokat (nem a kórházakat!) büntetnek meg azért, mert nem
+volt rajtuk névtábla, érdekes módon erről ugyanazok a lapok nem írnak
+cikkeket, amik 2009-ben fel voltak háborodva az EBF tevékenységén.)
 
-És mindezt 12 évvel ezelőtt. 12 év telt az EBF megszüntetése óta, és
-azóta nemhogy a 12 évvel ezelőtti lehetőségeket nem sikerült újra
+És mindezt 15 évvel ezelőtt. 15 év telt az EBF megszüntetése óta, és
+azóta nemhogy a 15 évvel ezelőtti lehetőségeket nem sikerült újra
 elérni, de még csak a leghalványabb nyoma sincs ilyen – pláne nyilvános,
 teljesen transzparens – indikátorrendszernek. A NEAK jelenlegi
 „indikátorrendszere” 3 (azaz három) [mutatóból
@@ -3237,7 +3133,7 @@ követelmény: a jogszabály külön említi, hogy az „átláthatóság érdek
 nyilvánosan közlendővé, nem magukat az eredményeket! (Lehet, hogy jót
 tett volna, ha a szakmai szervezetek nem egy (!) napot kapnak a tervezet
 [véleményezésére](https://mok.hu/public/media/source/Transzparencia/Allasfoglalasok/EMMI_egyeztet%C3%A9s_fekv%C5%91beteg_ell%C3%A1t%C3%A1s%20min%C5%91s%C3%ADt%C3%A9s_0407.pdf)…
-Miután 12 évig nem történt semmi.)
+Miután 15 *évig* nem történt semmi.)
 
 ## Halálozási adatok
 
@@ -3358,7 +3254,7 @@ lenne ennyi a halálozási arány. A konfidenciaintervallum ezt szűri ki,
 de láthatjuk, hogy igazán ezzel sem vagyunk beljebb: a kiskunhalasi
 kórház így is extrém kilógó.
 
-Hasonló a helyzet a bőrgyógyászatnál:
+Hasonló a helyzet a bőrgyógyászatnál 2021-ben:
 
 <details><summary>R kód megjelenítése</summary>
 
@@ -3439,22 +3335,20 @@ folyamatosan nő a halálozás. Adat híján nehéz pontosan mondani, de erős
 tippem, hogy valójában semmi különös nem történik, csak az ellátott
 betegek egyre idősebbek, és törékenyebb állapotúak. Természetesen ennek
 megítéléséhez (ami elsőrendű érdeke lenne az ország egészségügyének…)
-kellenének a pontosabb adatok. Jól látható a járvány hatása is: az
+kellenének a pontosabb adatok. Jól látható a járvány hatása is, az
 intenzív ellátásban és az infektológián megugró halálozás.
 
 ## Záró gondolatok
 
 Remélem, hogy a fenti sorok két – csak első ránézésre ellentétes –
 dologra rá tudtak mutatni: egyrészt, hogy az ágyszám- és betegforgalmi
-kimutatások adatai értékesek és érdekesek (és talán emiatt nem volt
-felesleges a feldolgozható formára hozása és közzététele, hátha ez
-további elemzéseket is serkent), másrészt, hogy közben egy nagyon fontos
-feladat, a teljesítménymérés megoldásához azonban még egyáltalán nem
-tudjuk ezeket használni. Ehhez további adatokra volna szükség; de
-remélem meg tudtam mutatni azt is, hogy ez alapvető fontosságú lenne a
-magyar egészségügy fejlesztéséhez. Nem kis feladat – de megoldható. A
-szűk keresztmetszet ehhez, úgy hiszem, nem a módszertan, hanem a
-politikai szféra támogatása.
+kimutatások adatai értékesek és érdekesek, másrészt, hogy közben egy
+nagyon fontos feladat, a teljesítménymérés megoldásához még nem tudjuk
+ezeket használni. Ehhez további adatokra volna szükség; de remélem meg
+tudtam mutatni azt is, hogy ez alapvető fontosságú lenne a magyar
+egészségügy fejlesztéséhez. Nem kis feladat – de megoldható. A szűk
+keresztmetszet ehhez, úgy hiszem, nem a módszertan, hanem a politikai
+szféra támogatása.
 
 ------------------------------------------------------------------------
 
@@ -3463,361 +3357,3 @@ politikai szféra támogatása.
 A [szerző](http://www.medstat.hu/) klinikai biostatisztikus,
 orvosbiológiai mérnök. A fent leírtak teljes egészében a magánvéleményét
 képviselik.
-
-## Függelék
-
-### Technikai részletek
-
-Első lépésben kézzel letöltöttem a NEAK honlapjáról az egyes évek
-adatait (ki kell csomagolni egy `zip` fájlból; a régiek `doc`
-formátumban vannak meg), majd minden egyes év adatát kézzel átmentettem
-`docx` formátumban. (Ennek nagy jelentősége nincsen, csak a később
-használt `R` csomag a `docx` formátumot tudja minden további nélkül
-kezelni.)
-
-Az adatok feldolgozásához a `docxtractr` nevű R csomag jelenti a
-megoldást, ez be tud olvasni `docx` formátumú fájlt, sőt, ki tudja
-belőle szedni a táblázatokat (akár egyszerre az összeset, egy listában),
-ráadásul még azt is jól tudja kezelni, hogy egy táblázat több oldalon
-keresztül folytatódik.
-
-Elsőként megadom a használt kódot, utána kommentálom hosszabban, hogy az
-mit is csinál:
-
-<details open><summary>R kód megjelenítése</summary>
-
-``` r
-if(!file.exists("res.rds")) {
-  headernames <- c("Korhaz", "SzakmaKod", "SzakmaMegnev", "OsszesAgy",
-                   "MukodoIAgy", "MukodoIIAgy", "TartoSzuneteloAgy",
-                   "OsszesAtlagAgy", "MukodoAtlagAgy", "ElbocsatottBetegSzam",
-                   "EltavozottBetegSzam", "MasOsztalyBetegSzam", "MeghaltBetegSzam",
-                   "EgynaposEsetSzam", "TeljesithetoApolasiNapSzam",
-                   "TeljesitettApolasiNapSzam", "ApolasAtlTartam", "Agykihasznalas",
-                   "Halalozas")
-  
-  files <- list.files("./doc/")
-  
-  res <- rbindlist(lapply(files, function(file) {
-    yr <- regmatches(file, gregexpr("\\d{4}", file))[[1]]
-    
-    doc <- docxtractr::read_docx(paste0("./doc/", file))
-    
-    res <- docxtractr::docx_extract_all_tbls(doc)
-    res <- lapply(res, as.data.table)
-    
-    FenntartoTablaNum <- which(sapply(res, function(x)
-      names(x[1,1]))==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás.fenntartónként", yr, "..év"))
-    
-    Fenntartok <- data.table(Fenntarto = res[[FenntartoTablaNum]][[1]],
-                             KorhazRovid = res[[FenntartoTablaNum]][[1]])
-    Fenntartok[nchar(Fenntartok$Fenntarto)==4]$Fenntarto <- NA
-    Fenntartok <- tidyr::fill(Fenntartok, Fenntarto)
-    Fenntartok <- Fenntartok[!is.na(Fenntarto)&!is.na(KorhazRovid)]
-    Fenntartok <- Fenntartok[nchar(KorhazRovid)==4]
-    
-    res <- res[sapply(res, function(x)
-      names(x[1, 1])==paste0("Kórházi.ágyszám..és.betegforgalmi.kimutatás", yr, "..év")&
-        substring(x[1, 1], 1, 4)%in%Fenntartok$KorhazRovid)]
-    
-    res <- rbindlist(lapply(1:length(res), function(i) {
-      firstactive <- grep("Aktív", res[[i]][[2]], ignore.case = TRUE)[1]
-      firstchronic <- grep("Krónikus", res[[i]][[2]], ignore.case = TRUE)[1]
-      if(firstactive>firstchronic) NULL else
-        setNames(cbind(res[[i]][1,1], res[[i]][6:(firstactive-1),]), headernames)
-    }))
-    
-    for(i in headernames[-(1:3)]) res[[i]] <- as.numeric(stringr::str_replace_all(
-      res[[i]], c("," = ".", "[[:space:]]" = "")))
-    
-    res$Ev <- as.integer(yr)
-    
-    res$KorhazRovid <- substring(res$Korhaz, 1, 4)
-    merge(res, Fenntartok, by = "KorhazRovid")
-  }))
-  
-  res <- res[order(Ev)]
-  res$KorhazNev <- ifelse(do.call(c, gregexpr("(", res$Korhaz, fixed = TRUE))==-1,
-                          substring(res$Korhaz, 6), substring(res$Korhaz, 6, nchar(res$Korhaz)-17))
-  
-  saveRDS(res, "res.rds")
-} else res <- readRDS("res.rds")
-```
-
-</details>
-
-A következő kommentárok tartoznak a fentiekhez:
-
-- A fenntartó azt jelenti, hogy milyen típusú fenntartója van az
-  intézménynek (központi, önkormányzati, egyházi stb.). Ezt
-  tulajdonképpen hagyhatnánk is, de bizonyos elemzéseknél jól jön, ha ki
-  tudjuk zárni az elég atipikus intézményeket (pl. vállalkozások által
-  fenntartott intézményeket, melyek jellemzően nulla ágyszámmal csak
-  egynapos ellátást nyújtanak), úgyhogy érdemes lehet nem veszni hagyni.
-  Ha viszont e mellett döntünk, akkor kicsit küzdeni kell. A
-  dokumentumok jellemzően az elején (de még az sem egységes, hogy melyik
-  táblázatban, ezért kell a `FenntartoTablaNum`-ban kikeresni a
-  sorszámot) közlik a fenntartókat, de nagyon szerencsétlen formátumban:
-  egy oszlopban van a fenntartó és az intézmény. Ezt úgy kell
-  elképzelni, hogy először szerepel az „önkormányzati eü. intézmény”
-  kifejezés, majd utána jönnek az ilyen fenntartójúak azonosítói, aztán
-  egy „központi eü. intézmény” szó, majd sorakoznak ezek kódjai stb.,
-  ráadásul közben még összegzősorok is vannak. A problémát egy trükkel
-  oldjuk meg: ezt az oszlopot kétszer egymás mellé másoljuk, majd az
-  egyik oszlopból kitöröljük azokat az értékeket, amik nem 4 hosszúak.
-  Ezzel magyarul kitöröltük a kórházak azonosítóit, és meghagytuk a
-  felirat-szövegeket. (A dolgot az teszi lehetővé, hogy a kórház
-  azonosító mindig 4 karakter, viszont a feliratok reményeim szerint
-  soha.) Ezt következően a kiüresített helyekre lehúzzuk fentről az
-  utolsó szöveget – a `tidyr::fill` pont ezt teszi – így végeredményben
-  egymás *mellé* kerültek, ahogy arra szükségünk van, a fenntartók és a
-  kódok. Nincs más dolgunk, mint kitörölni a felesleges sorokat, azaz a
-  feliratok és az összegző-sorokat, de ezt könnyen megtaláljuk azáltal,
-  hogy ezeknél a kód oszlop nem 4 hosszúságú.
-- A rengeteg táblázatból meg kell keresni azt az egyetlen kombinációt,
-  ami érdekel minket: az intézményre lebontott táblákat. Az ilyeneket
-  két feltétellel azonosítjuk: egyrészt a bal szélső oszlop neve adott
-  értékű mindig, másrészt leellenőrizzük, hogy a bal felső cellában –
-  elvileg itt kell a kórház azonosítója szerepeljen – a megadott
-  négyjegyű kód tényleg valódi kórházazonosító-e. (Ezeket az
-  azonosítókat az előző lépésnek köszönhetően már ismerjük.)
-- A következő probléma az aktív és krónikus ellátások elkülönítése. A
-  2012 és azt követő évek táblázataiban nincsen probléma, ezeknél
-  ugyanis a krónikus ellátást biztosító szakmáknál üres a szakmakód, így
-  nyugodtan legyűjthetjük „ész nélkül” az összes megfelelő táblázatot,
-  maximum a végén elhagyjuk azokat, ahol nincs szakmakód. A probléma az,
-  hogy 2012 előtt nem követték ezt a szabályt, és a krónikus ellátást
-  végző szakmák mellett is fel volt tüntetve a szakmakód. Ez azért gond,
-  mert ezek a kódok átfednek az aktív szakmák kódjaival, sőt, akár még
-  egy kórházon belül is előfordulhat mindkettő (például 2011-ben a Szt.
-  Imre Kórháznak volt 18-as szakmakódú pszichiátriából aktív *és*
-  krónikus ellátása is). De az sem jó megoldás, hogy elkezdjük
-  legyűjteni a sorokat addig, amíg van szakmakód, mert van olyan kórház,
-  amiben egyáltalán nincs aktív ellátás. Végül azt a megoldást találtam
-  ki, hogy megkeressük az „aktív” és a „krónikus” szavak előfordulását
-  (ezek az összegző-sorokban biztosan szerepelnek). Ha az „aktív” szó
-  csak a „krónikus” után van, akkor nincs aktív ellátás (a szó az „aktív
-  és krónikus összesen” nagy összegző sorban szerepelt), ezt az
-  intézményt átugorhatjuk, ha nem, akkor a kettő *közötti* sorokat kell
-  kiszednünk. Ez a megoldás már jól működőnek tűnik, viszont így
-  deklarálni kell, hogy az elemzés kizárólag az aktív ellátásra terjed
-  ki.
-- A számokat tartalmazó sorokban szóköz az ezres elválasztó,
-  tizedesvessző a tizedesjelölő, az előbbieket el kell távolítani, az
-  utóbbiakat vesszőre kell cserélni, hogy számmá lehessen alakítható
-  (erre a feladatra a `stringr::str_replace_all` kényelmesebb mint a
-  `gsub`).
-- Szerencsére az oszlopok sorrendje és tartalma végig ugyanaz (ezt
-  tartalmazza a `headernames` változó).
-- A kórház kódja szerencsére mindig a nevének az első négy karaktere.
-
-A fentiek végén megkapjuk a kialakítani tervezett táblázat első
-változatát. Mindenek előtt végezzünk rajta pár adatvalidációt.
-
-Egyedi kórháznévből összesen 704 van, de ez valójában nem jelöl ennyi
-kórházat, hiszen sok kórház neve változott az évek alatt. A rekord 9:
-összesen 1 kórház is van, aminek ennyi különböző neve volt a vizsgált
-időszakban. Szerencsére gyors átfutás alapján az adatok rendben vannak,
-azaz ugyanahhoz a kód ténylegesen ugyanaz a kórház tartozik (még ha a
-neve változott is). Így a kód megfelelő azonosító.
-
-Nézzük most a szakmákat:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-knitr::kable(as.data.table(table(res$SzakmaKod, res$SzakmaMegnev))[N!=0][
-  order(V1), .(`Szakmakód` = V1, `Szakma megnevezése` = V2)])
-```
-
-</details>
-
-| Szakmakód | Szakma megnevezése                        |
-|:----------|:------------------------------------------|
-|           | Rendkívüli osztály                        |
-| 01        | Belgyógyászat                             |
-| 02        | Sebészet                                  |
-| 03        | Traumatológia                             |
-| 04        | Szülészet-nőgyógyászat                    |
-| 05        | Csecs.- és gyermekgyógy.                  |
-| 05        | Csecsemő- és gyermekgyógyászat            |
-| 06        | Fül-orr-gégegyógyászat                    |
-| 06        | Fül-orr-gégészet                          |
-| 07        | Szemészet                                 |
-| 08        | Bőr- és nemibeteg                         |
-| 08        | Bőrgyógyászat                             |
-| 09        | Ideggyógyászat                            |
-| 09        | Neurológia                                |
-| 10        | Ortopédia                                 |
-| 10        | Ortopédia-traumatológia                   |
-| 11        | Urológia                                  |
-| 12        | Klinikai onkológia                        |
-| 12        | Onkológia, onkoradiológia                 |
-| 13        | Fog- és szájsebészet                      |
-| 13        | Fogászati ellátás                         |
-| 14        | Reumatológia                              |
-| 15        | Aneszteziológiai és intenzív betegellátás |
-| 15        | Intenzív betegellátó                      |
-| 16        | Fertőző betegellátó                       |
-| 16        | Infektológia                              |
-| 17        | Arc-, állcsont- és szájsebészet           |
-| 17        | Felvételi osztály                         |
-| 18        | Elmegyógyászat                            |
-| 18        | Pszichiátria                              |
-| 19        | Tüdőgyógyászat                            |
-| 19        | Tüdőgyógyászat (pulmonológia)             |
-| 20        | Plasztikai- és égéssebészet               |
-| 23        | Gyermek- és ifjúságpszichiátria           |
-| 40        | Kardiológia                               |
-| 46        | Sürgősségi betegellátás                   |
-| 90        | Mátrix intézet                            |
-| 91        | Belgyógyászati típusú mátrix              |
-| 92        | Sebészeti típusú mátrix                   |
-
-Amint látható, itt már van egy kis kavarodás, de pár kivételtől
-eltekintve nem valódi gond van, csak a szakma megnevezése nem volt
-egységes. Az egyik kivétel a 17-es kód, itt tényleges gikszer van:
-2003-tól 2011-ig ezt a „Felvételi osztály” szakmára használják, utána
-viszont egy durva hiba történik, mert *ugyanazt* a kódot kiosztják egy
-teljesen más szakmának („Arc-, állcsont- és szájsebészet”). Hasonló
-történik a 3-as és 10-es kód kapcsán: 2011-ig a 3-as kód a
-traumatológia, a 10-es pedig az ortopédia, ám 2012-től már a kettőt
-egybevonják „ortopédia-traumatológia” néven, ami nem lenne probléma, az
-viszont már maximálisan az, hogy erre *ugyanazt* a 10-es kódot osztják
-ki, ami korábban még csak az ortopédia volt magában… Mindkét esetben
-ugyanaz jelenti a megoldást: a kódokat szedjük szét (17F és 17A, illetve
-3, 10O, 10OT neveken) úgy, hogy ennek során az évet is tekintetbe
-vesszük. (Ez nem lenne kötelező, hiszen az év figyelembevétele a kód
-mellett, vagy a szöveges elnevezés használata elvileg biztonságos
-megoldás, de a kavarodások elkerülése érdekében jobbnak láttam, ha
-pusztán a kód is tükrözi a valós helyzetet.) Potenciálisan zűrös még a
-13-as kód: ez 2011-ig a „Fog- és szájsebészet” volt, utána két évig nem
-használták, majd 2014-ben visszatért, de immár mint „Fogászati ellátás”.
-A biztonság kedvéért ezt is megkülönböztettem (13FSZ és 13F), hozzátéve
-mellesleg, hogy valószínűleg a 17F a 13FSZ átnevezése. Ezen felül az
-egységesség kedvéért javítsuk ki az ingadozó elnevezéseket is (az ízlés
-kérdése, hogy melyiket módosítjuk melyikre, a lényeg, hogy egységes
-legyen); illetve egy szakmanevet is lerövidítünk, hogy jobban kiférjen
-az ábrákon. Összesséségében véve a következő átalakításokat tesszük:
-
-<details open><summary>R kód megjelenítése</summary>
-
-``` r
-res[SzakmaMegnev=="Csecs.- és gyermekgyógy."]$SzakmaMegnev <- "Csecsemő- és gyermekgyógyászat"
-res[SzakmaMegnev=="Fül-orr-gégészet"]$SzakmaMegnev <- "Fül-orr-gégegyógyászat"
-res[SzakmaMegnev=="Bőrgyógyászat"]$SzakmaMegnev <- "Bőr- és nemibeteg"
-res[SzakmaMegnev=="Ideggyógyászat"]$SzakmaMegnev <- "Neurológia"
-res[SzakmaMegnev=="Klinikai onkológia"]$SzakmaMegnev <- "Onkológia, onkoradiológia"
-res[SzakmaMegnev=="Intenzív betegellátó"]$SzakmaMegnev <- "Aneszteziológiai és intenzív betegellátás"
-res[SzakmaMegnev=="Aneszteziológiai és intenzív betegellátás"]$SzakmaMegnev <-
-  "Aneszt. és intenzív betegellátás"
-res[SzakmaMegnev=="Fertőző betegellátó"]$SzakmaMegnev <- "Infektológia"
-res[SzakmaMegnev=="Elmegyógyászat"]$SzakmaMegnev <- "Pszichiátria"
-res[SzakmaMegnev=="Tüdőgyógyászat (pulmonológia)"]$SzakmaMegnev <- "Tüdőgyógyászat"
-
-res[SzakmaMegnev=="Felvételi osztály"]$SzakmaKod <- "17F"
-res[SzakmaMegnev=="Arc-, állcsont- és szájsebészet"]$SzakmaKod <- "17A"
-res[SzakmaMegnev=="Ortopédia"]$SzakmaKod <- "10O"
-res[SzakmaMegnev=="Ortopédia-traumatológia"]$SzakmaKod <- "10OT"
-res[SzakmaMegnev=="Fog- és szájsebészet"]$SzakmaKod <- "13FSZ"
-res[SzakmaMegnev=="Fogászati ellátás"]$SzakmaKod <- "13F"
-```
-
-</details>
-
-Ezek után már a megnevezés aggálytalanul használható.
-
-A későbbi szűkítések leegyszerűsítésére mentsünk el egy indikátort a
-speciális fenntartójú kórházakhoz (börtönkórház, IMEI, vállalkozás által
-fenntartott egészségklinika stb.), és a speciális szakmákhoz (rendkívül
-osztály, mátrixintézet stb.); a későbbiekben ezeket majd sokszor
-kizárjuk a vizsgálatokból:
-
-<details open><summary>R kód megjelenítése</summary>
-
-``` r
-res$NemSpecKh <- res$Fenntarto%in%c("Önkormányzati kórházak", "Egyházi kórházak",
-                                    "Klinikák", "Állami kórházak", "HM és BM kórházak",
-                                    "MÁV kórházak", "Központi intézmény", "Egyházi",
-                                    "Egyetem", "Önkormányzati eü. intézmény",
-                                    "Központi eü. intézmény", "Egyházi intézmény")
-res$NemSpecSzakma <- res$SzakmaKod!=""&!grepl("mátrix", res$SzakmaMegnev, ignore.case = TRUE)
-```
-
-</details>
-
-(Még így is nagyon sok pl. rendelőintézet belekerül a listánkba, de ezek
-könnyen elkülöníthetőek lesznek, hiszen nulla az ágyszámuk.)
-
-Ezzel végeztünk az előkészületekkel, nincs más dolgunk mint
-feldolgozható formátumokban lementeni az adatokat:
-
-<details open><summary>R kód megjelenítése</summary>
-
-``` r
-saveRDS(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.rds")
-fwrite(res, "ferenci-tamas-korhaz-agyszam-betegforgalom.csv",
-       sep = ";", dec = ",", row.names = FALSE, bom = TRUE)
-openxlsx2::write_xlsx(
-  res, "ferenci-tamas-korhaz-agyszam-betegforgalom.xlsx")
-```
-
-</details>
-
-Most már nekiláthatunk az elemzésnek! Az adatok feldolgozásához a
-`data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
-
-### Adatvalidáció
-
-Az egyik változó, ami más adatokkal validálható, az ágykihasználás. Az
-egyszerűség kedvéért vegyünk egy konkrét példát: 2021-ben a hatvani
-Albert Schweitzer Kórház (1035) 15-ös kódú intenzív osztályán az ápolás
-átlagos időtartama 6.49 nap volt. Ez azt jelenti, hogy ha abban a
-pillanatban, hogy felszabadult egy ágy, azonnal új beteg került rá, egy
-év alatt összesen 365/6.49 = 56.2 beteget tudtak ellátni. Mivel az évben
-átlagosan 6 ágyuk volt, ez összesen 6 · 56.2 = 337.4 beteg. Igen ám, de
-közben a tényleges betegforgalom 1841 beteg volt! (Az elméleti maximum
-5.5-szerese!) Ezt – intenzív osztályról lévén szó nem meglepő módon – az
-egynapos ellátás sem tudja megmagyarázni, ilyen ugyanis nem volt.
-
-Nem tudom a jelenség magyarázata mi lehet, kézenfekvőnek tűnik, hogy a
-koronavírus-járvány miatt került ide sok beteg, nagyobb ágyszámon, de ha
-így van, akkor meg az átlagos ágyszám adata hibás, hiszen annak
-*elvileg* tükröznie kell az egész évben történt változásokat (ennek a
-definíciója ugyanis a kimutatás szerint: „kórházi ágyak számának a
-tárgyév során bekövetkezett változásait is tükröző súlyozott átlaga”).
-Érdekes azt is megjegyezni, hogy igazából már az átlagos ápolási
-időtartam sem stimmel (vagy jobban mondva legalábbis nem konzisztens a
-többi adattal): a NEAK [definíciója
-szerint](http://site.oep.hu/statisztika/2011/pdf/hun/Fekvobeteg_modszertan_2011.pdf)
-ez aktív ellátás esetén „a teljesített ápolási napok száma osztva az
-osztályokról elbocsátott betegek számával”, jelen esetben 11705 / 1841 =
-6.36, ami nem egyezik pontosan a táblázatban szereplő értékkel. (Ez az
-apró eltérés az oka annak, hogy a fenti kiszámolt hányados nem egyezik
-pontosan a táblában közölt ágykihasználással, ami 534.47%, mindenesetre
-ez is bőven 100% feletti.) A dolog nem egyedi, összesen 372 példa van
-ilyen adatra. Egyáltalán nem csak a koronavírus-járvány éveiről van szó,
-jó kérdés tehát, hogy mi lehet a magyarázat…
-
-Ha már említettük az egynapos ellátást, érdemes arra is ránézni. Itt is
-hozok konkrét példát: 2021-ben a László Kórház (0109) 07-es szakmakódú
-szemészete nem rendelkezett egyetlen ággyal sem, mégis elbocsátott 937
-beteget. Ez nem meglepő, mert egynapos ellátást nyújtott – igen ám, csak
-az egynapos ellátási események száma 934 volt. A különbség nem nagy,
-talán csak banális adminisztrációs hibáról van szó, mindenesetre a
-teljes adatbázisban 1134 esetben fordul elő, hogy működő ágy nélkül
-osztályok több beteget bocsátottak el, mint ahány egynapos esetük volt.
-
-És még egy megjegyzés a végére, ami immár nem egy gépi úton, hanem
-kézzel felderített probléma, de akkor is probléma: a 0163-as kódú
-OITI-nek az adatbázis szerint 2021-ben 42 ágya volt, ami nagyon kevésnek
-tűnik (2020-ban még 170 volt). A magyarázat minden bizonnyal az, hogy az
-intézmény az év közepén összeolvadt a Nyírővel – ezt egy lábjegyzet
-jelzi is a kimutatásban – ám a jelek szerint az ágyszámot mégis az egész
-évre osztották le. (Teljesen logikátlan és értelmetlen módon, hiszen ha
-a számlálóban, tehát az ágyak napi számának összeadásában csak márciusig
-mennek el, akkor nyilván a nevezővel, a napok számával is csak addig
-kell elmenni.) Annyit tettem, hogy az egyetlen kimutatásból, ahol név
-szerint megjelent volna, a legkisebb kórházak listájából, kézzel
-kiszedtem, hiszen így természetesen nincs értelme legkisebb között
-lévőnek nevezni.
