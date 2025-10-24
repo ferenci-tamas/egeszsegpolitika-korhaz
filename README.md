@@ -8,8 +8,8 @@ Ferenci Tamás (<https://www.medstat.hu/>)
 - [Ágyszámra vonatkozó adatok](#ágyszámra-vonatkozó-adatok)
 - [A szünetelő ágyak ügye](#a-szünetelő-ágyak-ügye)
 - [Az egynapos ellátások kérdése](#az-egynapos-ellátások-kérdése)
-- [Átlagos ápolási idő és az
-  ágykihasználás](#átlagos-ápolási-idő-és-az-ágykihasználás)
+- [Ágykihasználás és átlagos ápolási
+  idő](#ágykihasználás-és-átlagos-ápolási-idő)
 - [Egy záró gondolat a hazai ellátórendszer
   kórház-centrikusságáról](#egy-záró-gondolat-a-hazai-ellátórendszer-kórház-centrikusságáról)
 - [Botcsinálta politológiai lezárás, avagy az amerikai cukoripar és a
@@ -75,7 +75,7 @@ kérdésekre. E vizsgálatokat tartalmazza a jelen dolgozat. Pár kommentárt
 szóval élve: egészségpolitika) kapcsán.
 
 Röviden érintem a szünetelő ágyak, az egynapos ellátások, az
-ágyszámkihasználás és az átlagos ápolási idő kérdését is.
+ágykihasználás és az átlagos ápolási idő kérdését is.
 
 Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E
 mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis,
@@ -2337,7 +2337,7 @@ ellátás, ahol ezt megelőzte a betegforgalom felmérése, a kórházi munka
 minőségének felmérése, a többi ellátó kórház elérhetőségének és
 kapacitásának felmérése, urambocsá’ a kérdés társadalmi egyeztetése, a
 változás összekapcsolása az egyéb intézkedésekkel, mint a betegszállítás
-vagy ápolás megerősítése, az egynapos ellátások erősítése és a
+vagy ápolás fejlesztése, az egynapos ellátások erősítése és a
 protokollok felülvizsgálata – hanem ott, ahol legjobban ég a ház. Ahol a
 kórház már nem tudja finanszírozni a tevékenységet, ahol elfogy az
 orvos, ahol elfogy a nővér.
@@ -2440,7 +2440,7 @@ nagyon mások, az intenzív terápia nem igen fog tudni „egynapos ellátást�
 nyújtani). Kiemelhető, ahogy a szemészet szinte egy-két évtized alatt
 teljesen átalakult ilyen szempontból.
 
-## Átlagos ápolási idő és az ágykihasználás
+## Ágykihasználás és átlagos ápolási idő
 
 Az eddig megtárgyalt két szempont, a betegforgalom és az ágyszám
 szorosan összefügg: több ágyon vélhetően nagyobb a betegforgalom is. De
@@ -2599,7 +2599,10 @@ változásokra is.
 Érdekes lehet egyébként az ágykihasználást és a szünetelő ágyak arányát
 *egyszerre* is vizsgálni. Felvethető például, hogy ahol magas az
 ágykihasználás, de mégis sok ágy szünetel, az valamilyen furcsaságra
-utalhat. Nézzük meg a 2024-es adatokat:
+utalhat. (Hiszen ha magas az ágykihasználás, az arra utal, hogy szükség
+lehet kapacitásra, ha magas a szünetelő ágyak aránya, az arra, hogy
+volna is ilyen aktiválható tartalék, így adja magát a kérdés, hogy akkor
+miért szünetelnek ezek az ágyak.) Nézzük meg a 2024-es adatokat:
 
 <details><summary>R kód megjelenítése</summary>
 
