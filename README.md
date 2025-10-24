@@ -3,6 +3,24 @@ adatok elemzéséről, és néhány egészségpolitikai megjegyzés ezek ürügy
 ================
 Ferenci Tamás (<https://www.medstat.hu/>)
 
+- [Technikai részletek](#technikai-részletek)
+- [Betegforgalmi adatok](#betegforgalmi-adatok)
+- [Ágyszámra vonatkozó adatok](#ágyszámra-vonatkozó-adatok)
+- [A szünetelő ágyak ügye](#a-szünetelő-ágyak-ügye)
+- [Az egynapos ellátások kérdése](#az-egynapos-ellátások-kérdése)
+- [Átlagos ápolási idő és az
+  ágykihasználás](#átlagos-ápolási-idő-és-az-ágykihasználás)
+- [Egy záró gondolat a hazai ellátórendszer
+  kórház-centrikusságáról](#egy-záró-gondolat-a-hazai-ellátórendszer-kórház-centrikusságáról)
+- [Botcsinálta politológiai lezárás, avagy az amerikai cukoripar és a
+  magyar kisvárosi szülészet
+  kapcsolata](#botcsinálta-politológiai-lezárás-avagy-az-amerikai-cukoripar-és-a-magyar-kisvárosi-szülészet-kapcsolata)
+- [Kitérő jellegű felvezető a halálozási adatokhoz: gondolatok az
+  egészségügyi teljesítmény
+  méréséről](#kitérő-jellegű-felvezető-a-halálozási-adatokhoz-gondolatok-az-egészségügyi-teljesítmény-méréséről)
+- [Halálozási adatok](#halálozási-adatok)
+- [Záró gondolatok](#záró-gondolatok)
+
 *„A gyávaság forrása, hogy az emberek nem tudják elképzelni a rossznál
 még rosszabbat.”*
 
@@ -150,7 +168,7 @@ illusztratív lesz):
 ``` r
 kableExtra::add_header_above(
   kableExtra::kable(
-    dcast(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    dcast(res[Ev == 2024][NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(ElbocsatottBetegSzam), which.max(ElbocsatottBetegSzam))]), .(SzakmaMegnev)],
       SzakmaMegnev ~ tipus, value.var = c("ElbocsatottBetegSzam", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
@@ -1083,10 +1101,10 @@ szürke vonalak az egyes osztályok forgalmai, a piros vonal az átlaguk
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ElbocsatottBetegSzam, group = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
     , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Elbocsátott betegszám [fő]",
@@ -1109,7 +1127,7 @@ egészségügy teljesítményének:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
   , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
   aes(x = Ev, y = ElbocsatottBetegSzam)) +
   facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
@@ -1145,8 +1163,7 @@ megjelenő, egyetlen számba sűrített jellemzője a kórházi ágyak száma.
 
 Azért is emeltem ki külön a közvélemény szerepét, mert remélem már a
 korábbi fejtegetések is rámutattak arra, hogy valójában ez egy nagyon
-káros szemlélet. Itt nincs mód ennek a teljes megtárgyalására, de néhány
-szempontot felvetnék.
+káros szemlélet. Ehhez szeretnék itt néhány szempontot felvetni.
 
 Egyik az a – klasszikus szocialista – szemlélet, hogy a százezer lakosra
 jutó kórházi ágyak száma olyan, mint a százezer lakosra jutó
@@ -1179,187 +1196,36 @@ nem kórházban kellene megoldani, ráadásul ezt a technikai fejlődés egyre
 jobban lehetővé is teszi: egy sor beavatkozás van, ami miatt 50 évvel
 ezelőtt még indokolt is volt valakit kórházba fektetni, de ma már nem
 az. Szürkehályog-műtét 50 évvel ezelőtt bennfekvést *igényelt*, ez nem
-egészségpolitikai vagy szervezési kérdés volt, ma már nem igényli, az
-orvosi fejlődésnek köszönhetően. Innentől kezdve viszont
-egészségpolitikai és szervezési kérdés is, hogy ezeket az orvosi
-vívmányokat ki tudjuk e használni, és csökkenteni tudjuk-e a kórházi
-ápolási igényt, például az egynapos ellátásokat fejlesztve.
-
-Sajnos ugyanis, mint az a korábbiakból is sejthető, ezzel ellentétes
-hatások is vannak: bár mondhatjuk, hogy „ezek a kapacitások
-feleslegessé”, vagy, jobban mondva, egyenesen károssá válnak, leépíteni
+egészségpolitikai vagy szervezési kérdés volt, hanem orvosi, de ma már
+nem igényli, egyszerűen az orvosi fejlődésnek köszönhetően. Innentől
+kezdve viszont az egészségpolitikai és szervezési kérdés is, hogy ezeket
+az orvosi vívmányokat ki tudjuk e használni, és csökkenteni tudjuk-e a
+kórházi ápolási igényt, például az egynapos ellátásokat fejlesztve. Erre
+a kérdésre nemsokára külön is kitérek, de előbb nézzük meg a helyzetet
+ágyszám terén! Sajnos ugyanis, mint az a korábbiakból is sejthető, a
+fentiekkel ellentétes hatások is vannak: bár mondhatjuk, hogy ezek a
+kapacitások feleslegessé, sőt, egyenesen károssá válnak, leépíteni
 viszont nem könnyű őket, épp a korábban vázolt politikai okok és egyéni
 érdekek miatt (és sok esetben a finanszírozás is ezt preferálja). Hogy
 még rosszabb legyen a helyzet, a dolog ráadásul visszafelé is hat: a
 túlzottan kórházcentrikus struktúra aktívan nehezíti az említett
 korszerű technikák terjedését, hiszen lesznek szereplők, akik
 ellenérdekeltek a kórházak kiváltásában, hiába lenne ez mind a betegnek,
-mind az államnak jobb. A végeredmény? Nézzük meg hogyan alakult az
-európai országokban néhány nevezetes
-[műtét-típus](https://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&StrNom=CL_ICD9-CM&StrLanguageCode=EN&IntPcKey=&StrLayoutCode=HIERARCHIC)
-esetén az egynapos ellátásban végzettek aránya (szürke vonalak az
-európai országokat jelentik, piros Magyarország):
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-res2 <- unique(rbind(
-  data.table(eurostat::get_eurostat("hlth_co_proc2")),
-  data.table(eurostat::get_eurostat("hlth_co_proc3"))))
-```
-
-</details>
-
-    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
-
-    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-res2 <- res2[unit=="NR"]
-ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
-            .(icd9cm, geo, TIME_PERIOD)],
-       aes(x = TIME_PERIOD, y = V1, group = forcats::fct_reorder(geo, geo=="HU", .fun = first),
-           color = geo=="HU")) + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
-  guides(color = "none") + facet_wrap(~icd9cm) + geom_line() +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
-       caption = paste0(
-         "Ferenci Tamás, https://www.medstat.hu/\n",
-         "Adatok forrása: Eurostat, hlth_co_proc2 és hlth_co_proc3"))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
-
-Az ábra rendkívül izgalmas. Látszik, hogy bizonyos esetekben érdemben
-tudtunk javítani az arányon és tartjuk a lépést a nemzetközi fejlődéssel
-(CM131-138: szürkehályog-műtét), van, hogy mutatkozik egy pici javulás,
-de más országoktól nagyon lényegesen elmaradó mértékben (CM530-531:
-lágyéksérv-műtét), viszont a legmeglepőbb, hogy egy sor esetben igaz,
-hogy miközben máshol egyre megszokottabb – sőt, adott esetben akár
-domináns! – az egynapos ellátás keretében történő megoldás, addig nálunk
-ez gyakorlatilag nem létezik (CM282-284: mandulaeltávolítás, CM5123:
-laparoszkópos epehólyag-műtét).
-
-Természetesen nem lehet teljes egészében az egészségügyi
-ellátórendszeren elverni a port az egynapos ellátások terén mutatkozó
-lemaradásunk miatt: ebben nem csak az elérhető eszközök, technikák,
-személyzet stb. játszik szerepet, hanem erősen benne van a betegek
-állapota is – ez egyáltalán nem ugyanolyan itt, mint Ausztriában,
-márpedig ez befolyásolhatja az egynapos ellátásra való alkalmasságot
-(mind a beavatkozást, mind az utógondozás lehetőségeit illetően).
-
-Mindezt megnézhetjük a hazai adatbázisunk alapján is, hiszen szerencsére
-meg van adva az egynapos esetek száma, így könnyen meg tudjuk az
-arányukat is határozni. Így néz ez ki szakmaosztályonként (szürke
-vonalak az egyes kórházak adatai, piros az országos átlag):
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
-       aes(x = Ev, y = EgynaposEsetSzam/ElbocsatottBetegSzam*100, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-    ,.(EgynaposArany = sum(EgynaposEsetSzam)/sum(ElbocsatottBetegSzam)*100) , .(Ev, SzakmaMegnev)],
-    aes(x = Ev, y = EgynaposArany), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
-       caption = captionlab) +
-  scale_x_continuous(limits = range(res$Ev))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
-
-Látszik, hogy a fejlődés nagyon eltérő az egyes szakmák között (ez
-persze nem pusztán egészségpolitikai kérdés, az orvosi lehetőségek is
-nagyon mások, az intenzív terápia nem igen fog tudni „egynapos ellátást”
-nyújtani). Kiemelhető, ahogy a szemészet szinte egy-két évtized alatt
-teljesen átalakult ilyen szempontból.
-
-Itt csak egyetlen bekezdés erejéig tudok kitérni rá, de természetesen a
-kórházakat, a fekvőbeteg-ellátást nem lehet izoláltan nézni, az egész
-rendszer számít. Közhelyet tudok csak mondani: míg az elmélet az, hogy a
-hármas tagozódásban (alapellátás – járóbeteg-szakellátás –
-fekvőbeteg-szakellátás, pongyolán, de hétköznapi kifejezésekkel élve:
-háziorvos – szakrendelő – kórház) minden lejjebb lévő szint szűrő
-szerepet valósít meg, és a beteg csak akkor kerül feljebb, ha alsóbb
-szinten nem oldható meg a problémája, a valóságban ez nem valósul meg
-jól. Ennek csak az lehet az eredménye, hogy olyanok is fekszenek
-kórházban, akiknek nem kellene. Jól ismert, hogy a „kapuőri” háziorvosok
-valójában annyira túlterheltek, hogy esélyük sincs ezt érdemben
-megoldani, gúzsba van kötve a kezük abban is, hogy milyen terápiákat
-indikálhatnak, ráadásul itt nem csak az orvosokról van szó, sokszor
-maguk a betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
-ellátórendszerben és a háziorvos szerepe csak annyi, hogy adjon
-beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
-alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!
-Ehhez képest a háziorvosok száma [folyamatosan
-csökken](https://www.ksh.hu/stadat_files/ege/hu/ege0046.html), jelenleg
-864 tartósan betöltetlen háziorvosi praxis [van az
-országban](https://alapellatas.okfo.gov.hu/tajekoztato-a-tartosan-betoltetlen-haziorvosi-korzetekrol/),
-és valószínűleg az sem tesz jót, hogy a háziorvosok
-[átlagéletkora](https://www.parlament.hu/irom42/09346/09346KIEGSZ008.pdf)
-60 év.) A helyzet ráadásul egyre romlik, csak egyetlen
-[számadat](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/egeszsegugyi_evkonyv_2014.pdf)
-ennek érzékeltetésére: 1990-ben még a háziorvosi ellátásban megjelentek
-7,2%-át utalták tovább szakrendelésre, 2000-ben 12,1%-át, 2010-ben
-19,4%-át,
-[2019-ben](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/evkonyv_2019.pdf)
-pedig már 20,9%-át! (Az összes megjelent beteghez viszonyítva, beleértve
-azokat is, akik beugranak a táppénzes papírjukért, vagy a rutin krónikus
-gyógyszerük felírásáért! Képzelhetjük, hogy ez az arány mekkora a
-tényleges ellátást igénylő betegekhez viszonyítva…)
-
-Valójában a perspektíva még ennél is tovább bővítendő: fontos szerepet
-játszik a problémában az otthoni betegápolás borzasztó helyzete,
-általában a rehabilitációs ellátások, ápolási osztályok helyzete, mert
-az ebben le nem fedett igények mind-mind kórházi ellátásokban fognak
-lecsapódni. Az, ha a kórházak szociális gondozási feladatot látnak el
-(értsd: a hozzátartozó dolgozik, távol él, a beteg idős vagy
-magatehetetlen, de közben kifejezett orvosi ellátást nem igényel stb.),
-mindenkinek a létező legrosszabb megoldás, betegnek, kórháznak, államnak
-egyaránt. Ráadásul teljesen irracionális is: egy kórházi ellátás árának
-töredékéből tudna egy házi szaknővér vagy gondozó dolgozni. Nem arról
-van szó, hogy azt gondolnám, hogy ezekről az emberekről nem kell az
-államnak gondoskodnia, dehogynem kell – csak nem kórházban! Mert az nem
-erre van, és ezért a legrosszabb megoldás ha erre használjuk. Csak ehhez
-először rögzíteni kellene, hogy a kórházi ágy arra szolgál, hogy azon
-egészségügyi ellátást nyújtsunk, nem arra, hogy szociális ellátást, ami
-viszont arra van, arról meg el kellene ismerni, hogy jelen pillanatban
-teljesen elégtelen és funkcióját nem tudja betölteni, ezért drasztikusan
-meg kell erősíteni, infrastruktúrában, és az ott dolgozók
-megbecsültségében is. Ezzel lehetne a kórházakat tehermentesíteni az oda
-nem illő és ott káros ellátásoktól, javítva mindenki helyzetén.
-
-És végül még egy szempont ahhoz, hogy miért nehéz változtatni: ki kell
-mondani, hogy a dolognak van még egy rétege, az orvosszakmai
-megalapozottság. Vannak dolgok, amiket nem áthelyezni kellene az
-ellátórendszerben betegbiztonsági vagy anyagi okokból, hanem egész
-egyszerűen kiiktatni, mert nem működnek. Mindenki pontosan tudja, hogy
-egy sor eljárást végzünk, aminek semmi értelme – de egyszerűen erősebb a
-megszokás. Nem akarok konkrét példát hozni, hogy ne úgy tűnjön, hogy én
-akarok ebben ítéletet mondani, de az biztos, hogy transzparens működésű
-szakmai grémiumoknak volna mit felülvizsgálniuk a protokollok terén.
-Tudom, hogy ez a legnehezebb területek egyike, mert egyszerre ütközik
-bele az orvosok egy részének és a betegek egy részének az ellenállásába,
-de hiszek abban, hogy folyamatos nyílt és őszinte kommunikáció mellett
-fel lehetne állítani egy olyan rendszert, ami erősíti a használt
-eljárások, terápiák legjobb elérhető bizonyítékokra alapozottságát.
+mind az államnak jobb.
 
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat
 erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben:
-mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A legfrissebb
-adat 2021-es:
+mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A [legfrissebb
+adat](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_bds1/default/table?lang=EN)
+2023-as:
 
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
-res2 <- res2[unit=="P_HTHAB"&facility=="HBEDT_CUR"&TIME_PERIOD=="2021-01-01"&nchar(geo)==2 & hlthcare == "TOTAL"]
+res2 <- res2[unit == "P_HTHAB" & facility == "HBEDT_CUR" &
+               TIME_PERIOD == "2023-01-01" & nchar(geo) == 2 &
+               hlthcare == "TOTAL"]
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
        aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
@@ -1372,12 +1238,12 @@ ggplot(res2[order(values, decreasing = TRUE)],
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 A dolog sok kommentárt nem igényel (érdemes azt is megnézni, hogy
 mennyire szépen megjelenik a szocialista örökség máshol is, illetve,
 hogy mennyire fals az a kép, hogy a magas ágyszám automatikusan azt
-jelenti, hogy jobb a helyzet – amit elvileg jelent az az hozzáállás, ami
+jelenti, hogy jobb a helyzet – amit elvileg jelent az a hozzáállás, ami
 szerint az ágyszám-csökkentés automatikusan rossz). *Még most is* a
 lista első felében vagyunk.
 
@@ -1393,11 +1259,11 @@ más volt Magyarországon, hanem egész egyszerűen a szakember. Az orvos,
 de még inkább: az ápoló. (Sőt, még ez a kör is bővíthető: a
 szakember-hiány megjelenik a gazdasági-műszaki szolgálat terén is.)
 
-Vegyük példának Dániát: miközben ott kórházi ágyból 40%-kal kevesebb van
+Vegyük példának Dániát: miközben ott kórházi ágyból 65%-kal kevesebb van
 lakosságarányosan mint nálunk, addig orvosból mégis [ott van
-több](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRS1/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff),
+több](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_prs2/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff),
 ha csak a kórházban dolgozó orvosokat nézzük, [akkor
-pláne](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRSHP1/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff).
+pláne](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_prshp2/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff).
 Az igazi dráma azonban nem is itt van, [hanem a
 szakdolgozóknál](https://ec.europa.eu/eurostat/databrowser/view/HLTH_RS_PRSHP1/default/table?lang=en&category=hlth.hlth_care.hlth_res.hlth_staff):
 ápolóból lakosságarányosan több mint kétszer (!) annyi van Dániában,
@@ -1419,7 +1285,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 Adná magát a gondolat, hogy foglalkozzunk a legkisebb vagy épp
 legnagyobb osztályokkal, de ez nagyon félrevezető lenne, mert az egyes
@@ -1436,7 +1302,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 Itt már látszanak a különbségek! Az önmagában vett érdekességen túl itt
 is nézzük meg szakmánként is a legkisebb és legnagyobb (ágyszámú)
@@ -1447,7 +1313,7 @@ osztályokat:
 ``` r
 kableExtra::add_header_above(
   kableExtra::kable(
-    dcast(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
+    dcast(res[Ev == 2024][NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
       , cbind(tipus = factor(c("Min", "Max"), levels = c("Min", "Max")),
               .SD[c(which.min(MukodoAtlagAgy), which.max(MukodoAtlagAgy))]), .(SzakmaMegnev)],
       SzakmaMegnev ~ tipus, value.var = c("MukodoAtlagAgy", "KorhazNev"))[, c(1, 2, 4, 3, 5)],
@@ -2151,7 +2017,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)),
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Itt már részletesebb elemzés nélkül is látszanak meglepő eredmények; íme
 a legkisebb kórházak listája (ezt most csak a központi egészségügyi
@@ -2261,7 +2127,7 @@ ggplot(res[,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)) , .(Ev)],
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 Az elmúlt 15-20 évben újságot olvasó állampolgár számára nem kell sokat
 magyaráznom, hogy mit látunk a grafikonon. A 2006/2007-ben végrehajtott,
@@ -2317,6 +2183,635 @@ kérnie, ha semmi másért nem is, de legalább azért, hogy az
 ágyszám-csökkentés népirtás lett volna. (Ekkorra a 2010-ben hatalomra
 került kormány még további 3000 ágyat zárt be a 2010-es állapothoz
 képest is.)
+
+## A szünetelő ágyak ügye
+
+Az előbbiekben, amikor ágyszámokról volt szó, minden esetben a *működő*
+ágyak számát használtam. Ez értelemszerű volt, hiszen ez adja meg azon
+ágyakat, amik betegelhelyezésre alkalmasak és amiken ténylegesen
+egészségügyi ellátás folyik. Van azonban még egy kategória: kórházi ágy
+lehet – például egy felújítás miatt – szünetelő is (itt megkülönböztetik
+a tartósan és a nem tartósan szünetelő ágyakat, az előbbi az, ami 6
+hónapon túl szünetel). Az ágyszám- és betegforgalmi kimutatás december
+31-re vonatkozóan megadja az összes kategóriát (összes ágy, tartósan
+szünetelő, nem tartósan szünetelő, működő), éves átlagban pedig, amit én
+mindenhol használtam, az összeset és a működőt adja meg. (A dolog nincs
+teljesen pontosan definiálva, de én úgy értelmezem, hogy az éves átlag
+minden nap az aznap épp ténylegesen működőket átlagolja, így ebben a
+mutatóban nincs jelentősége annak, hogy valami tartósan, vagy nem
+tartósan szünetel-e.)
+
+Noha tehát az elemzéshez a működő ágyak száma releváns, az, hogy mennyi
+szünetelő ágy van, *önmagában* is egy érdekes mutató lehet. Mennyi
+szünetelő ágy van? Sok, kevés? Változik a számuk időben? Elképzelhető,
+hogy a szünetelő ágyak száma önmagában is fontos dolgokat mutat meg az
+egészségügyi ellátórendszerről, úgyhogy nézzük meg ezt közelebbről!
+
+Először is, 2013-ig a dolognak nem volt nagy jelentősége, mert alig volt
+szünetelő ágy:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(melt(res[,.(`Összes ágy` = sum(OsszesAtlagAgy), `Működő ágy` = sum(MukodoAtlagAgy)) , .(Ev)], id.vars = "Ev"),
+       aes(x = Ev, y = value, group = variable, color = variable)) + geom_point() +
+  geom_line() + lims(y = c(0, NA)) +
+  labs(x = "Év", y = "Ágyszám", color = "Típus", caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+Amint látható, 2014 után elkezdett nyílni az olló, egyre több lett a
+szünetelő ágy. Ezt közvetlenül is ábrázolhatjuk, ha a szünetelő ágyak
+arányát számoljuk ki:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[, .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy)) , .(Ev)],
+       aes(x = Ev, y = SzunetArany)) + geom_point() +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA)) +
+  labs(x = "Év", y = "Szünetelő ágyak aránya [%]", caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+Egyértelmű tehát, hogy a jelenség, hogy ágyak érdemleges mértékben
+szünetelnek, 2014-ben indult be, és azóta gyorsan és folytonosan
+emelkedik az arány.
+
+Vajon melyik szakmát érinti a dolog? Van ebben valamilyen eltérés szakma
+szerint? Nézzük meg:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[OsszesAtlagAgy >= MukodoAtlagAgy, .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy)),
+           .(Ev, SzakmaMegnev)][!is.nan(SzunetArany)],
+       aes(x = Ev, y = SzunetArany)) + facet_wrap(~SzakmaMegnev) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent, limits = c(0, NA)) +
+  labs(x = "Év", y = "Ágyszám", caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+Látható, hogy kevés kivétel van: szinte minden szakmára igaz a fenti
+jelenség, eltérés inkább csak a mértékben van. Pszichiátriában, bőr- és
+nemigyógyászatban már most az ágyak több mint 15%-a szünetel,
+aneszteziológiában és intenzív terápiában, belgyógyászatban, csecsemő-
+és gyermekgyógyászatban, infektológiában, neurológiában, onkológiában,
+sebészetben, tüdőgyógyászatban, urológiában 10%; szinte mindenhol
+gyorsan nő az arány.
+
+A dolog érdekes lehet kórház-szinten is. Vannak kórházak, ahol kiugróan
+magas a szünetelő ágyak aránya? (Azt nem kérdezem, hogy kiugróan
+alacsony, hiszen sok helyen van 0%, vagy ahhoz közeli érték.) De nézzük
+meg azon kórházak listáját, ahol 2024-ben 15% felett volt a szünetelő
+ágyak aránya:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+knitr::kable(
+  res[Ev==2024][OsszesAtlagAgy >= MukodoAtlagAgy,
+                .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy),
+                  MukodoAtlagAgy = sum(MukodoAtlagAgy),
+                  OsszesAtlagAgy = sum(OsszesAtlagAgy)),
+                .(Ev, KorhazNev)][!is.nan(SzunetArany)][SzunetArany > 0.15][order(SzunetArany, decreasing = TRUE)][
+                  , .(`Kórház neve` = KorhazNev,
+                      `Működő ágyak száma` = MukodoAtlagAgy,
+                      `Összes ágy száma` = OsszesAtlagAgy,
+                      `Szünetelő ágyak aránya [%]` = round(SzunetArany * 100, 1))])
+```
+
+</details>
+
+| Kórház neve | Működő ágyak száma | Összes ágy száma | Szünetelő ágyak aránya \[%\] |
+|:---|---:|---:|---:|
+| Tapolcai Deák Jenő Kórház | 0.0 | 15.0 | 100.0 |
+| Mosonmagyaróvári Karolina Kórház-Rendelőintézet | 61.0 | 161.0 | 62.1 |
+| Szaplonczay Manó Marcali Kórház | 39.0 | 68.0 | 42.6 |
+| Nyírő Gyula Országos Pszichiátriai és Addiktológiai Intézet | 260.9 | 373.8 | 30.2 |
+| Budapesti Péterfy Sándor utcai Kórház-Rendelőintézet | 400.2 | 568.0 | 29.5 |
+| Karcagi Kátai Gábor Kórház | 177.5 | 247.0 | 28.1 |
+| Budapesti Jahn Ferenc Dél-pesti Kórház és Rendelőintézet | 480.0 | 630.0 | 23.8 |
+| Kistarcsai Flór Ferenc Kórház | 538.0 | 687.0 | 21.7 |
+| Siófoki Kórház-Rendelőintézet | 241.1 | 304.0 | 20.7 |
+| Dél-pesti Centrumkórház - Országos Hematológiai és Infektológiai Intézet | 484.0 | 603.1 | 19.7 |
+| Veszprém Vármegyei Csolnoky Ferenc Kórház | 589.9 | 729.0 | 19.1 |
+| Észak-budai Szent János Centrumkórház | 614.4 | 748.0 | 17.9 |
+| Borsod-Abaúj-Zemplén Vármegyei Központi Kórház és Egyetemi Oktatókórház | 1879.5 | 2286.0 | 17.8 |
+| Hódmezővásárhelyi-Makói Egészségügyi Ellátó Központ | 195.0 | 235.0 | 17.0 |
+
+Ezen a listán két dolog lehet meglepő, az egyik, hogy egész extrém
+értékek is előfordulnak (a mosonmagyaróvári kórház ágyainak 60%-át
+jelentette szünetelőként!), a másik, hogy – ha nem is ilyen extrém
+számokkal – de kifejezetten nagy kórházak is szerepelnek a lista elején:
+a Péterfy majdnem 30%, a Jahn Ferenc több mint 20, a László is majdnem
+20.
+
+Érdekes és felvethető kérdés, hogy kell-e örülni ennek a jelenségnek.
+Elvégre, ha egyszer a fentiekben azt tárgyaltam, hogy a betegek érdekét
+szolgálná az ágyszám csökkentése, akkor annak örülni kell, ha – kicsit
+indirekt módon is, ágyak szüneteltetésével – de végső soron csak csökken
+az ágyszám, nem? Az én személyes válaszom az, hogy nem. Két, egymással
+erősen összefüggő okból. A nyilvánvaló problémám ezzel a dolog
+„elmosós”, szőnyeg alá söprős jellege: ahelyett, hogy kimondanák, hogy
+mi a helyzet (azaz, hogy csökkenteni kell az ágyak számát),
+elmismásolják a dolgot, mondván, hogy nem csökkentünk, dehogy, ugyanmár
+– csak közben az ágyak lassan 10%-a szünetel. Engem bosszant az
+őszinteség hiánya, de ez talán még a kisebbik probléma. A nagyobb, hogy
+ennek van egy folyománya: ha ugyanis őszintén beszélni sem lehet erről,
+akkor pláne nem lehet racionálisan megtervezni. Így végeredményben nem
+az történik, amit én kívánatosnak neveztem, tehát a betegek, orvosok, a
+magyar egészsésügy érdekeit szolgáló változtatás, nem ott szűnik meg az
+ellátás, ahol ezt megelőzte a betegforgalom felmérése, a kórházi munka
+minőségének felmérése, a többi ellátó kórház elérhetőségének és
+kapacitásának felmérése, urambocsá’ a kérdés társadalmi egyeztetése, a
+változás összekapcsolása az egyéb intézkedésekkel, mint a betegszállítás
+vagy ápolás megerősítése, az egynapos ellátások erősítése és a
+protokollok felülvizsgálata – hanem ott, ahol legjobban ég a ház. Ahol a
+kórház már nem tudja finanszírozni a tevékenységet, ahol elfogy az
+orvos, ahol elfogy a nővér.
+
+Ilyen típusú ágyszámcsökkenésen nem nagyon van mit örülni, hiszen ez
+aligha várható, hogy megvalósítja azt a célt, hogy a betegek, orvosok, a
+magyar egészsésügy javát szolgálja. Ehhez végiggondolás, racionális
+tervezés kell – aminek előfeltétele az őszinte és nyílt beszéd.
+
+## Az egynapos ellátások kérdése
+
+A fentiekben említettem az egynapos ellátások ügyét, mint ami jól
+mutatja az orvostudomány fejlődését, illetve azt, hogy ezt mennyire
+tudja a hazai intézményrendszer követni. Vizsgáljuk meg kicsit
+részletesebben ezt a kérdéskört.
+
+Elsőként nézzük meg hogyan alakult az európai országokban néhány
+nevezetes
+[műtét-típus](https://circabc.europa.eu/ui/group/7b3a8e80-bdaa-483c-96ef-c4d152b50172/library/e603c59e-2f43-4b48-bfd4-2b250d187b27/details)
+esetén az egynapos ellátásban végzettek aránya (szürke vonalak az
+európai országokat jelentik, piros Magyarország):
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+res2 <- unique(rbind(
+  data.table(eurostat::get_eurostat("hlth_co_proc2")),
+  data.table(eurostat::get_eurostat("hlth_co_proc3"))))
+```
+
+</details>
+
+    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
+
+    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+res2 <- res2[unit == "NR"]
+ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
+            .(icd9cm, geo, TIME_PERIOD)],
+       aes(x = TIME_PERIOD, y = V1, group = forcats::fct_reorder(geo, geo=="HU", .fun = first),
+           color = geo=="HU")) + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
+  guides(color = "none") + facet_wrap(~icd9cm) + geom_line() +
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_proc2 és hlth_co_proc3"))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+Az ábra rendkívül izgalmas. Látszik, hogy bizonyos esetekben érdemben
+tudtunk javítani az arányon és tartjuk a lépést a nemzetközi fejlődéssel
+(CM131-138: szürkehályog-műtét), van, hogy mutatkozik egy pici javulás,
+de más országoktól nagyon lényegesen elmaradó mértékben (CM530-531:
+lágyéksérv-műtét), viszont a legmeglepőbb, hogy egy sor esetben igaz,
+hogy miközben máshol egyre megszokottabb – sőt, adott esetben akár
+domináns! – az egynapos ellátás keretében történő megoldás, addig nálunk
+ez gyakorlatilag nem létezik (CM282-284: mandulaeltávolítás, CM5123:
+laparoszkópos epehólyag-műtét).
+
+Természetesen nem lehet teljes egészében az egészségügyi
+ellátórendszeren elverni a port az egynapos ellátások terén mutatkozó
+lemaradásunk miatt: ebben nem csak az elérhető eszközök, technikák,
+személyzet stb. játszik szerepet, hanem erősen benne van a betegek
+állapota is – ez egyáltalán nem ugyanolyan itt, mint Ausztriában,
+márpedig ez befolyásolhatja az egynapos ellátásra való alkalmasságot
+(mind a beavatkozást, mind az utógondozás lehetőségeit illetően).
+
+Mindezt megnézhetjük a hazai adatbázisunk alapján is, hiszen szerencsére
+meg van adva az egynapos esetek száma, így könnyen meg tudjuk az
+arányukat is határozni. Így néz ez ki szakmaosztályonként (szürke
+vonalak az egyes kórházak adatai, piros az országos átlag):
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
+       aes(x = Ev, y = EgynaposEsetSzam/ElbocsatottBetegSzam*100, group = KorhazRovid)) +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
+    ,.(EgynaposArany = sum(EgynaposEsetSzam)/sum(ElbocsatottBetegSzam)*100) , .(Ev, SzakmaMegnev)],
+    aes(x = Ev, y = EgynaposArany), inherit.aes = FALSE, color = "red") +
+  labs(x = "Év", y = "Egynapos ellátásban megoldott esetek aránya [%]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+Látszik, hogy a fejlődés nagyon eltérő az egyes szakmák között (ez
+persze nem pusztán egészségpolitikai kérdés, az orvosi lehetőségek is
+nagyon mások, az intenzív terápia nem igen fog tudni „egynapos ellátást”
+nyújtani). Kiemelhető, ahogy a szemészet szinte egy-két évtized alatt
+teljesen átalakult ilyen szempontból.
+
+## Átlagos ápolási idő és az ágykihasználás
+
+Az eddig megtárgyalt két szempont, a betegforgalom és az ágyszám
+szorosan összefügg: több ágyon vélhetően nagyobb a betegforgalom is. De
+ha jobban meggondoljuk, más is számít azért, például az átlagos ápolási
+idő: ha az rövidebb, akkor ugyanazon az egy ágyon is több beteg meg tud
+fordulni adott idő alatt.
+
+De legyünk kicsit szisztematikusabbak, ez a dolog ugyanis könnyen
+„meg-matematizálható”! (Ígérem, hogy a négy alapműveleten túl másra nem
+lesz szükség!) Ha az átlagos ápolási időtartam jele $AtlApTartam$, akkor
+egy év alatt $\frac{365}{AtlApTartam}$ beteg tud legfeljebb megfordulni
+egy ágyon, így $AgySzam$ számú ágyon legfeljebb
+$\frac{365}{AtlApTartam} \cdot AgySzam$ beteg fordulhat meg. Ha ehhez
+képest ténylegesen $EllatottBeteg$ számú beteget láttak el, akkor az
+ágykihasználás:
+
+$$AgyKihasznalas = \frac{EllatottBeteg}{\frac{365}{AtlApTartam} \cdot AgySzam}.$$
+
+Ezt a képletet kissé átrendezve:
+
+$$EllatottBeteg = \frac{365 \cdot AgyKihasznalas}{AtlApTartam}\cdot AgySzam.$$
+
+Azaz azt kaptuk, hogy az ellátott betegek száma valóban az ágyszámtól
+függ, amit két tényező befolyásol: az ágykihasználás és az ápolás
+átlagos hossza. Az is szépen kiolvasható a képletből, ami tulajdonképpen
+intuitíve is érzékelhető, de most már levezetve, számszerűen is látjuk:
+akkor tudjuk növelni adott ágyszám mellett az ellátott betegek számát,
+ha vagy az ágykihasználást javítjuk, vagy az átlagos ápolási időtartamot
+csökkentjük (vagy mindkettő).
+
+Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
+magyar adatokon:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[Ev == 2024][NemSpecKh & NemSpecSzakma & MukodoAtlagAgy>0],
+       aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
+  geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
+  labs(x = "Működő ágyak átlagos száma",
+       y = "Ellátott betegek száma",
+       caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+Az ábrán kékkel behúztam a pontokra legjobban illeszkedő, origón átmenő
+egyenest. Ebből két dolog látszik: egyrészt, hogy a meredekség a már
+emlegetett $\frac{365 \cdot AgyKihasznalas}{AtlApTartam}$ faktor:
+amelyik szakmában meredekebb az egyenes, tehát adott ágyszámon több
+beteget látnak el, ott vagy az ágykihasználás jobb, vagy az ápolási
+időtartam rövidebb átlagosan (vagy mindkettő). Van azonban még egy
+fontos dolog: a behúzott egyenes meredeksége az összes magyar kórház
+*átlagát* adja meg, de érdemes a pontokat is nézni, mert azok szóródása
+megmutatja, hogy ebben a két tényezőben – ágykihasználás és átlagos
+ápolási idő – mekkora eltérések vannak az országban. Látható, hogy
+például sebészetben nincs nagy szóródás, addig mondjuk kardiológiában
+jóval nagyobbak az eltérések (a Szent Margit 49 ággyal 2171 beteget
+látott el, a SOTE alig több, 65-tel 12404-et). Ez persze abból adódik jó
+eséllyel, hogy kardiológián belül is nagyon mást csináltak (a
+különbséget az ápolási idő táplálja elsősorban, nem az ágykihasználás:
+előbbiben ez átlagosan 8,1 nap, utóbbiban 1,9). Az ilyen és ehhez
+hasonló helyzetek megértéséhez fontos lenne a betegút-elemzés is, hiszen
+jó eséllyel a későbbi pályája is eltér az itt kezelt betegeknek, de ezt
+sajnos ebből az adatbázisból nem tudjuk vizsgálni.
+
+Nézzük meg most e két tényezőt külön-külön! Kezdjük az
+ágykihasználással. Így néz ki a 2024-es helyzet:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
+  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+  labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+
+Egyrészt látszanak 100% feletti ágykihasználások; ezek ügye
+[adatvalidációs
+kérdést](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas#adatvalid%C3%A1ci%C3%B3)
+jelent. Az okát nem tudván ezt most figyelmen kívül hagyom, így az
+látszik jól, hogy milyen különbségek vannak az egyes szakterületek
+között.
+
+Ez utóbbi aspektus talán még érdekesebbé tehető, ha az időbeli trendeket
+is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
+adata, a vastag piros pedig az országos átlag adott szakmában):
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
+       aes(x = Ev, y = Agykihasznalas, group = KorhazRovid)) +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
+    ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
+    aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
+  labs(x = "Év", y = "Ágykihasználás [%]", caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+
+Ezt az ábrát is érdemes tanulmányozni. Tökéletesen látszik rajta a
+koronavírus-járvány hatása (abban is, ahogy bizonyos osztályok, például
+reumatológia kihasználása hogyan esett le, és abban is, hogy másoké,
+mint az infektológia hogy ugrott meg). Jól látható, hogy a 2006/2007-es
+reform, ha csak nagyon kicsit is, de helyenként tudta érzékelhetően
+javítani az ágykihasználást. Ami a legfontosabb azonban az összkép:
+egyrészt, hogy hol mekkora az ágykihasználás (mennyivel marad el a
+100%-tól), valamint, hogy ebben mekkora szóródás van az egyes kórházak
+között.
+
+Ezen a ponton már ne kerülgessük tovább azt a kérdést, hogy ha a
+kihasználtság az valamilyen hatékonysági mérőszám, akkor a 100%-e a cél?
+Első látásra igen, hiszen egy kisebb kihasználás azt jelenti, hogy az
+ágy üresen (feleslegesen) áll, miközben egy sor költséget így is
+generál.
+
+Ez valóban igaz, és csakugyan törekedni kell a hatékonyság, és így az
+ágykihasználtság növelésére, de van több szempont, ami miatt a helyzet
+ennyire azért nem egyszerű, és nem lehet cél a 100%. Az első probléma,
+hogy bizonyos területeken, jellegükből adódóan fel kell készülni nagyon
+hirtelen, semmilyen módon előre nem jelezhető betegszám-megugrásra, amit
+el kell tudni látni. (Tömeges baleset, egy járvány kitörése, időjárási
+katasztrófa stb.) Tehát már csak ezért sem lehet 100%-ot megcélozni;
+természetesen ez nagyon szakterület-függő, intenzív ellátásban sokkal
+inkább lehet ilyenre szükség, reumatológián aligha. Ezt figyelembe kell
+venni, amikor megítéljük az egyes szakmák ágykihasználását. (Valamelyest
+igazából minden szakmánál kell ilyenre gondolni, például mert tartalékot
+kell beépíteni arra az esetre is, ha egy kórházzal történik valami vagy
+egy kiterjedt katasztrófa üt be, úgyhogy az egészségügy egészében is
+kell legyen tartalék.) A következő problémakör a szezonalitás: bizonyos
+betegségekből markánsan több van télen, mint nyáron, van amiből pont
+fordítva, más esetben eltérhet hétvége és hétköznapi, nemzeti ünnep stb.
+stb. A kórháznak erre is fel kell készülnie, hiszen ne feledjük, hogy az
+ágykihasználás az egy – egész éves – *átlag*, miközben a betegeket nem
+csak egy éves átlagban kell tudnunk elhelyezni, hanem minden nap.
+Természetesen a szakirodalom, a historikus adatok tudnak segíteni ennek
+megtervezésében. Végezetül pedig tekintettel kell lenni a hosszú távú
+trendekre is: bizonyos területek esetszáma, ha csak lassan, évek alatt
+is, de csökken, másoké nő. Lehet persze azt mondani, hogy ezt menet
+közben állítjuk, és alapvetően tényleg ez a teendő, de azért azt is
+látni kell, hogy a kórházi ágyszám nem rettenetesen rugalmas, tehát
+érdemes lehet némi tartalékot beépíteni az előre látható jövőbeli
+változásokra is.
+
+Érdekes lehet egyébként az ágykihasználást és a szünetelő ágyak arányát
+*egyszerre* is vizsgálni. Felvethető például, hogy ahol magas az
+ágykihasználás, de mégis sok ágy szünetel, az valamilyen furcsaságra
+utalhat. Nézzük meg a 2024-es adatokat:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[Ev == 2024, .(KorhazNev, SzakmaMegnev, Agykihasznalas, SzunetArany = 1 - MukodoAtlagAgy / OsszesAtlagAgy)][
+  !is.na(Agykihasznalas) & !is.nan(SzunetArany)], aes(x = Agykihasznalas, y = SzunetArany, color = SzakmaMegnev)) +
+  geom_point() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Ágykihasználás [%]", y = "Szünetelő ágyak aránya [%]", color = "Szakma")
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+
+Kiszedve az előbb említett kritérium szerint potenciálisan furcsa
+eseteket, nézzük meg hol fordult elő, hogy 80% feletti volt az
+ágykihasználás, úgy, közben az ágyak több mint 30%-a szünetelt:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+knitr::kable(res[Ev == 2024,
+    .(KorhazNev, SzakmaMegnev,
+      Agykihasznalas = round(Agykihasznalas, 1),
+      SzunetArany = round((1 - MukodoAtlagAgy / OsszesAtlagAgy)*100, 1))][
+        !is.na(Agykihasznalas) & !is.nan(SzunetArany)][
+          Agykihasznalas > 80 & SzunetArany > 30][
+            order(Agykihasznalas * SzunetArany, decreasing = TRUE)][
+              , .(`Kórház` = KorhazNev, `Szakma` = SzakmaMegnev,
+                  `Ágykihasználás [%]` = Agykihasznalas,
+                  `Szünetelő ágyak aránya [%]` = SzunetArany)])
+```
+
+</details>
+
+| Kórház | Szakma | Ágykihasználás \[%\] | Szünetelő ágyak aránya \[%\] |
+|:---|:---|---:|---:|
+| Pécsi Tudományegyetem Klinikai Központ | Szemészet | 208.1 | 54.5 |
+| Budapesti Jahn Ferenc Dél-pesti Kórház és Rendelőintézet | Belgyógyászat | 137.8 | 59.7 |
+| Észak-budai Szent János Centrumkórház | Kardiológia | 126.0 | 50.0 |
+| Borsod-Abaúj-Zemplén Vármegyei Központi Kórház és Egyetemi Oktatókórház | Szemészet | 88.5 | 66.7 |
+| Semmelweis Egyetem Klinikai Központ | Bőr- és nemibeteg | 83.5 | 69.7 |
+| Pécsi Tudományegyetem Klinikai Központ | Bőr- és nemibeteg | 108.7 | 50.0 |
+| Mosonmagyaróvári Karolina Kórház-Rendelőintézet | Belgyógyászat | 89.6 | 58.8 |
+| Veszprém Vármegyei Csolnoky Ferenc Kórház | Pszichiátria | 84.3 | 60.0 |
+| Budapesti Péterfy Sándor utcai Kórház-Rendelőintézet | Belgyógyászat | 94.0 | 49.6 |
+| Dél-budai Centrumkórház Szent Imre Egyetemi Oktatókórház | Pszichiátria | 107.2 | 41.5 |
+| Budapesti Uzsoki Utcai Kórház | Ortopédia-traumatológia | 96.0 | 42.7 |
+| Budapesti Péterfy Sándor utcai Kórház-Rendelőintézet | Neurológia | 81.2 | 50.0 |
+| Észak-Pesti Centrumkórház - Honvédkórház | Pszichiátria | 90.0 | 37.5 |
+| Veszprém Vármegyei Csolnoky Ferenc Kórház | Kardiológia | 85.8 | 37.4 |
+| Pécsi Tudományegyetem Klinikai Központ | Tüdőgyógyászat | 87.4 | 30.8 |
+
+Térjünk most át az ápolási időre! Azt már láttuk, hogy az ápolási idő
+csökkentése a technikai hatékonyságot növeli (tehát, azonos ágyszám
+mellett több beteg ellátását teszi lehetővé rögzített idő alatt). Arról
+is volt szó, hogy ez nem pusztán gazdasági kérdés, a betegnek is jobb,
+természetesen, ha kevesebbet van kórházban. Ezt a technikai fejlődés is
+elősegíti, de Magyarországon sajnos az egyéb érdekek ezt néha
+ellensúlyozzák. Vajon mi mindezek összhatása?
+
+Elsőként nézzük meg itt is a 2024-es adatokat:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
+  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+  labs(x = "Átlagos ápolási időtartam [nap]", y = "",
+       caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+
+Jól látszanak a területenkénti eltérések, de ennyi adat alapján
+mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése,
+nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a
+nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez
+utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy
+másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán
+minden halvány vonal egy kórház adata, a vastag piros pedig az országos
+átlag adott szakmában:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
+       aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
+    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
+    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
+       caption = captionlab) +
+  scale_x_continuous(limits = range(res$Ev))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+
+Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol
+nem nagyon változott – ilyen szempontból – a helyzet az évek alatt, van
+ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a
+leglátványosabb példa – emlékezzünk vissza az egynapos ellátások
+ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni
+több területen is az ápolási időtartam érzékelhető csökkenését: a
+fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a
+legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont az
+igen nagy forgalmú területeken nem volt érdemi fejlődés, így
+végeredményben alig sikerült ebben előrelépni az évek alatt. Így néz ki
+a befektetett betegek átlagos kórházban töltött időtartama az egyes
+európai országokban; piros jelöli Magyarországot:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
+res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
+ggplot(res2, aes(x = TIME_PERIOD, y = values,
+                 group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
+  geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
+  guides(color = "none") +
+  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_inpst"))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+
+Nem csak arról van szó, hogy a magyar adat nagyon magas, hanem arról is,
+hogy – egészen párját ritkítóan – *még nő is* az évek alatt. Azaz:
+nagyon sokáig tartjuk ott az embereket, ahol a legkevésbé kellene. És az
+orvosi lehetőségek meg is engednék, hogy ezt ne tegyük – „csak”
+változtatni kellene a rendszer egészén.
+
+## Egy záró gondolat a hazai ellátórendszer kórház-centrikusságáról
+
+Itt csak egyetlen gondolat erejéig tudok kitérni rá, de természetesen a
+kórházakat, a fekvőbeteg-ellátást nem lehet izoláltan nézni, az egész
+rendszer számít. Közhelyet tudok csak mondani: míg az elmélet az, hogy a
+hármas tagozódásban (alapellátás – járóbeteg-szakellátás –
+fekvőbeteg-szakellátás, pongyolán, de hétköznapi kifejezésekkel élve:
+háziorvos – szakrendelő – kórház) minden lejjebb lévő szint szűrő
+szerepet valósít meg, és a beteg csak akkor kerül feljebb, ha alsóbb
+szinten nem oldható meg a problémája, a valóságban ez nem valósul meg
+jól. Ennek csak az lehet az eredménye, hogy olyanok is fekszenek
+kórházban, akiknek nem kellene. Jól ismert, hogy a „kapuőri” háziorvosok
+valójában annyira túlterheltek, hogy esélyük sincs ezt érdemben
+megoldani, gúzsba van kötve a kezük abban is, hogy milyen terápiákat
+indikálhatnak, ráadásul itt nem csak az orvosokról van szó, sokszor
+maguk a betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
+ellátórendszerben és a háziorvos szerepe csak annyi, hogy adjon
+beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
+alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!
+Ehhez képest a háziorvosok száma [folyamatosan
+csökken](https://www.ksh.hu/stadat_files/ege/hu/ege0046.html), jelenleg
+899 tartósan betöltetlen háziorvosi praxis [van az
+országban](https://alapellatas.okfo.gov.hu/tajekoztato-a-tartosan-betoltetlen-haziorvosi-korzetekrol/),
+és valószínűleg az sem tesz jót, hogy a háziorvosok
+[átlagéletkora](https://www.parlament.hu/irom42/09346/09346KIEGSZ008.pdf)
+60 év.) A helyzet ráadásul egyre romlik, csak egyetlen
+[számadat](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/egeszsegugyi_evkonyv_2014.pdf)
+ennek érzékeltetésére: 1990-ben még a háziorvosi ellátásban megjelentek
+7,7%-át utalták tovább, 2000-ben 12,8%-át, 2010-ben 20,2%-át,
+[2019-ben](https://www.ksh.hu/docs/hun/xftp/idoszaki/evkonyv/evkonyv_2019.pdf)
+pedig már 21,5%-át! (Az összes megjelent beteghez viszonyítva, beleértve
+azokat is, akik beugranak a táppénzes papírjukért, vagy a rutin krónikus
+gyógyszerük felírásáért! Képzelhetjük, hogy ez az arány mekkora a
+tényleges ellátást igénylő betegekhez viszonyítva…)
+
+Valójában a perspektíva még ennél is tovább bővítendő: fontos szerepet
+játszik a problémában az otthoni betegápolás borzasztó helyzete,
+általában a rehabilitációs ellátások, ápolási osztályok helyzete, mert
+az ebben le nem fedett igények mind-mind kórházi ellátásokban fognak
+lecsapódni. Az, ha a kórházak szociális gondozási feladatot látnak el
+(értsd: a hozzátartozó dolgozik, távol él, a beteg idős vagy
+magatehetetlen, de közben kifejezett orvosi ellátást nem igényel stb.),
+mindenkinek a létező legrosszabb megoldás, betegnek, kórháznak, államnak
+egyaránt. Ráadásul teljesen irracionális is: egy kórházi ellátás árának
+töredékéből tudna egy házi szaknővér vagy gondozó dolgozni. Nem arról
+van szó, hogy azt gondolnám, hogy ezekről az emberekről nem kell az
+államnak gondoskodnia, dehogynem kell – csak nem kórházban! Mert az nem
+erre van, és ezért a legrosszabb megoldás ha erre használjuk. Csak ehhez
+először rögzíteni kellene, hogy a kórházi ágy arra szolgál, hogy azon
+egészségügyi ellátást nyújtsunk, nem arra, hogy szociális ellátást, ami
+viszont arra van, arról meg el kellene ismerni, hogy jelen pillanatban
+teljesen elégtelen és funkcióját nem tudja betölteni, ezért drasztikusan
+meg kell erősíteni, infrastruktúrában, és az ott dolgozók
+megbecsültségében is. Ezzel lehetne a kórházakat tehermentesíteni az oda
+nem illő és ott káros ellátásoktól, javítva mindenki helyzetén.
+
+És végül még egy szempont ahhoz, hogy miért nehéz változtatni: ki kell
+mondani, hogy a dolognak van még egy rétege, az orvosszakmai
+megalapozottság. Vannak dolgok, amiket nem áthelyezni kellene az
+ellátórendszerben betegbiztonsági vagy anyagi okokból, hanem egész
+egyszerűen kiiktatni, mert nem működnek. Mindenki pontosan tudja, hogy
+egy sor eljárást végzünk, aminek semmi értelme – de egyszerűen erősebb a
+megszokás. Nem akarok konkrét példát hozni, hogy ne úgy tűnjön, hogy én
+akarok ebben ítéletet mondani, de az biztos, hogy transzparens működésű
+szakmai grémiumoknak volna mit felülvizsgálniuk a protokollok terén.
+Tudom, hogy ez a legnehezebb területek egyike, mert egyszerre ütközik
+bele az orvosok egy részének és a betegek egy részének az ellenállásába,
+de hiszek abban, hogy folyamatos nyílt és őszinte kommunikáció mellett
+fel lehetne állítani egy olyan rendszert, ami erősíti a használt
+eljárások, terápiák legjobb elérhető bizonyítékokra alapozottságát.
 
 ## Botcsinálta politológiai lezárás, avagy az amerikai cukoripar és a magyar kisvárosi szülészet kapcsolata
 
@@ -2500,255 +2995,7 @@ egy sajtótájékoztatóra, és azt mondani, hogy most bezárunk ennyi
 kórházat meg ágyat, mert ez szolgálja a magyar emberek, a magyar
 egészségügy érdekeit. Nem tudom megérem-e azt, hogy ilyen előforduljon.
 
-## Átlagos ápolási idő és az ágykihasználás
-
-Az eddig megtárgyalt két szempont, a betegforgalom és az ágyszám
-szorosan összefügg: több ágyon vélhetően nagyobb a betegforgalom is. De
-ha jobban meggondoljuk, más is számít azért, például az átlagos ápolási
-idő: ha az rövidebb, akkor ugyanazon az egy ágyon is több beteg meg tud
-fordulni adott idő alatt.
-
-De legyünk kicsit szisztematikusabbak, ez a dolog ugyanis könnyen
-„meg-matematizálható”! (Ígérem, hogy a négy alapműveleten túl másra nem
-lesz szükség.) Ha az átlagos ápolási időtartam jele $AtlApTartam$, akkor
-egy év alatt $\frac{365}{AtlApTartam}$ beteg tud legfeljebb megfordulni
-egy ágyon, így $AgySzam$ számú ágyon legfeljebb
-$\frac{365}{AtlApTartam} \cdot AgySzam$ beteg fordulhat meg. Ha ehhez
-képest ténylegesen $EllatottBeteg$ számú beteget láttak el, akkor az
-ágykihasználás:
-
-$$
-AgyKihasznalas = \frac{EllatottBeteg}{\frac{365}{AtlApTartam} \cdot AgySzam}.
-$$
-
-Ezt a képletet kissé átrendezve:
-
-$$
-EllatottBeteg = \frac{365 \cdot AgyKihasznalas}{AtlApTartam}\cdot AgySzam.
-$$
-
-Azaz azt kaptuk, hogy az ellátott betegek száma valóban az ágyszámtól
-függ, amit két tényező befolyásol: az ágykihasználás és az ápolás
-átlagos hossza. Az is szépen kiolvasható a képletből, ami tulajdonképpen
-intuitíve is érzékelhető, de most már levezetve, számszerűen is látjuk:
-akkor tudjuk növelni adott ágyszám mellett az ellátott betegek számát,
-ha vagy az ágykihasználást javítjuk, vagy az átlagos ápolási időtartamot
-csökkentjük (vagy mindkettő).
-
-Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
-magyar adatokon:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[Ev==2024][NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
-       aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
-  geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
-  labs(x = "Működő ágyak átlagos száma",
-       y = "Ellátott betegek száma",
-       caption = captionlab)
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
-
-Az ábrán kékkel behúztam a pontokra legjobban illeszkedő, origón átmenő
-egyenest. Ebből két dolog látszik: egyrészt, hogy a meredekség a már
-emlegetett $\frac{365 \cdot AgyKihasznalas}{AtlApTartam}$ faktor:
-amelyik szakmában meredekebb az egyenes, tehát adott ágyszámon több
-beteget látnak el, ott vagy az ágykihasználás jobb, vagy az ápolási
-időtartam rövidebb átlagosan (vagy mindkettő). Van azonban még egy
-fontos dolog: a behúzott egyenes meredeksége az összes magyar kórház
-*átlagát* adja meg, de érdemes a pontokat is nézni, mert azok szóródása
-megmutatja, hogy ebben a két tényezőben – ágykihasználás és átlagos
-ápolási idő – mekkora eltérések vannak az országban. Látható, hogy
-például sebészetben nincs nagy szóródás, addig mondjuk kardiológiában
-jóval nagyobbak az eltérések (a Szent Margit 49 ággyal 2171 beteget
-látott el, a SOTE alig több, 65-tel 12404-et). Ez persze abból adódik jó
-eséllyel, hogy kardiológián belül is nagyon mást csináltak (a
-különbséget az ápolási idő táplálja elsősorban, nem az ágykihasználás:
-előbbiben ez átlagosan 8,1 nap, utóbbiban 1,9). Az ilyen és ehhez
-hasonló helyzetek megértéséhez fontos lenne a betegút-elemzés is, hiszen
-jó eséllyel a későbbi pályája is eltér az itt kezelt betegeknek, de ezt
-sajnos ebből az adatbázisból nem tudjuk vizsgálni.
-
-Nézzük meg most e két tényezőt külön-külön! Kezdjük az
-ágykihasználással. Így néz ki a 2024-es helyzet:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
-
-Egyrészt látszanak 100% feletti ágykihasználások; ezek ügye
-[adatvalidációs
-kérdést](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas#adatvalid%C3%A1ci%C3%B3)
-jelent. Az okát nem tudván ezt most figyelmen kívül hagyom, így az
-látszik jól, hogy milyen különbségek vannak az egyes szakterületek
-között.
-
-Ez utóbbi aspektus talán még érdekesebbé tehető, ha az időbeli trendeket
-is bevonjuk a vizsgálat tárgykörébe (minden halvány vonal egy kórház
-adata, a vastag piros pedig az országos átlag adott szakmában):
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
-       aes(x = Ev, y = Agykihasznalas, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-    ,.(Agykihasznalas = weighted.mean(Agykihasznalas, ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
-    aes(x = Ev, y = Agykihasznalas), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Ágykihasználás [%]", caption = captionlab) +
-  scale_x_continuous(limits = range(res$Ev))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
-
-Ezt az ábrát is érdemes tanulmányozni. Tökéletesen látszik rajta a
-koronavírus-járvány hatása (abban is, ahogy bizonyos osztályok, például
-reumatológia kihasználása hogyan esett le, és abban is, hogy másoké,
-mint az infektológia hogy ugrott meg). Jól látható, hogy a 2006/2007-es
-reform, ha csak nagyon kicsit is, de helyenként tudta érzékelhetően
-javítani az ágykihasználást. Ami a legfontosabb azonban az összkép:
-egyrészt, hogy hol mekkora az ágykihasználás (mennyivel marad el a
-100%-tól), valamint, hogy ebben mekkora szóródás van az egyes kórházak
-között.
-
-Ezen a ponton már ne kerülgessük tovább azt a kérdést, hogy ha a
-kihasználtság az valamilyen hatékonysági mérőszám, akkor a 100%-e a cél?
-Első látásra igen, hiszen egy kisebb kihasználás azt jelenti, hogy az
-ágy üresen (feleslegesen) áll, miközben egy sor költséget így is
-generál.
-
-Ez valóban igaz, és csakugyan törekedni kell a hatékonyság, és így az
-ágykihasználtság növelésére, de van több szempont, ami miatt a helyzet
-ennyire azért nem egyszerű, és nem lehet cél a 100%. Az első probléma,
-hogy bizonyos területeken, jellegükből adódóan fel kell készülni nagyon
-hirtelen, semmilyen módon előre nem jelezhető betegszám-megugrásra, amit
-el kell tudni látni. (Tömeges baleset, egy járvány kitörése, időjárási
-katasztrófa stb.) Tehát már csak ezért sem lehet 100%-ot megcélozni;
-természetesen ez nagyon szakterület-függő, intenzív ellátásban sokkal
-inkább lehet ilyenre szükség, reumatológián aligha. Ezt figyelembe kell
-venni, amikor megítéljük az egyes szakmák ágykihasználását. (Valamelyest
-igazából minden szakmánál kell ilyenre gondolni, például mert tartalékot
-kell beépíteni arra az esetre is, ha egy kórházzal történik valami vagy
-egy kiterjedt katasztrófa üt be, úgyhogy az egészségügy egészében is
-kell legyen tartalék.) A következő problémakör a szezonalitás: bizonyos
-betegségekből markánsan több van télen, mint nyáron, van amiből pont
-fordítva, más esetben eltérhet hétvége és hétköznapi, nemzeti ünnep stb.
-stb. A kórháznak erre is fel kell készülnie, hiszen ne feledjük, hogy az
-ágykihasználás az egy – egész éves – *átlag*, miközben a betegeket nem
-csak egy éves átlagban kell tudnunk elhelyezni, hanem minden nap.
-Természetesen a szakirodalom, a historikus adatok tudnak segíteni ennek
-megtervezésében. Végezetül pedig tekintettel kell lenni a hosszú távú
-trendekre is: bizonyos területek esetszáma, ha csak lassan, évek alatt
-is, de csökken, másoké nő. Lehet persze azt mondani, hogy ezt menet
-közben állítjuk, és alapvetően tényleg ez a teendő, de azért azt is
-látni kell, hogy a kórházi ágyszám nem rettenetesen rugalmas, tehát
-érdemes lehet némi tartalékot beépíteni az előre látható jövőbeli
-változásokra is.
-
-Térjünk most át az ápolási időre! Azt már láttuk, hogy az ápolási idő
-csökkentése a technikai hatékonyságot növeli (tehát, azonos ágyszám
-mellett több beteg ellátását teszi lehetővé rögzített idő alatt). Arról
-is volt szó, hogy ez nem pusztán gazdasági kérdés, a betegnek is jobb,
-természetesen, ha kevesebbet van kórházban. Ezt a technikai fejlődés is
-elősegíti, de Magyarországon sajnos az egyéb érdekek ezt néha
-ellensúlyozzák. Vajon mi mindezek összhatása?
-
-Elsőként nézzük meg itt is a 2024-es adatokat:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
-  labs(x = "Átlagos ápolási időtartam [nap]", y = "",
-       caption = captionlab)
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
-
-Jól látszanak a területenkénti eltérések, de ennyi adat alapján
-mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése,
-nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a
-nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez
-utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy
-másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán
-minden halvány vonal egy kórház adata, a vastag piros pedig az országos
-átlag adott szakmában:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-ggplot(res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0],
-       aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh==TRUE&NemSpecSzakma==TRUE&MukodoAtlagAgy>0][
-    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
-    aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
-  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
-       caption = captionlab) +
-  scale_x_continuous(limits = range(res$Ev))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
-
-Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol
-nem nagyon változott – ilyen szempontból – a helyzet az évek alatt, van
-ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a
-leglátványosabb példa – emlékezzünk vissza az egynapos ellátások
-ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni
-több területen is az ápolási időtartam érzékelhető csökkenését: a
-fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a
-legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont az
-igen nagy forgalmú területeken nem volt érdemi fejlődés, így
-végeredményben alig sikerült ebben előrelépni az évek alatt. Így néz ki
-a befektetett betegek átlagos kórházban töltött időtartama az egyes
-európai országokban; piros jelöli Magyarországot:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
-res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
-ggplot(res2, aes(x = TIME_PERIOD, y = values,
-                 group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
-  geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
-  guides(color = "none") +
-  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
-       caption = paste0(
-         "Ferenci Tamás, https://www.medstat.hu/\n",
-         "Adatok forrása: Eurostat, hlth_co_inpst"))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
-
-Nem csak arról van szó, hogy a magyar adat nagyon magas, hanem arról is,
-hogy – egészen párját ritkítóan – *még nő is* az évek alatt. Azaz:
-nagyon sokáig tartjuk ott az embereket, ahol a legkevésbé kellene. És az
-orvosi lehetőségek meg is engednék, hogy ezt ne tegyük – „csak”
-változtatni kellene a rendszer egészén.
-
-## Felvezető helyett kitérő: gondolatok az egészségügyi teljesítmény méréséről
+## Kitérő jellegű felvezető a halálozási adatokhoz: gondolatok az egészségügyi teljesítmény méréséről
 
 A magyar egészségügy egyik nagyon komoly, alapvető problémája véleményem
 szerint a *transzparens teljesítménymérés szinte teljes hiánya*. Ez egy
@@ -3157,7 +3404,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 Első ránézésre elég logikus az ábra, ha a különböző szakmákra gondolunk,
 de azért vannak meglepő dolgok is. Például mik azok a pontok jobb szélen
@@ -3212,7 +3459,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBeteg
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 A vízszintes sávok az úgynevezett 95%-os konfidenciaintervallumok.
 Leegyszerűsítve: azt jelzik, hogy a véletlen ingadozás miatt mekkora
@@ -3268,7 +3515,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 Vagy épp a pszichiátriánál:
 
@@ -3284,7 +3531,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&Mukod
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 A sok szakma miatt kevésbé áttekinthető, de azért megnézhetjük az
 összeset egyben is (vigyázzunk, hogy a vízszintes tengely skálázása mind
@@ -3305,7 +3552,7 @@ ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
 Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben
 is, itt minden vonal egy kórházat jelöl:
@@ -3313,7 +3560,7 @@ is, itt minden vonal egy kórházat jelöl:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)) +
+ggplot(res[NemSpecSzakma == TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)) +
   geom_line(alpha = 0.2) + facet_wrap(~SzakmaMegnev, scales = "free") + guides(color = "none") +
   labs(x = "Év", y = "Halálozási arány [%]", caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
@@ -3321,7 +3568,7 @@ ggplot(res[NemSpecSzakma==TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovid)
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
 
 A rejtélyeket nem igazán oldja fel a dolog, sőt, az bizonyos tekintetben
 inkább csak fokozódik: látszik, hogy a pszichiátrián a kilógó érték nem
