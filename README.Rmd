@@ -64,9 +64,9 @@ Az adatokon alapuló megközelítéssel sajnos elég hamar elakadtam: Magyarorsz
 
 Miután az adatok feldolgozhatóvá váltak, elvégeztem -- mintegy példaként is, demonstrálva az így elérhetővé váló lehetőségeket -- néhány egyszerű elemzést, melyek a fenti kérdések körül csoportosulnak: tényleg sok kórház van? Tényleg sok osztály van? Tényleg vannak túl kis osztályok? Az így elemezhetővé tett adatbázisnak köszönhetően már meg tudom próbálni az e kérdések kapcsán releváns tények bemutatását, majd -- ahol szükséges, felvetve pár szempontot a szakirodalomból és nemzetközi összehasonlítást téve -- megpróbálom megadni a saját válaszaimat e kérdésekre. E vizsgálatokat tartalmazza a jelen dolgozat. Pár kommentárt általában is teszek a magyar fekvőbeteg-ellátás szervezése (nagyképű szóval élve: egészségpolitika) kapcsán.
 
-Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis, de igen komoly félreértések forrása is lehet. A magyar egészségügy egyik nagy problémája véleményem szerint a transzparens teljesítménymérés szinte teljes hiánya; ebben tűnhet segítségnek ez az adat. Írásomban megmutatom, hogy valójában miért nem ilyen egyszerű a helyzet, de azt is, hogy mire lehet mégis felhasználni ezeket a számokat; ki fog jönni pár nagyon is érdekes eredmény.
+Röviden érintem a szünetelő ágyak, az egynapos ellátások, az ágyszámkihasználás és az átlagos ápolási idő kérdését is.
 
-Röviden érintem az ágyszámkihasználás és az átlagos ápolási idő kérdését is.
+Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis, de igen komoly félreértések forrása is lehet. A magyar egészségügy egyik nagy problémája véleményem szerint a transzparens teljesítménymérés szinte teljes hiánya; ebben tűnhet segítségnek ez az adat. Írásomban megmutatom, hogy valójában miért nem ilyen egyszerű a helyzet, de azt is, hogy mire lehet mégis felhasználni ezeket a számokat; ki fog jönni pár nagyon is érdekes eredmény.
 
 Mindezzel a munkával szeretnék hozzájárulni a racionális, adatokon alapuló diskurzushoz a magyar egészségpolitikában. Hitem szerint ez a hozzáállás javítja a közbeszéd minőségét és hozzájárulhat a döntéshozatal jobbításához.
 

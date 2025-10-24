@@ -74,6 +74,9 @@ kérdésekre. E vizsgálatokat tartalmazza a jelen dolgozat. Pár kommentárt
 általában is teszek a magyar fekvőbeteg-ellátás szervezése (nagyképű
 szóval élve: egészségpolitika) kapcsán.
 
+Röviden érintem a szünetelő ágyak, az egynapos ellátások, az
+ágyszámkihasználás és az átlagos ápolási idő kérdését is.
+
 Az adatbázis egyik jellemzője, hogy halálozási adatokat is tartalmaz. E
 mellett nem lehet szó nélkül elmenni, mert bár fontos információbázis,
 de igen komoly félreértések forrása is lehet. A magyar egészségügy egyik
@@ -82,9 +85,6 @@ szinte teljes hiánya; ebben tűnhet segítségnek ez az adat. Írásomban
 megmutatom, hogy valójában miért nem ilyen egyszerű a helyzet, de azt
 is, hogy mire lehet mégis felhasználni ezeket a számokat; ki fog jönni
 pár nagyon is érdekes eredmény.
-
-Röviden érintem az ágyszámkihasználás és az átlagos ápolási idő kérdését
-is.
 
 Mindezzel a munkával szeretnék hozzájárulni a racionális, adatokon
 alapuló diskurzushoz a magyar egészségpolitikában. Hitem szerint ez a
