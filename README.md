@@ -1,5 +1,5 @@
-Gondolatok a magyar kórházak adatainak elemzéséről, és néhány
-egészségpolitikai megjegyzés ezek ürügyén
+A magyar kórházi ágyszám-, betegforgalmi- és halálozási adatok elemzése,
+néhány egészségpolitikai megjegyzéssel
 ================
 Ferenci Tamás (<https://www.medstat.hu/>)
 
