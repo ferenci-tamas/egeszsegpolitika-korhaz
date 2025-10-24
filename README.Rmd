@@ -1,5 +1,5 @@
 ---
-title: "Gondolatok a magyar kórházi ágyszám-, betegforgalmi- és halálozási adatok elemzéséről, és néhány egészségpolitikai megjegyzés ezek ürügyén"
+title: "Gondolatok a magyar kórházak adatainak elemzéséről, és néhány egészségpolitikai megjegyzés ezek ürügyén"
 author:
   - Ferenci Tamás (https://www.medstat.hu/)
 output:
@@ -20,8 +20,8 @@ knitr::knit_hooks$set(source = function(x, options) {
   paste0(
     knitr::raw_html(paste0(
       "<details", if(!is.null(options$open) &&
-                     options$open) " open" else
-                       "", "><summary>R kód megjelenítése</summary>")),
+                     options$open) " open" else "",
+      "><summary>R kód megjelenítése</summary>")),
     "\n\n```r\n", paste0(x, collapse = "\n"), "\n```\n",
     "</details>\n"
   )
@@ -35,7 +35,10 @@ library(data.table)
 library(ggplot2)
 theme_set(theme_bw())
 
-res <- readRDS(url("https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas/raw/refs/heads/main/ferenci-tamas-korhaz-agyszam-betegforgalom.rds"))
+res <- readRDS(url(paste0(
+  "https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom",
+  "-halalozas/raw/refs/heads/main/ferenci-tamas-korhaz-agyszam",
+  "-betegforgalom.rds")))
 res$NemSpecKh <- res$Fenntarto%in%c(
   "Önkormányzati kórházak", "Egyházi kórházak",
   "Klinikák", "Állami kórházak", "HM és BM kórházak",
@@ -94,7 +97,7 @@ ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
 Ez önmagában még nem túl informatív, hiszen a különböző szakmák, különböző kórházak nagyon eltérően viselkednek. Érdemes ezért az eloszlást szakmánként ábrázolni:
 
 ```{r, fig.height = 8}
-ggplot(res[Ev==2024],
+ggplot(res[Ev == 2024],
        aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) +
   scale_y_discrete(limits=rev) +
@@ -215,7 +218,7 @@ Vegyük példának Dániát: miközben ott kórházi ágyból 65%-kal kevesebb v
 Visszatérve a magyar adatokhoz, ássunk most kicsit mélyebbre! Elsőként nézzük meg az ágyszámok eloszlását 2024-ben (itt és a továbbiakban csak azokkal az intézményekkel foglalkozunk, ahol van egyáltalán működő ágy), az átlagos működő ágyszámot alapul véve:
 
 ```{r}
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy)) +
   geom_histogram(boundary = 0, binwidth = 10) +
   labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
        caption = captionlab)
@@ -224,7 +227,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
 Adná magát a gondolat, hogy foglalkozzunk a legkisebb vagy épp legnagyobb osztályokkal, de ez nagyon félrevezető lenne, mert az egyes szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes, úgyhogy készítsünk róla egy ábrát:
 
 ```{r, fig.height = 8}
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos ágyszám", y = "", caption = captionlab)
 ```
@@ -245,7 +248,7 @@ kableExtra::add_header_above(
 Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú összesítés is: amikor egy kórház egészének az aktív ágyszámát vizsgáljuk meg. Ez így néz ki 2022-ben:
 
 ```{r, fig.height = 10}
-ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
   order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
@@ -256,7 +259,7 @@ Itt már részletesebb elemzés nélkül is látszanak meglepő eredmények; ím
 
 ```{r}
 knitr::kable(
-  res[Ev==2024][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
+  res[Ev == 2024][SzakmaKod != "" & MukodoAtlagAgy > 0 & Fenntarto == "Központi eü. intézmény"][
     , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
       order(`Működő átlagos aktív ágyszám`)][1:15])
 ```
@@ -330,15 +333,18 @@ A dolog érdekes lehet kórház-szinten is. Vannak kórházak, ahol kiugróan ma
 
 ```{r}
 knitr::kable(
-  res[Ev==2024][OsszesAtlagAgy >= MukodoAtlagAgy,
-                .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy),
-                  MukodoAtlagAgy = sum(MukodoAtlagAgy),
-                  OsszesAtlagAgy = sum(OsszesAtlagAgy)),
-                .(Ev, KorhazNev)][!is.nan(SzunetArany)][SzunetArany > 0.15][order(SzunetArany, decreasing = TRUE)][
-                  , .(`Kórház neve` = KorhazNev,
-                      `Működő ágyak száma` = MukodoAtlagAgy,
-                      `Összes ágy száma` = OsszesAtlagAgy,
-                      `Szünetelő ágyak aránya [%]` = round(SzunetArany * 100, 1))])
+  res[Ev == 2024][
+    OsszesAtlagAgy >= MukodoAtlagAgy,
+    .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy),
+      MukodoAtlagAgy = sum(MukodoAtlagAgy),
+      OsszesAtlagAgy = sum(OsszesAtlagAgy)),
+    .(Ev, KorhazNev)][!is.nan(SzunetArany)][SzunetArany > 0.15][
+      order(SzunetArany, decreasing = TRUE)][
+        , .(`Kórház neve` = KorhazNev,
+            `Működő ágyak száma` = MukodoAtlagAgy,
+            `Összes ágy száma` = OsszesAtlagAgy,
+            `Szünetelő ágyak aránya [%]` =
+              round(SzunetArany * 100, 1))])
 ```
 
 Ezen a listán két dolog lehet meglepő, az egyik, hogy egész extrém értékek is előfordulnak (a mosonmagyaróvári kórház ágyainak 60%-át jelentette szünetelőként!), a másik, hogy -- ha nem is ilyen extrém számokkal -- de kifejezetten nagy kórházak is szerepelnek a lista elején: a Péterfy majdnem 30%, a Jahn Ferenc több mint 20, a László is majdnem 20.
@@ -419,7 +425,7 @@ Az ábrán kékkel behúztam a pontokra legjobban illeszkedő, origón átmenő 
 Nézzük meg most e két tényezőt külön-külön! Kezdjük az ágykihasználással. Így néz ki a 2024-es helyzet:
 
 ```{r, fig.height = 8}
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
 ```
@@ -458,16 +464,17 @@ ggplot(res[Ev == 2024, .(KorhazNev, SzakmaMegnev, Agykihasznalas, SzunetArany = 
 Kiszedve az előbb említett kritérium szerint potenciálisan furcsa eseteket, nézzük meg hol fordult elő, hogy 80% feletti volt az ágykihasználás, úgy, közben az ágyak több mint 30%-a szünetelt:
 
 ```{r}
-knitr::kable(res[Ev == 2024,
-    .(KorhazNev, SzakmaMegnev,
-      Agykihasznalas = round(Agykihasznalas, 1),
-      SzunetArany = round((1 - MukodoAtlagAgy / OsszesAtlagAgy)*100, 1))][
-        !is.na(Agykihasznalas) & !is.nan(SzunetArany)][
-          Agykihasznalas > 80 & SzunetArany > 30][
-            order(Agykihasznalas * SzunetArany, decreasing = TRUE)][
-              , .(`Kórház` = KorhazNev, `Szakma` = SzakmaMegnev,
-                  `Ágykihasználás [%]` = Agykihasznalas,
-                  `Szünetelő ágyak aránya [%]` = SzunetArany)])
+knitr::kable(res[
+  Ev == 2024,
+  .(KorhazNev, SzakmaMegnev,
+    Agykihasznalas = round(Agykihasznalas, 1),
+    SzunetArany = round((1 - MukodoAtlagAgy / OsszesAtlagAgy)*100, 1))][
+      !is.na(Agykihasznalas) & !is.nan(SzunetArany)][
+        Agykihasznalas > 80 & SzunetArany > 30][
+          order(Agykihasznalas * SzunetArany, decreasing = TRUE)][
+            , .(`Kórház` = KorhazNev, `Szakma` = SzakmaMegnev,
+                `Ágykihasználás [%]` = Agykihasznalas,
+                `Szünetelő ágyak aránya [%]` = SzunetArany)])
 ```
 
 Térjünk most át az ápolási időre! Azt már láttuk, hogy az ápolási idő csökkentése a technikai hatékonyságot növeli (tehát, azonos ágyszám mellett több beteg ellátását teszi lehetővé rögzített idő alatt). Arról is volt szó, hogy ez nem pusztán gazdasági kérdés, a betegnek is jobb, természetesen, ha kevesebbet van kórházban. Ezt a technikai fejlődés is elősegíti, de Magyarországon sajnos az egyéb érdekek ezt néha ellensúlyozzák. Vajon mi mindezek összhatása?
@@ -475,8 +482,10 @@ Térjünk most át az ápolási időre! Azt már láttuk, hogy az ápolási idő
 Elsőként nézzük meg itt is a 2024-es adatokat:
 
 ```{r, warning = FALSE, fig.height = 8}
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0],
+       aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
+  geom_jitter(width = 0, height = 0.1) +
+  scale_y_discrete(limits=rev) +
   labs(x = "Átlagos ápolási időtartam [nap]", y = "",
        caption = captionlab)
 ```
@@ -486,9 +495,10 @@ Jól látszanak a területenkénti eltérések, de ennyi adat alapján mindössz
 ```{r warning = FALSE, fig.height = 10}
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  facet_wrap(~SzakmaMegnev, scales = "free") +
+  geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
+    , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
        caption = captionlab) +
@@ -499,7 +509,7 @@ Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol nem 
 
 ```{r, message = FALSE}
 res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
-res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
+res2 <- res2[age == "TOTAL" & sex == "T" & icd10 == "A-T_Z"]
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
   geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +

@@ -1,5 +1,5 @@
-Gondolatok a magyar kórházi ágyszám-, betegforgalmi- és halálozási
-adatok elemzéséről, és néhány egészségpolitikai megjegyzés ezek ürügyén
+Gondolatok a magyar kórházak adatainak elemzéséről, és néhány
+egészségpolitikai megjegyzés ezek ürügyén
 ================
 Ferenci Tamás (<https://www.medstat.hu/>)
 
@@ -146,7 +146,7 @@ eloszlást szakmánként ábrázolni:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024],
+ggplot(res[Ev == 2024],
        aes(x = ElbocsatottBetegSzam, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) +
   scale_y_discrete(limits=rev) +
@@ -1277,7 +1277,7 @@ az átlagos működő ágyszámot alapul véve:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy)) +
   geom_histogram(boundary = 0, binwidth = 10) +
   labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
        caption = captionlab)
@@ -1295,7 +1295,7 @@ szakmák lényegesen eltérő jellegűek lehetnek. Ez önmagában is érdekes,
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy, y = SzakmaMegnev)) + 
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos ágyszám", y = "", caption = captionlab)
 ```
@@ -2008,7 +2008,7 @@ meg. Ez így néz ki 2022-ben:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
   order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
@@ -2028,7 +2028,7 @@ szó):
 
 ``` r
 knitr::kable(
-  res[Ev==2024][SzakmaKod!=""&MukodoAtlagAgy>0&Fenntarto=="Központi eü. intézmény"][
+  res[Ev == 2024][SzakmaKod != "" & MukodoAtlagAgy > 0 & Fenntarto == "Központi eü. intézmény"][
     , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
       order(`Működő átlagos aktív ágyszám`)][1:15])
 ```
@@ -2281,15 +2281,18 @@ meg azon kórházak listáját, ahol 2024-ben 15% felett volt a szünetelő
 
 ``` r
 knitr::kable(
-  res[Ev==2024][OsszesAtlagAgy >= MukodoAtlagAgy,
-                .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy),
-                  MukodoAtlagAgy = sum(MukodoAtlagAgy),
-                  OsszesAtlagAgy = sum(OsszesAtlagAgy)),
-                .(Ev, KorhazNev)][!is.nan(SzunetArany)][SzunetArany > 0.15][order(SzunetArany, decreasing = TRUE)][
-                  , .(`Kórház neve` = KorhazNev,
-                      `Működő ágyak száma` = MukodoAtlagAgy,
-                      `Összes ágy száma` = OsszesAtlagAgy,
-                      `Szünetelő ágyak aránya [%]` = round(SzunetArany * 100, 1))])
+  res[Ev == 2024][
+    OsszesAtlagAgy >= MukodoAtlagAgy,
+    .(SzunetArany = 1 - sum(MukodoAtlagAgy) / sum(OsszesAtlagAgy),
+      MukodoAtlagAgy = sum(MukodoAtlagAgy),
+      OsszesAtlagAgy = sum(OsszesAtlagAgy)),
+    .(Ev, KorhazNev)][!is.nan(SzunetArany)][SzunetArany > 0.15][
+      order(SzunetArany, decreasing = TRUE)][
+        , .(`Kórház neve` = KorhazNev,
+            `Működő ágyak száma` = MukodoAtlagAgy,
+            `Összes ágy száma` = OsszesAtlagAgy,
+            `Szünetelő ágyak aránya [%]` =
+              round(SzunetArany * 100, 1))])
 ```
 
 </details>
@@ -2515,7 +2518,7 @@ Nézzük meg most e két tényezőt külön-külön! Kezdjük az
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = Agykihasznalas, y = SzakmaMegnev)) +
   geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
   labs(x = "Ágykihasználás [%]", y = "", caption = captionlab)
 ```
@@ -2625,16 +2628,17 @@ eseteket, nézzük meg hol fordult elő, hogy 80% feletti volt az
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-knitr::kable(res[Ev == 2024,
-    .(KorhazNev, SzakmaMegnev,
-      Agykihasznalas = round(Agykihasznalas, 1),
-      SzunetArany = round((1 - MukodoAtlagAgy / OsszesAtlagAgy)*100, 1))][
-        !is.na(Agykihasznalas) & !is.nan(SzunetArany)][
-          Agykihasznalas > 80 & SzunetArany > 30][
-            order(Agykihasznalas * SzunetArany, decreasing = TRUE)][
-              , .(`Kórház` = KorhazNev, `Szakma` = SzakmaMegnev,
-                  `Ágykihasználás [%]` = Agykihasznalas,
-                  `Szünetelő ágyak aránya [%]` = SzunetArany)])
+knitr::kable(res[
+  Ev == 2024,
+  .(KorhazNev, SzakmaMegnev,
+    Agykihasznalas = round(Agykihasznalas, 1),
+    SzunetArany = round((1 - MukodoAtlagAgy / OsszesAtlagAgy)*100, 1))][
+      !is.na(Agykihasznalas) & !is.nan(SzunetArany)][
+        Agykihasznalas > 80 & SzunetArany > 30][
+          order(Agykihasznalas * SzunetArany, decreasing = TRUE)][
+            , .(`Kórház` = KorhazNev, `Szakma` = SzakmaMegnev,
+                `Ágykihasználás [%]` = Agykihasznalas,
+                `Szünetelő ágyak aránya [%]` = SzunetArany)])
 ```
 
 </details>
@@ -2670,8 +2674,10 @@ Elsőként nézzük meg itt is a 2024-es adatokat:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0],
+       aes(x = ApolasAtlTartam, y = SzakmaMegnev)) +
+  geom_jitter(width = 0, height = 0.1) +
+  scale_y_discrete(limits=rev) +
   labs(x = "Átlagos ápolási időtartam [nap]", y = "",
        caption = captionlab)
 ```
@@ -2694,9 +2700,10 @@ minden halvány vonal egy kórház adata, a vastag piros pedig az országos
 ``` r
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  facet_wrap(~SzakmaMegnev, scales = "free") +
+  geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-    ,.(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)) , .(Ev, SzakmaMegnev)],
+    , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
        caption = captionlab) +
@@ -2724,7 +2731,7 @@ európai országokban; piros jelöli Magyarországot:
 
 ``` r
 res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
-res2 <- res2[age=="TOTAL"&sex=="T"&icd10=="A-T_Z"]
+res2 <- res2[age == "TOTAL" & sex == "T" & icd10 == "A-T_Z"]
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
   geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
