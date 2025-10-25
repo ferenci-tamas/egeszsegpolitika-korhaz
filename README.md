@@ -1200,18 +1200,18 @@ egészségpolitikai vagy szervezési kérdés volt, hanem orvosi, de ma már
 nem igényli, egyszerűen az orvosi fejlődésnek köszönhetően. Innentől
 kezdve viszont az egészségpolitikai és szervezési kérdés is, hogy ezeket
 az orvosi vívmányokat ki tudjuk e használni, és csökkenteni tudjuk-e a
-kórházi ápolási igényt, például az egynapos ellátásokat fejlesztve. Erre
-a kérdésre nemsokára külön is kitérek, de előbb nézzük meg a helyzetet
-ágyszám terén! Sajnos ugyanis, mint az a korábbiakból is sejthető, a
-fentiekkel ellentétes hatások is vannak: bár mondhatjuk, hogy ezek a
-kapacitások feleslegessé, sőt, egyenesen károssá válnak, leépíteni
-viszont nem könnyű őket, épp a korábban vázolt politikai okok és egyéni
-érdekek miatt (és sok esetben a finanszírozás is ezt preferálja). Hogy
-még rosszabb legyen a helyzet, a dolog ráadásul visszafelé is hat: a
-túlzottan kórházcentrikus struktúra aktívan nehezíti az említett
-korszerű technikák terjedését, hiszen lesznek szereplők, akik
-ellenérdekeltek a kórházak kiváltásában, hiába lenne ez mind a betegnek,
-mind az államnak jobb.
+kórházi ápolási igényt, például az egynapos ellátásokat, nappali
+kórházakat fejlesztve. Erre a kérdésre nemsokára külön is kitérek, de
+előbb nézzük meg a helyzetet ágyszám terén! Sajnos ugyanis, mint az a
+korábbiakból is sejthető, a fentiekkel ellentétes hatások is vannak: bár
+mondhatjuk, hogy ezek a kapacitások feleslegessé, sőt, egyenesen károssá
+válnak, leépíteni viszont nem könnyű őket, épp a korábban vázolt
+politikai okok és egyéni érdekek miatt (és sok esetben a finanszírozás
+is ezt preferálja). Hogy még rosszabb legyen a helyzet, a dolog ráadásul
+visszafelé is hat: a túlzottan kórházcentrikus struktúra aktívan
+nehezíti az említett korszerű technikák terjedését, hiszen lesznek
+szereplők, akik ellenérdekeltek a kórházak kiváltásában, hiába lenne ez
+mind a betegnek, mind az államnak jobb.
 
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat
 erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben:
@@ -2756,8 +2756,9 @@ változtatni kellene a rendszer egészén.
 
 Itt csak egyetlen gondolat erejéig tudok kitérni rá, de természetesen a
 kórházakat, a fekvőbeteg-ellátást nem lehet izoláltan nézni, az egész
-rendszer számít. Közhelyet tudok csak mondani: míg az elmélet az, hogy a
-hármas tagozódásban (alapellátás – járóbeteg-szakellátás –
+rendszer számít, és most nem csak az egynapos ellátásokra és nappali
+kórházakra gondolok. Közhelyet tudok csak mondani: míg az elmélet az,
+hogy a hármas tagozódásban (alapellátás – járóbeteg-szakellátás –
 fekvőbeteg-szakellátás, pongyolán, de hétköznapi kifejezésekkel élve:
 háziorvos – szakrendelő – kórház) minden lejjebb lévő szint szűrő
 szerepet valósít meg, és a beteg csak akkor kerül feljebb, ha alsóbb
@@ -2768,10 +2769,10 @@ valójában annyira túlterheltek, hogy esélyük sincs ezt érdemben
 megoldani, gúzsba van kötve a kezük abban is, hogy milyen terápiákat
 indikálhatnak, ráadásul itt nem csak az orvosokról van szó, sokszor
 maguk a betegek is azt érzik kívánatosnak, hogy továbbmenjenek az
-ellátórendszerben és a háziorvos szerepe csak annyi, hogy adjon
-beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos lenne az
-alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a kórházat!
-Ehhez képest a háziorvosok száma [folyamatosan
+ellátórendszerben és a háziorvos szerepe szerintük csak annyi, hogy
+adjon beutalót. Nem véletlenül mondják állandóan, hogy milyen fontos
+lenne az alapellátás erősítése. (Azt kell közelvinni a beteghez, nem a
+kórházat! Ehhez képest a háziorvosok száma [folyamatosan
 csökken](https://www.ksh.hu/stadat_files/ege/hu/ege0046.html), jelenleg
 899 tartósan betöltetlen háziorvosi praxis [van az
 országban](https://alapellatas.okfo.gov.hu/tajekoztato-a-tartosan-betoltetlen-haziorvosi-korzetekrol/),
@@ -2789,24 +2790,25 @@ tényleges ellátást igénylő betegekhez viszonyítva…)
 
 Valójában a perspektíva még ennél is tovább bővítendő: fontos szerepet
 játszik a problémában az otthoni betegápolás borzasztó helyzete,
-általában a rehabilitációs ellátások, ápolási osztályok helyzete, mert
-az ebben le nem fedett igények mind-mind kórházi ellátásokban fognak
-lecsapódni. Az, ha a kórházak szociális gondozási feladatot látnak el
-(értsd: a hozzátartozó dolgozik, távol él, a beteg idős vagy
-magatehetetlen, de közben kifejezett orvosi ellátást nem igényel stb.),
-mindenkinek a létező legrosszabb megoldás, betegnek, kórháznak, államnak
-egyaránt. Ráadásul teljesen irracionális is: egy kórházi ellátás árának
-töredékéből tudna egy házi szaknővér vagy gondozó dolgozni. Nem arról
-van szó, hogy azt gondolnám, hogy ezekről az emberekről nem kell az
-államnak gondoskodnia, dehogynem kell – csak nem kórházban! Mert az nem
-erre van, és ezért a legrosszabb megoldás ha erre használjuk. Csak ehhez
-először rögzíteni kellene, hogy a kórházi ágy arra szolgál, hogy azon
-egészségügyi ellátást nyújtsunk, nem arra, hogy szociális ellátást, ami
-viszont arra van, arról meg el kellene ismerni, hogy jelen pillanatban
-teljesen elégtelen és funkcióját nem tudja betölteni, ezért drasztikusan
-meg kell erősíteni, infrastruktúrában, és az ott dolgozók
-megbecsültségében is. Ezzel lehetne a kórházakat tehermentesíteni az oda
-nem illő és ott káros ellátásoktól, javítva mindenki helyzetén.
+általában a rehabilitációs ellátások, ápolási osztályok, mentesítő
+szolgáltatások stb. helyzete, mert az ebben le nem fedett igények
+mind-mind kórházi ellátásokban fognak lecsapódni. Az, ha a kórházak
+szociális gondozási feladatot látnak el (értsd: a hozzátartozó dolgozik,
+távol él, a beteg idős vagy magatehetetlen, de közben kifejezett orvosi
+ellátást nem igényel stb.), mindenkinek a létező legrosszabb megoldás,
+betegnek, kórháznak, államnak egyaránt. Ráadásul teljesen irracionális
+is: egy kórházi ellátás árának töredékéből tudna egy házi szaknővér vagy
+gondozó dolgozni. Nem arról van szó, hogy azt gondolnám, hogy ezekről az
+emberekről nem kell az államnak gondoskodnia, dehogynem kell – csak nem
+kórházban! Mert az nem erre van, és ezért a legrosszabb megoldás ha erre
+használjuk. Csak ehhez először rögzíteni kellene, hogy a kórházi ágy
+arra szolgál, hogy azon egészségügyi ellátást nyújtsunk, nem arra, hogy
+szociális ellátást, ami viszont arra van, arról meg el kellene ismerni,
+hogy jelen pillanatban teljesen elégtelen és funkcióját nem tudja
+betölteni, ezért drasztikusan meg kell erősíteni, infrastruktúrában, és
+az ott dolgozók megbecsültségében is. Ezzel lehetne a kórházakat
+tehermentesíteni az oda nem illő és ott káros ellátásoktól, javítva
+mindenki helyzetén.
 
 És végül még egy szempont ahhoz, hogy miért nehéz változtatni: ki kell
 mondani, hogy a dolognak van még egy rétege, az orvosszakmai
