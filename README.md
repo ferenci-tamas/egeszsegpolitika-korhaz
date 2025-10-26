@@ -3663,16 +3663,16 @@ közfinanszírozott ellátást tekintjük. E problémára sajnos nem találtam
 megoldást.
 
 Mindezek miatt én az Eurostat adatait használtam, hiszen ez van közelebb
-a realitáshoz, ráadásul az európai összevetést is lehetővé teszi. Az
-NEAK Statisztikai Évkönyvének az lenne az előnye, hogy ha nem is a
-kórház, de a megye-szintű lebontást lehetővé tesz, az Eurostat-nál ilyen
-adat ugyanis nincsen, csak országos összesítés. Az előző okok miatt,
-illetve mert a NEAK Statisztikai Évkönyvet csak 2020-ig sikerült
-fellelnem, mégis az Eurostat adatokat használtam (a területi eloszlás
-esetleges jelentőségére később még visszatérek). PET-re vonatkozó adat
-csak az Eurostat-nál van, de ott a fenti problémák a módszertani leírás
-szerint nem jelentkeznek (azzal, hogy ott is csak a közfinanszírozott
-ellátásról van adat).
+a realitáshoz, ráadásul az európai összevetést is lehetővé teszi. A NEAK
+Statisztikai Évkönyvének az lenne az előnye, hogy ha nem is a kórház, de
+a megye-szintű lebontást lehetővé tesz, az Eurostat-nál ilyen adat
+ugyanis nincsen, csak országos összesítés. Az előző okok miatt, illetve
+mert a NEAK Statisztikai Évkönyvet csak 2020-ig sikerült fellelnem,
+mégis az Eurostat adatokat használtam (a területi eloszlás esetleges
+jelentőségére később még visszatérek). PET-re vonatkozó adat csak az
+Eurostat-nál van, de ott a fenti problémák a módszertani leírás szerint
+nem jelentkeznek (azzal, hogy ott is csak a közfinanszírozott ellátásról
+van adat).
 
 Az adatközlésben nincs megkülönböztetve, hogy a berendezés kórházban,
 vagy járóbeteg-szakellátóhelyen van. Az ilyen műszerek inkább kórházban
@@ -3770,15 +3770,16 @@ A gépek száma mindössze két szempontból érdekes, az egyik a reduncia, ha
 valamelyik elromlik vagy karbantartáson van, a másik, fontosabb szempont
 a területi közelség, hiszen ha több van, akkor közelebb tud lenni a
 beteghez. Több száz millió forintos eszközökről beszélünk, értelemszerű,
-hogy itt a betegnek kell a géphez mennie, nem a gépnek a beteghez (ami
-szükségképp nem tökéletes kihasználtsághoz vezetne). Az – és csak az! –
-jelent kivételt ez alól, ha orvosi sürgősség, vagy logisztikai okok
-miatt nem lehet, vagy nem célszerű a beteget mozgatni. Képzeletbeli
-példaként: ha az ország összes CT-igényét ki tudnánk elégíteni egyetlen
-CT-berendezéssel, *akkor sem* volna célszerű egyet venni, kihasználtság
-ide vagy oda, hiszen nem lehet minden embert aki elesett és beverte a
-fejét egy zalai megyei faluban, felhozni Budapestre CT-re (majd
-visszavinni).
+hogy itt a betegnek kell a géphez mennie, nem a gépnek a beteghez
+(azzal, hogy sok helyre telepítünk), ami szükségképp nem tökéletes
+kihasználtsághoz vezetne. Az – és csak az! – jelent kivételt ez alól, ha
+orvosi sürgősség miatt nincs idő, vagy ha logisztikai, betegbiztonsági,
+vagy betegkomfort okok miatt nem lehet vagy nem célszerű a beteget
+mozgatni. Képzeletbeli példaként: ha az ország összes CT-igényét ki
+tudnánk elégíteni egyetlen CT-berendezéssel, *akkor sem* volna célszerű
+egyet venni, kihasználtság ide vagy oda, hiszen nem lehet minden embert
+aki elesett és beverte a fejét egy Zala megyei faluban, felhozni
+Budapestre CT-re (majd visszavinni).
 
 Szóval akkor elvégzett vizsgálatok száma; nézzük itt is először az
 aktuális helyzetképet:
