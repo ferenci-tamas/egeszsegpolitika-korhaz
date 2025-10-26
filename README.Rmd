@@ -77,7 +77,9 @@ Munkámat transzparensen, mindent részletében reprodukálhatóan közlöm a k�
 
 ## Technikai részletek
 
-A felhasznált forrásadatok -- valamint az előállításuk részletei -- a már említett projektem [oldalán](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas) teljes részletességgel megtalálhatóak. Az adatgyűjtés technikai megoldása miatt -- illetve mert amúgy is ez volt most a fókuszomban -- az egész elemzés kizárólag az aktív ellátásokra vonatkozik.
+Vizsgálataim elsődleges adatforrása az évente publikált Kórházi ágyszám- és betegforgalmi kimutatás, mely a magyar kórházakról szóló legátfogóbb nyilvánosan elérhető adatközlés. Ezen adatok -- valamint az összegyűjtésük -- részletei a már említett projektem [oldalán](https://github.com/ferenci-tamas/korhaz-agyszam-betegforgalom-halalozas) teljes részletességgel megtalálhatóak. Fontos rögzíteni, hogy a mostani elemzés az aktív ellátásokra korlátozódik (az adatgyűjtés is erre vonatkozott). A másik lényeges, adatforrásból adódó korlát, hogy azon szakmákról, amikhez nem tartozik ágyszám, értelemszerűen ilyen kimutatás sem készül, így róluk innen nem nyerünk információt. Ilyen terület az újszülött-ellátás, amihez Magyarországon hagyományosan nem rendelnek ágyszámot, illetve, ami talán még fontosabb, a diagnosztika: röntgen vagy labor nélkül aligha működhet kórház, de ezekről nem lesz információnk ebből a kimutatásból, hiszen nincsenek ágyaik.
+
+Néhány esetben az Eurostat által gyűjtött adatokat használtam (a magyar adatszolgáltató ezekhez tipikusan vagy a KSH vagy az OKFŐ), helyenként azért, hogy az eredményeket európai kontextusba helyezzem, helyenként pedig ott, ahol nem volt az ágyszám- és betegforgalmi kimutatásban adat.
 
 A mostani elemzés [R statisztikai környezet](https://ferenci-tamas.github.io/r-nyelv/) alatt történt; az ehhez szükséges kódokat a transzparencia és a nyílt tudomány jegyében az eredményt közlő pontokban is megadom, egyesével minden eredményhez (alapból elrejtve; az "R kód megjelenítése" felirat melletti háromszögre kattintva nyithatóak le). Az adatok feldolgozásához a `data.table`, a vizualizációhoz a `ggplot2` csomagot használtam.
 
@@ -690,12 +692,120 @@ A rejtélyeket nem igazán oldja fel a dolog, sőt, az bizonyos tekintetben ink�
 
 Az ábráról azonban sokkal fontosabb dolgok is leolvashatóak. Egyrészt vannak elég látványos hosszú távú trendek, például a belgyógyászatokon folyamatosan nő a halálozás. Adat híján nehéz pontosan mondani, de erős tippem, hogy valójában semmi különös nem történik, csak az ellátott betegek egyre idősebbek, és törékenyebb állapotúak. Természetesen ennek megítéléséhez (ami elsőrendű érdeke lenne az ország egészségügyének...) kellenének a pontosabb adatok. Jól látható a járvány hatása is, az intenzív ellátásban és az infektológián megugró halálozás.
 
+## Diagnosztikai infrastruktúra és -igénybevétel
+
+A felvezetőben említettem, hogy a diagnosztikai infrastruktúráról az ágyszám- és betegforgalmi kimutatások nem adnak információt (lévén, hogy ezekhez nem tartozik ágy), noha ezek kritikus elemei a kórházi ellátásnak -- aligha képzelhető el kórház röntgen vagy labor nélkül. Szerencsére azonban ezen infrastruktúra egy részéről, jelesül a képalkotókról -- tételesen: a CT-, MRI- és PET-berendezésekről -- van információnk. Egész pontosan kétféle információ érhető el, és mindkettő érdekes lehet: a berendezések darabszáma, és az elvégzett vizsgálatok száma.
+
+Mielőtt a részletekre kitérünk, beszéljünk picit az adatforrásokról. A NEAK minden évben [kiad](https://www.neak.gov.hu/felso_menu/rolunk/kozerdeku_adatok/gazdalkodasi_adatok/statisztikai_kiadvanyok) egy ún. Statisztikai Évkönyvet, aminek van CT/MRI-ről szóló pontja. Az országos adatok tartalmazzák a vizsgálatok számát, az elektronikus mellékletben elérhető megyesoros adatok pedig a készülékek számát is. (Azt nem értem, hogy ez utóbbi miért nincsen szerepeltetve az országos adatok között; ott csak a finanszírozott szolgáltatók számáról van adat, ami nekünk nem sokat segít, hiszen nem tudni, hogy egy szolgáltatóhoz hány gép tartozik.) Az országos adathoz tartozó módszertani leírás rögzíti, hogy az ott szereplő adat, tehát a vizsgálatok száma, csak az [1-es térítési kategória](https://njt.hu/jogszabaly/1999-43-20-22) ("magyar biztosítás alapján végzett térítésmentes ellátás") adatait tartalmazzák. Mivel a "fekvő beteg részére végzett ellátás" egy másik térítési kategória (6-os kód), így értelmezésem szerint ez a szám a vizsgálatok egy lényeges hányadát nem tartalmazza, hiszen a fekvőbetegeken végzett vizsgálatok nincsenek benne. A megyesoros adatokhoz nem tartozik módszertani leírás, így ott nincs pontos definíciónk. A dolog ott válik érdekessé, ha mindehhez hozzátesszük, hogy ilyen adatok -- mindkét típus -- az Eurostat-nál is elérhető. Az ottani leírás szerint az adatszolgáltatójuk a NEAK, de az adatok mégsem egyeznek egymással. Hogy pontos legyek: a vizsgálatok száma nagyobb; azt gondolom, hogy ez megerősíti a feltételezésemet arról, hogy a NEAK-nál nincsenek benne a fekvőbetegek részére végzett vizsgálatok. Az Eurostat [módszertani leírása](https://ec.europa.eu/eurostat/cache/metadata/EN/hlth_res_esms_hu.htm) ugyanis úgy fogalmaz, hogy a közölt adat azon vizsgálatok száma, amit a NEAK finanszíroz; értelmezésem szerint ebben a fekvő betegek részére végzett vizsgálatok is benne vannak, a szám ezért nagyobb. (De még így is csak a közfinanszírozott ellátásokat tartalmazza -- nézőpont kérdése, hogy ez mennyire limitáció, lehet éppenséggel a mellett is érvelni, hogy az állam által működtetett egészségügyi infrastruktúra megítéléshez pont hogy ez számít.) A készülékek számára közölt adat az Eurostat-nál pontosan ugyanaz, mint a NEAK Statisztikai Évkönyvében. Ez azért nagyon fontos, mert mint említettem, a NEAK-nál ehhez nem volt módszertani leírás -- de az Eurostat-nál van! Így kiderül, hogy ez a szám mit jelent: azon túl, hogy itt is csak a közfinanszírozott ellátást nyújtó gépek vannak feltüntetve, van egy nagyon komoly limitáció: nem jelennek meg a statisztikákban azok a gépek, melyek kizárólag fekvőbeteg-ellátásban vesznek részt. (Ennek finanszírozástechnikai oka vannak: az ilyen gépekre nincs külön finanszírozási szerződés, mert a költségük bele van építve a megfelelő HBCS-be. Ezzel együtt is, számomra érthetetlen, hogy az ország miért nem vezet erről egy teljeskörű leltárt, finanszírozási szerződéstől függetlenül; azért ilyen gépből nincs követhetetlenül sok, és nem változik naponta kétszer a számuk...) Ez azt jelenti, hogy itt a magyar adat kevesebb lehet, mint a valós, még úgy is, hogy csak a közfinanszírozott ellátást tekintjük. E problémára sajnos nem találtam megoldást.
+
+Mindezek miatt én az Eurostat adatait használtam, hiszen ez van közelebb a realitáshoz, ráadásul az európai összevetést is lehetővé teszi. Az NEAK Statisztikai Évkönyvének az lenne az előnye, hogy ha nem is a kórház, de a megye-szintű lebontást lehetővé tesz, az Eurostat-nál ilyen adat ugyanis nincsen, csak országos összesítés. Az előző okok miatt, illetve mert a NEAK Statisztikai Évkönyvet csak 2020-ig sikerült fellelnem, mégis az Eurostat adatokat használtam (a területi eloszlás esetleges jelentőségére később még visszatérek). PET-re vonatkozó adat csak az Eurostat-nál van, de ott a fenti problémák a módszertani leírás szerint nem jelentkeznek (azzal, hogy ott is csak a közfinanszírozott ellátásról van adat).
+
+Az adatközlésben nincs megkülönböztetve, hogy a berendezés kórházban, vagy járóbeteg-szakellátóhelyen van. Az ilyen műszerek inkább kórházban lelhetőek fel, ezzel együtt is, helyesebb ha úgy fogalmazunk, hogy most a magyar egészségügyi ellátórendószer egészéről (és nem a kórházi rendszerről) nyilatkozunk.
+
+Nézzük most először a készülékek számát! Kezdjük az aktuális helyzetképpel (a 2023-as adatot használom, mert a 2024-es még nagyon hiányos):
+
+```{r, fig.height = 6, message=FALSE}
+res2 <- as.data.table(eurostat::get_eurostat(
+  "hlth_rs_medim", use.data.table = TRUE))
+res2 <- res2[unit == "P_HTHAB" & icha_hp == "HP1_3"]
+res2$countryname <- countrycode::countrycode(
+  res2$geo, "eurostat", "cldr.name.hu")
+res2[facility == "CT_SCAN"]$facility <- "CT"
+res2[facility == "PET_SCAN"]$facility <- "PET"
+ggplot(res2[TIME_PERIOD == "2023-01-01" &
+              facility %in% c("CT", "MRI", "PET")],
+       aes(y = tidytext::reorder_within(countryname, values,
+                                        facility),
+           x = values, fill = geo == "HU")) +
+  geom_col() + facet_wrap(~facility, scales = "free") +
+  tidytext::scale_y_reordered() +
+  guides(fill = "none") +
+  labs(x = "Készülékek száma [készülék/100 ezer fő]", y = "",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_rs_medim"))
+```
+
+Az időbeli alakulás, szokásosan piros vonal jelzi Magyarországot, szürke vonalak pedig a többi európai országot:
+
+```{r, fig.height = 6}
+ggplot(res2[facility %in% c("CT", "MRI", "PET")],
+       aes(y = values, x = TIME_PERIOD,
+           group = forcats::fct_reorder(geo, geo == "HU",
+                                        .fun = first),
+           color = geo == "HU")) +
+  geom_line() + facet_wrap(~facility, scales = "free_y") +
+  guides(color = "none") +
+  scale_color_manual(values = c("FALSE" = "gray",
+                                "TRUE" = "red")) +
+  labs(x = "Év", y = "Készülékek száma [/100 ezer fő]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_rs_medim"))
+```
+
+Az összkép teljesen egyértelmű: a berendezések darabszámában az európai lista legvégén vagyunk, egyértelműen és nagy lemaradással, és bár a helyzet az évtizedek alatt javult és folyamatosan javul, nem eléggé ahhoz, hogy elmozdítson minket az utolsó helyről. Egyedül PET terén állunk nagyon kicsit jobban.
+
+Szinte levegőt se veszek és rögtön mondom, hogy ez az a mérőszám, amire végképp igaz, hogy nem lehet úgy értelmezni, mint a szocialista stílusú "100 ezer lakosra jutó cementgyártás" példáját, tehát, hogy minél több, annál jobb. A sürgősségi ellátástól eltekintve voltaképp a gépek száma mindegy is, hiszen a betegnek az ellátórendszer kapacitása a kérdés, márpedig azt nem a gépek, hanem a *vizsgálatok* száma jelenti. Amivel a beteg szembesül, hogy mennyi kapacitása van számára a rendszernek, az azon múlik, hogy hány vizsgálatot tudunk elvégezni, nem azon, hogy hány gépünk van. Ami nagyon nem ugyanaz, hiszen az egy év alatt egy gépre jutó vizsgálatok száma egyáltalán nem biztos, hogy ugyanaz az egyes országokban.
+
+Ha valaki kevesebb gépből is több vizsgálatot tud kihozni, az nemhogy nem baj, hanem kimondottan jó hír: ezek a gépek rettenetesen drágák, nagy tőkelekötést jelentenek, így ha az ember egyszer már megvette őket, akkor az a racionális, ha minél többet dolgoznak. Annál nincs drágább, mintha megvettük a gépet nagyon sok pénzért, aztán áll és nem dolgozik, vagyis új gépet addig nem szabad venni, amíg a meglevőknek van szabad kapacitása. Elméletileg az lenne az ideális, ha -- a karbantartásoktól eltekintve -- minden percben folyamatosan dolgoznának, és csak akkor vennék a meglevők mellé egy újabbat, ha az összes eddigi már 100%-os kihasználtsággal működik.
+
+A gépek száma mindössze két szempontból érdekes, az egyik a reduncia, ha valamelyik elromlik vagy karbantartáson van, a másik, fontosabb szempont a területi közelség, hiszen ha több van, akkor közelebb tud lenni a beteghez. Több száz millió forintos eszközökről beszélünk, értelemszerű, hogy itt a betegnek kell a géphez mennie, nem a gépnek a beteghez (ami szükségképp nem tökéletes kihasználtsághoz vezetne). Az -- és csak az! -- jelent kivételt ez alól, ha orvosi sürgősség, vagy logisztikai okok miatt nem lehet, vagy nem célszerű a beteget mozgatni. Képzeletbeli példaként: ha az ország összes CT-igényét ki tudnánk elégíteni egyetlen CT-berendezéssel, *akkor sem* volna célszerű egyet venni, kihasználtság ide vagy oda, hiszen nem lehet minden embert aki elesett és beverte a fejét egy zalai megyei faluban, felhozni Budapestre CT-re (majd visszavinni).
+
+Szóval akkor elvégzett vizsgálatok száma; nézzük itt is először az aktuális helyzetképet:
+
+```{r, message=FALSE}
+res2 <- as.data.table(eurostat::get_eurostat(
+  "hlth_co_exam", use.data.table = TRUE))
+res2 <- res2[unit == "P_HTHAB" & icha_hp == "HP1_3"]
+res2$countryname <- countrycode::countrycode(
+  res2$geo, "eurostat", "cldr.name.hu")
+res2[facility == "CT_SCAN"]$facility <- "CT"
+res2[facility == "PET_SCAN"]$facility <- "PET"
+ggplot(res2[TIME_PERIOD == "2023-01-01" &
+              facility %in% c("CT", "MRI", "PET")],
+       aes(y = tidytext::reorder_within(countryname, values,
+                                        facility),
+           x = values/1000, fill = geo == "HU")) +
+  geom_col() + facet_wrap(~facility, scales = "free") +
+  tidytext::scale_y_reordered() +
+  guides(fill = "none") +
+  labs(x = "Vizsgálatok száma [ezer vizsgálat/100 ezer fő]",
+       y = "",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_exam"))
+```
+
+Az időbeli alakulás:
+
+```{r, fig.height = 6}
+ggplot(res2[facility %in% c("CT", "MRI", "PET")],
+       aes(y = values, x = TIME_PERIOD,
+           group = forcats::fct_reorder(geo, geo == "HU",
+                                        .fun = first),
+           color = geo == "HU")) +
+  geom_line() + facet_wrap(~facility, scales = "free_y") +
+  guides(color = "none") +
+  scale_color_manual(values = c("FALSE" = "gray",
+                                "TRUE" = "red")) +
+  labs(x = "Év",
+       y = "Vizsgálatok száma [ezer vizsgálat/100 ezer fő]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_exam"))
+```
+
+Látható, hogy nagyon más a helyzet: MRI-ben továbbra is a lista alján vagyunk, ha nem is az utolsó helyen, de PET-ben már a lista közepén, CT-ben pedig egyenesen a lista tetején! (Azaz hatékonyabbak vagyunk: sokkal jobb egy CT-berendezésre jutó vizsgálat-számot produkálunk.)
+
+Akkor ez már tényleg a tökéletes mutató? Sajnos ez sem teljesen, egy szempontot ugyanis még ez is figyelmen kívül hagy: az igényt. Nem lehet azt mondani, hogy ha egy országban 10 vizsgálatot végeznek, egy másikban meg 100-at, akkor az utóbbiban jobb a helyzet -- mi van, ha az előbbiben 10-re van igény is, de az utóbbiban 1000-re? Nagyon is elképzelhetőek különbségek országok között az igényben, gondoljunk csak arra, hogy egy sor rákbetegség igényel képalkotó vizsgálatot, márpedig a rák előfordulása nagyon eltérhet országok között. Ezt kicsit továbbgondolva hamar eljutunk oda, hogy mi lenne az ideális mérőszám: egyszerűen azt kellene tudni, hogy a vizsgálatokon történő sorra kerülés ideje mennyi (természetesen ahhoz viszonyítva, mint amit az adott eset orvosi sürgőssége indokol!). Ha mindenkit meg tudunk egy órán belül CT-zni, akit orvosilag indokolt egy órán belül, mindenkit egy napon belül, akit orvosilag indokolt egy napon belül, mindenkit egy héten belül, akit orvosilag indokolt egy héten belül stb. akkor elég CT-készülék van, ha nem, akkor nincs -- *függetlenül* attól, hogy mennyi a vizsgálatok száma (és pláne függetlenül attól, hogy mennyi a gépek száma). Sajnos erre vonatkozó nyilvános adatról nem tudok.
+
 ## Záró gondolatok
 
 Remélem, hogy a fenti sorok két -- csak első ránézésre ellentétes -- dologra rá tudtak mutatni: egyrészt, hogy az ágyszám- és betegforgalmi kimutatások adatai értékesek és érdekesek, másrészt, hogy közben egy nagyon fontos feladat, a teljesítménymérés megoldásához még nem tudjuk ezeket használni. Ehhez további adatokra volna szükség; de remélem meg tudtam mutatni azt is, hogy ez alapvető fontosságú lenne a magyar egészségügy fejlesztéséhez. Nem kis feladat -- de megoldható. A szűk keresztmetszet ehhez, úgy hiszem, nem a módszertan, hanem a politikai szféra támogatása.
 
 ---
 
-(Az írás a 2025. június 17-én érvényes állapotot tükrözi.)
+(Az írás a 2025. október 26-án érvényes állapotot tükrözi.)
 
-A [szerző](http://www.medstat.hu/) klinikai biostatisztikus, orvosbiológiai mérnök. A fent leírtak teljes egészében a magánvéleményét képviselik.
+A [szerző](https://www.medstat.hu/) klinikai biostatisztikus, orvosbiológiai mérnök. A fent leírtak teljes egészében a magánvéleményét képviselik.
