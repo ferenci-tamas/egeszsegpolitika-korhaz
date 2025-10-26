@@ -2695,9 +2695,67 @@ mindössze két dolgot tehetünk: szakmai adatokhoz (irodalmi közlése,
 nemzetközi összehasonlító adatok stb.) hasonlítjuk a számokat, illetve a
 nagyon kilógó értékeket keressük meg, pusztán matematikai alapon. Ez
 utóbbira egy későbbi adatsor kapcsán hozok példát, most nézzünk meg egy
-másik lehetőséget: tekintsük át az időbeli trendeket is! Az alábbi ábrán
+másik lehetőséget: tekintsük át az időbeli trendeket is! Először nézzük
+az országos összesített adatot:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0,
+           .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev)],
+       aes(x = Ev, y = ApolasAtlTartam)) +
+  geom_line() +
+  labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
+       caption = captionlab)
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+
+Amint látszik, volt fejlődés az utóbbi években (a koronavírus-járvány
+hatásától eltekintve). Itt azonban feltétlenül érdemes megnézni az
+Eurostat adatait is (ezek, ha nem is tökéletesen, de nagyjából
+egybevágnak a fentiekkel), és nem csak az európai összehasonlítás miatt,
+hanem azért is, mert az ő adatbázisuk sokkal régebbre visszamegy. Így
+néz ki a befektetett betegek átlagos kórházban töltött időtartama az
+aktív ellátásban az egyes európai országokban; piros jelöli
+Magyarországot:
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
+res2 <- as.data.table(eurostat::get_eurostat(
+  "hlth_co_inpagg", use.data.table = TRUE))
+res2 <- res2[hlthcare == "TOTAL" & indic_he == "ALOS"]
+ggplot(res2, aes(x = TIME_PERIOD, y = values,
+                 group = forcats::fct_reorder(geo, geo=="HU",
+                                              .fun = first),
+                 color = geo=="HU")) +
+  geom_line() +
+  scale_color_manual(values = c("FALSE" = "gray",
+                                "TRUE" = "red")) +
+  guides(color = "none") +
+  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_inpagg"))
+```
+
+</details>
+
+![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+
+Mint látható, az átlagos ápolási idő leszorításában évtizedes távlatban
+valóban sikerült eredményeket elérni, de ezen az ábrán már jobban
+látszik, hogy e haladás nagy részét 1980 és 2010 között értük el. Azóta
+nem nagyon sikerült változtatni; szolgáljon vigaszul, hogy a fenti ábra
+szerint ez másoknak sem ment sokkal jobban Európában… (Vegyük
+figyelembe, hogy azért a dolognak van egy orvosi minimuma.)
+
+Nézzük most a helyzetet kórházanként és szakmánként. Az alábbi ábrán
 minden halvány vonal egy kórház adata, a vastag piros pedig az országos
-átlag adott szakmában:
+átlag az adott szakmában:
 
 <details><summary>R kód megjelenítése</summary>
 
@@ -2716,7 +2774,7 @@ ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol
 nem nagyon változott – ilyen szempontból – a helyzet az évek alatt, van
@@ -2725,36 +2783,9 @@ leglátványosabb példa – emlékezzünk vissza az egynapos ellátások
 ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni
 több területen is az ápolási időtartam érzékelhető csökkenését: a
 fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a
-legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont az
-igen nagy forgalmú területeken nem volt érdemi fejlődés, így
-végeredményben alig sikerült ebben előrelépni az évek alatt. Így néz ki
-a befektetett betegek átlagos kórházban töltött időtartama az egyes
-európai országokban; piros jelöli Magyarországot:
-
-<details><summary>R kód megjelenítése</summary>
-
-``` r
-res2 <- as.data.table(eurostat::get_eurostat("hlth_co_inpst", use.data.table = TRUE))
-res2 <- res2[age == "TOTAL" & sex == "T" & icd10 == "A-T_Z"]
-ggplot(res2, aes(x = TIME_PERIOD, y = values,
-                 group = forcats::fct_reorder(geo, geo=="HU", .fun = first), color = geo=="HU")) +
-  geom_line() + scale_color_manual(values = c("FALSE" = "gray", "TRUE" = "red")) +
-  guides(color = "none") +
-  labs(x = "Év", y = "Átlagos kórházi tartózkodás [nap]",
-       caption = paste0(
-         "Ferenci Tamás, https://www.medstat.hu/\n",
-         "Adatok forrása: Eurostat, hlth_co_inpst"))
-```
-
-</details>
-
-![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
-
-Nem csak arról van szó, hogy a magyar adat nagyon magas, hanem arról is,
-hogy – egészen párját ritkítóan – *még nő is* az évek alatt. Azaz:
-nagyon sokáig tartjuk ott az embereket, ahol a legkevésbé kellene. És az
-orvosi lehetőségek meg is engednék, hogy ezt ne tegyük – „csak”
-változtatni kellene a rendszer egészén.
+legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont a
+nagyobb forgalmú területeken nem volt érdemi fejlődés, azaz ezeknél
+továbbra is sokáig tartjuk ott az embereket, ahol a legkevésbé kellene.
 
 ## Egy záró gondolat a hazai ellátórendszer kórház-centrikusságáról
 
@@ -3420,7 +3451,7 @@ ggplot(res[Ev==2024][MukodoAtlagAgy>0], aes(x = Halalozas, y = SzakmaMegnev)) +
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 Első ránézésre elég logikus az ábra, ha a különböző szakmákra gondolunk,
 de azért vannak meglepő dolgok is. Például mik azok a pontok jobb szélen
@@ -3475,7 +3506,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Fül-orr-gégegyógyászat"&ElbocsatottBeteg
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 A vízszintes sávok az úgynevezett 95%-os konfidenciaintervallumok.
 Leegyszerűsítve: azt jelzik, hogy a véletlen ingadozás miatt mekkora
@@ -3531,7 +3562,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Bőr- és nemibeteg"&ElbocsatottBetegSzam>30
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 Vagy épp a pszichiátriánál:
 
@@ -3547,7 +3578,7 @@ ggplot(res[Ev==2021][SzakmaMegnev=="Pszichiátria"&ElbocsatottBetegSzam>30&Mukod
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
 A sok szakma miatt kevésbé áttekinthető, de azért megnézhetjük az
 összeset egyben is (vigyázzunk, hogy a vízszintes tengely skálázása mind
@@ -3568,7 +3599,7 @@ ggplot(res[Ev==2024][ElbocsatottBetegSzam>30&MukodoAtlagAgy>0][
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
 
 Következő lépésben nézzük meg ugyanezeket az adatokat időbeli metszetben
 is, itt minden vonal egy kórházat jelöl:
@@ -3584,7 +3615,7 @@ ggplot(res[NemSpecSzakma == TRUE], aes(x = Ev, y = Halalozas, group = KorhazRovi
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
 
 A rejtélyeket nem igazán oldja fel a dolog, sőt, az bizonyos tekintetben
 inkább csak fokozódik: látszik, hogy a pszichiátrián a kilógó érték nem
@@ -3710,7 +3741,7 @@ ggplot(res2[TIME_PERIOD == "2023-01-01" &
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
 
 Az időbeli alakulás, szokásosan piros vonal jelzi Magyarországot, szürke
 vonalak pedig a többi európai országot:
@@ -3735,7 +3766,7 @@ ggplot(res2[facility %in% c("CT", "MRI", "PET")],
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
 
 Az összkép teljesen egyértelmű: a berendezések darabszámában az európai
 lista legvégén vagyunk, egyértelműen és nagy lemaradással, és bár a
@@ -3811,7 +3842,7 @@ ggplot(res2[TIME_PERIOD == "2023-01-01" &
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 Az időbeli alakulás:
 
@@ -3836,7 +3867,7 @@ ggplot(res2[facility %in% c("CT", "MRI", "PET")],
 
 </details>
 
-![](README_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
 
 Látható, hogy nagyon más a helyzet: MRI-ben továbbra is a lista alján
 vagyunk, ha nem is az utolsó helyen, de PET-ben már a lista közepén,
