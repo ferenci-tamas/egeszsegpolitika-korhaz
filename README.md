@@ -1196,11 +1196,19 @@ emberből (és ezt – sajnos – a politikusok is jól tudják, de erről
 szintén kicsit később).
 
 A másik ok a magyar egészségügy történeti szerveződése: a klasszikus
-szovjet szervezési modell (a szemaskói szisztéma) egyik jellemzője a
+szovjet szervezési modell, a szemaskói szisztéma egyik jellemzője a
 teljesen vegyes minőségű, földrajzilag fragmentált ellátás, magyarra
 fordítva: „olyan amilyen, de közel van”. És itt is hatalmas probléma,
 hogy az évtizedek alatt ez egyszerűen beleivódott az emberek
-gondolkodásába, hovatovább ők maguk várják ezt el.
+gondolkodásába, hovatovább ők maguk várják ezt el. (Mielőtt nagyon
+elássuk szegény Szemaskót, a fair-ség kedvéért azért tegyük hozzá, hogy
+ő 1918-ban lett egészségügyi miniszter – vagy, hogy teljesen pontos
+legyek: egészségügyi népbiztos – amikor a kórházak műszerezettsége jó
+esetben egy röntgengépből és egy kezdetleges laborból állt, így a
+centralizálási igény jóval alacsonyabb volt, amikor rengeteg mindent nem
+is lehetett kórházon kívül gyógyítani, és amikor még sokkal-sokkal
+hosszabb idő volt egy kórházi ápolási epizód, így nagyobb jelentősége
+volt annak, hogy ez a beteg lakóhelye közelében történjen.)
 
 Valójában a kórházcentrikusság és a nagy ágyszám nem egyszerűen
 „indokolatlan” vagy „felesleges”, hanem aktívan káros: a kórház a lehető
