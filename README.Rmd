@@ -199,7 +199,7 @@ Valójában a kórházcentrikusság és a nagy ágyszám nem egyszerűen "indoko
 
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben: mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A [legfrissebb adat](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_bds1/default/table?lang=EN) 2023-as:
 
-```{r, message = FALSE, fig.height = 8}
+```{r, message = FALSE, fig.height = 6}
 res2 <- as.data.table(eurostat::get_eurostat(
   "hlth_rs_bds1", use.data.table = TRUE))
 res2 <- res2[unit == "P_HTHAB" & facility == "HBEDT_CUR" &
@@ -207,9 +207,9 @@ res2 <- res2[unit == "P_HTHAB" & facility == "HBEDT_CUR" &
                hlthcare == "TOTAL"]
 res2$countryname <- countrycode::countrycode(res2$geo, "eurostat",
                                              "cldr.name.hu")
-ggplot(res2[order(values, decreasing = TRUE)],
+ggplot(res2[order(values)],
        aes(y = factor(countryname, levels = countryname),
-           x = values, fill = geo=="HU")) +
+           x = values, fill = geo == "HU")) +
   geom_col() + guides(fill = "none") +
   labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "",
        caption = paste0(
@@ -518,12 +518,29 @@ ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0,
        caption = captionlab)
 ```
 
-Amint látszik, volt fejlődés az utóbbi években (a koronavírus-járvány hatásától eltekintve). Itt azonban feltétlenül érdemes megnézni az Eurostat adatait is (ezek, ha nem is tökéletesen, de nagyjából egybevágnak a fentiekkel), és nem csak az európai összehasonlítás miatt, hanem azért is, mert az ő adatbázisuk sokkal régebbre visszamegy. Így néz ki a befektetett betegek átlagos kórházban töltött időtartama az aktív ellátásban az egyes európai országokban; piros jelöli Magyarországot:
+Amint látszik, volt fejlődés az utóbbi években (a koronavírus-járvány hatásától eltekintve). Itt azonban feltétlenül érdemes megnézni az Eurostat [adatait](https://ec.europa.eu/eurostat/databrowser/view/hlth_co_inpagg/default/table?lang=en) is (ezek, ha nem is tökéletesen, de nagyjából egybevágnak a fentiekkel), és nem csak az európai összehasonlítás miatt, hanem azért is, mert az ő adatbázisuk sokkal régebbre visszamegy.
 
-```{r, message = FALSE}
+Ez a jelenlegi helyzetkép arról, hogy mennyi a befektetett betegek átlagos kórházban töltött időtartama az aktív ellátásban az egyes európai országokban (2023-as adatok, mert a 2024 még nagyon hiányos):
+
+```{r, fig.height = 6, message = FALSE}
 res2 <- as.data.table(eurostat::get_eurostat(
   "hlth_co_inpagg", use.data.table = TRUE))
 res2 <- res2[hlthcare == "TOTAL" & indic_he == "ALOS"]
+res2$countryname <- countrycode::countrycode(
+  res2$geo, "eurostat", "cldr.name.hu")
+ggplot(res2[TIME_PERIOD == "2023-01-01"][order(values)],
+       aes(y = factor(countryname, levels = countryname),
+           x = values, fill = geo == "HU")) +
+  geom_col() + guides(fill = "none") +
+  labs(x = "Átlagos kórházi tartózkodás [nap]", y = "",
+       caption = paste0(
+         "Ferenci Tamás, https://www.medstat.hu/\n",
+         "Adatok forrása: Eurostat, hlth_co_inpagg"))
+```
+
+Ebben tehát kimondottan jól állunk európai összevetésben! Szintén nagyon látványos ebben az esetben az időbeli alakulás is; piros görbe jelöli Magyarországot:
+
+```{r}
 ggplot(res2, aes(x = TIME_PERIOD, y = values,
                  group = forcats::fct_reorder(geo, geo=="HU",
                                               .fun = first),
