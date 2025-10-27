@@ -3377,7 +3377,7 @@ másodperccel). *És még csak a mentőszolgálat teljesítménymérése volt…
 Vajon mi mikor fogunk ide eljutni?
 
 Másodsorban, érdemes megnézni a
-\[betegségauditokat\]<https://digital.nhs.uk/data-and-information/clinical-audits-and-registries>),
+[betegségauditokat](https://digital.nhs.uk/data-and-information/clinical-audits-and-registries),
 egészen elképesztő mélységű adatok találhatóak a betegségekről
 (regiszter jelleggel – erről is lehetne Magyarországon beszélni…), de az
 ellátás teljesítmény-jellemzőiről is. Érdemes megnézni mondjuk a
