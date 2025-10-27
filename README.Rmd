@@ -90,7 +90,7 @@ A kórházak működésének egyik legközvetlenebb mutatója a betegforgalom, a
 Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái által 2024-ben ellátott betegek számának eloszlását:
 
 ```{r}
-ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
+ggplot(res[Ev == 2024], aes(x = ElbocsatottBetegSzam)) +
   geom_histogram(boundary = 0, binwidth = 1000) +
   labs(x = "Elbocsátott betegek száma [fő]",
        y = "Gyakoriság [db]", caption = captionlab)
@@ -120,7 +120,7 @@ kableExtra::add_header_above(
   c(" " = 1, "Legkisebb" = 2, "Legnagyobb" = 2))
 ```
 
-Mindezekből jól látszik a magyar egészségügyi ellátórendszer néhány strukturális problémája. Vegyük például a szülészet-nőgyógyászat szakmát! Itt egészen extrém esetek vannak: az ábra bal szélén lévő pont a Keszthelyi Kórház, ami egész évben összesen `r res[Ev==2024&KorhazRovid=="2003"&SzakmaKod=="04"]$ElbocsatottBetegSzam` beteget látott el ebben a szakmában. Ez természetesen nem mind szülés! A konkrét beavatkozások kórházankénti számáról Magyarországon semmilyen információnk nem lehet, az egyedüli kivétel azonban épp a szülések száma: egy [másik kimutatásból](https://www.neak.gov.hu/felso_menu/szakmai_oldalak/gyogyito_megeleozo_ellatas/szakellatas/fekvobeteg_szakellatas_minosegi_indikator/csaszarmetszesek) ez az egy megnézhető, és így tudhatjuk, hogy ebben a kórházban 264 szülés volt 2024-ben. Azaz kevesebb, mint napi 1... Konkrétan szülések számában, mint ebből a táblázatból kiderül, ez a kórház még így is csak a *negyedik* helyezett, a rekorder a Mezőtúri Kórház, 146 szüléssel. (Nem akarom kipécézni őket: 11 osztály van, ahol az 500-at sem érte el az éves szülések száma, 30, ahol az 1000-et sem.) Ilyen osztályokat minek fenntartani?! És itt most nem az anyagi szempontokról beszélek: az itt dolgozó orvosok, szakdolgozók nem fognak tudni manuális gyakorlatot szerezni, ezer más dolgot kénytelenek csinálni, így nem tudnak elmélyedni ebben a konkrét területben, nem fognak rendelkezésre állni a legkorszerűbb műszerek (vagy ha igen, akkor meg elment egy halom pénz arra, hogy aztán szinte teljesen kihasználatlanul álljanak). Nem lenne jobb -- *a szülőnőknek is*, sőt, elsősorban nekik! -- ha olyan orvosok, szülésznők és ápolók látnák el őket, akiknek bőséges manuális gyakorlatuk van, akik ezzel a szűk területtel foglalkoznak, így sokkal inkább tudják követni a szakirodalmat, és mindezt ott, ahol rendelkezésre állnak a legkorszerűbb eszközök? Az egyetlen ellenérv a szemaskó-i stílusú "de legalább közel van" megfontolás, csakhogy ebben a konkrét esetben ez is abszurd érv, lévén, hogy a szülészet *pont hogy* egy jól tervezhető terület. (Ennél még az infarktus-ellátás is ezerszer jobban centralizált -- nagyon helyesen! -- pedig aligha lehet mondani, hogy ott kevésbé fontos, hogy gyorsan ellátást kapjon a beteg, vagy, hogy ott jobban előre lehet tervezni az esemény bekövetkezését...)
+Mindezekből jól látszik a magyar egészségügyi ellátórendszer néhány strukturális problémája. Vegyük például a szülészet-nőgyógyászat szakmát! Itt egészen extrém esetek vannak: az ábra bal szélén lévő pont a Keszthelyi Kórház, ami egész évben összesen `r res[Ev == 2024 & KorhazRovid == "2003" & SzakmaKod == "04"]$ElbocsatottBetegSzam` beteget látott el ebben a szakmában. Ez természetesen nem mind szülés! A konkrét beavatkozások kórházankénti számáról Magyarországon semmilyen információnk nem lehet, az egyedüli kivétel azonban épp a szülések száma: egy [másik kimutatásból](https://www.neak.gov.hu/felso_menu/szakmai_oldalak/gyogyito_megeleozo_ellatas/szakellatas/fekvobeteg_szakellatas_minosegi_indikator/csaszarmetszesek) ez az egy megnézhető, és így tudhatjuk, hogy ebben a kórházban 264 szülés volt 2024-ben. Azaz kevesebb, mint napi 1... Konkrétan szülések számában, mint ebből a táblázatból kiderül, ez a kórház még így is csak a *negyedik* helyezett, a rekorder a Mezőtúri Kórház, 146 szüléssel. (Nem akarom kipécézni őket: 11 osztály van, ahol az 500-at sem érte el az éves szülések száma, 30, ahol az 1000-et sem.) Ilyen osztályokat minek fenntartani?! És itt most nem az anyagi szempontokról beszélek: az itt dolgozó orvosok, szakdolgozók nem fognak tudni manuális gyakorlatot szerezni, ezer más dolgot kénytelenek csinálni, így nem tudnak elmélyedni ebben a konkrét területben, nem fognak rendelkezésre állni a legkorszerűbb műszerek (vagy ha igen, akkor meg elment egy halom pénz arra, hogy aztán szinte teljesen kihasználatlanul álljanak). Nem lenne jobb -- *a szülőnőknek is*, sőt, elsősorban nekik! -- ha olyan orvosok, szülésznők és ápolók látnák el őket, akiknek bőséges manuális gyakorlatuk van, akik ezzel a szűk területtel foglalkoznak, így sokkal inkább tudják követni a szakirodalmat, és mindezt ott, ahol rendelkezésre állnak a legkorszerűbb eszközök? Az egyetlen ellenérv a szemaskó-i stílusú "de legalább közel van" megfontolás, csakhogy ebben a konkrét esetben ez is abszurd érv, lévén, hogy a szülészet *pont hogy* egy jól tervezhető terület. (Ennél még az infarktus-ellátás is ezerszer jobban centralizált -- nagyon helyesen! -- pedig aligha lehet mondani, hogy ott kevésbé fontos, hogy gyorsan ellátást kapjon a beteg, vagy, hogy ott jobban előre lehet tervezni az esemény bekövetkezését...)
 
 Azt, hogy a fent leírtak nem pusztán elméleti spekulációt jelentenek, hanem a gyakorlatban is így vannak, ma már bőséges mennyiségű empirikus bizonyíték is alátámasztja. A kérdést nagyon sokan, nagyon sokszor megvizsgálták tényadatok alapján, egységes eredményekkel; kiragadott példaként itt egy részlet egy ma már [klasszikus kutatás](https://www.nejm.org/doi/10.1056/NEJMsa012337) eredményeiből:
 
@@ -159,7 +159,8 @@ Zárásként vizsgáljuk meg a kérdést időben is: hogyan alakult az egyes sza
 ```{r, fig.height = 10}
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ElbocsatottBetegSzam, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  facet_wrap(~SzakmaMegnev, scales = "free") +
+  geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
     , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
@@ -172,9 +173,11 @@ A feltüntett piros görbe releváns akkor, ha egy átlagos osztályról akarunk
 
 ```{r, fig.height = 8}
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-  , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
+  , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000),
+  .(Ev, SzakmaMegnev)],
   aes(x = Ev, y = ElbocsatottBetegSzam)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() +
+  geom_point() +
   labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]",
        caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
@@ -197,13 +200,16 @@ Valójában a kórházcentrikusság és a nagy ágyszám nem egyszerűen "indoko
 Mielőtt rátérünk a magyar adatok részletes elemzésére, egy pillanat erejéig egyetlen összesítő számot nézzünk meg európai egybevetésben: mennyi a százezer lakosra jutó aktív kórházi ágyak száma. A [legfrissebb adat](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_bds1/default/table?lang=EN) 2023-as:
 
 ```{r, message = FALSE, fig.height = 8}
-res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
+res2 <- as.data.table(eurostat::get_eurostat(
+  "hlth_rs_bds1", use.data.table = TRUE))
 res2 <- res2[unit == "P_HTHAB" & facility == "HBEDT_CUR" &
                TIME_PERIOD == "2023-01-01" & nchar(geo) == 2 &
                hlthcare == "TOTAL"]
-res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
+res2$countryname <- countrycode::countrycode(res2$geo, "eurostat",
+                                             "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
-       aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
+       aes(y = factor(countryname, levels = countryname),
+           x = values, fill = geo=="HU")) +
   geom_col() + guides(fill = "none") +
   labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "",
        caption = paste0(
@@ -220,7 +226,8 @@ Vegyük példának Dániát: miközben ott kórházi ágyból 65%-kal kevesebb v
 Visszatérve a magyar adatokhoz, ássunk most kicsit mélyebbre! Elsőként nézzük meg az ágyszámok eloszlását 2024-ben (itt és a továbbiakban csak azokkal az intézményekkel foglalkozunk, ahol van egyáltalán működő ágy), az átlagos működő ágyszámot alapul véve:
 
 ```{r}
-ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0],
+       aes(x = MukodoAtlagAgy)) +
   geom_histogram(boundary = 0, binwidth = 10) +
   labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
        caption = captionlab)
@@ -250,9 +257,13 @@ kableExtra::add_header_above(
 Ez is elég tanulságos kimutatás, de érdekes lehet még egy másik típusú összesítés is: amikor egy kórház egészének az aktív ágyszámát vizsgáljuk meg. Ez így néz ki 2022-ben:
 
 ```{r, fig.height = 10}
-ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
-  order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][
+  ,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+    order(MukodoAtlagAgy)],
+  aes(x = MukodoAtlagAgy,
+      y = factor(KorhazRovid, levels = KorhazRovid))) +
+  geom_jitter(width = 0, height = 0.1) +
+  scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
        caption = captionlab)
 ```
@@ -261,9 +272,12 @@ Itt már részletesebb elemzés nélkül is látszanak meglepő eredmények; ím
 
 ```{r}
 knitr::kable(
-  res[Ev == 2024][SzakmaKod != "" & MukodoAtlagAgy > 0 & Fenntarto == "Központi eü. intézmény"][
-    , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
-      order(`Működő átlagos aktív ágyszám`)][1:15])
+  res[Ev == 2024][
+    SzakmaKod != "" & MukodoAtlagAgy > 0 &
+      Fenntarto == "Központi eü. intézmény"][
+        , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)),
+        .(`Kórház` = KorhazNev)][
+          order(`Működő átlagos aktív ágyszám`)][1:15])
 ```
 
 Ezeket látva is felmerülhet kérdés az ilyen intézmények fenntartásának racionalitását illetően. Elmondható minden, amit korábban elmondtam, ott éppen a nagyon pici szülészetek példáján, de van még egy további szempont, amit viszont itt érdemes megemlíteni: az, hogy egy kórházban, egy osztályon egy sor dolog van, ami fix tényező, azaz nem skálázódik a betegek számával. Bizonyos műszerekből és berendezésekből mindenképp kell legalább egy darab, akár kétnaponta van egy szülés akár naponta van 50. Kell mosoda, takarítónő, karbantartó, akárhány szülés is van. Nagyon fontos azonban hangsúlyoznom, hogy ez ráadásul nem egyszerűen csak pénz (méretgazdaságosság) kérdése: hiába is jönne ki a szülések száma alapján, hogy elég 0,1 aneszteziológus, mindenképp kelleni fog 1. Nagyon nem szerencsés az eleve limitáltan elérhető orvosokat, pláne limitáltan elérhető ápolókat nagyon sok kórház között, elaprózottan szétszórni. Mindezek miatt az ágyszám-csökkentésnél könnyen lehet, hogy érdemesebb komplett osztályokat, vagy akár komplett kórházat bezárni: ha van 10 darab 1000 ágyas kórházunk, és meg kell szünteti 1000 ágyat, akkor egy bezárása helyett mindegyikből bezárva 100 ágyat, akár még az is lehet, hogy annál is rosszabb helyzetbe kerülünk, mint ahonnan indultunk. Persze így megmarad 10 kórházigazgató pozíciója és mind a 10 polgármester elmondhatja a következő választási kampányban, hogy megvédte a helyi kórházat...
@@ -416,7 +430,8 @@ Ennek a következménye, hogy így néz ki a tényleges összefüggés a 2024-es
 ```{r, fig.height = 8}
 ggplot(res[Ev == 2024][NemSpecKh & NemSpecSzakma & MukodoAtlagAgy>0],
        aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
-  geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
+  geom_point() + facet_wrap(~SzakmaMegnev) +
+  geom_smooth(method = "lm", formula = y ~ x - 1) +
   labs(x = "Működő ágyak átlagos száma",
        y = "Ellátott betegek száma",
        caption = captionlab)
@@ -532,15 +547,18 @@ ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") +
   geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-    , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
+  geom_line(
+    data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
+      , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
        caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
 ```
 
-Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol nem nagyon változott -- ilyen szempontból -- a helyzet az évek alatt, van ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a leglátványosabb példa -- emlékezzünk vissza az egynapos ellátások ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni több területen is az ápolási időtartam érzékelhető csökkenését: a fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont a nagyobb forgalmú területeken nem volt érdemi fejlődés, azaz ezeknél továbbra is sokáig tartjuk ott az embereket, ahol a legkevésbé kellene. 
+Ez szintén nagyon tanulságos ábra. Látszik, hogy vannak területek ahol nem nagyon változott -- ilyen szempontból -- a helyzet az évek alatt, van ahol sikerült érdemi csökkenést elérni (talán a szemészet erre a leglátványosabb példa -- emlékezzünk vissza az egynapos ellátások ábrájára!). Az is jól látható, hogy a 2006/2007-es reform el tudta érni több területen is az ápolási időtartam érzékelhető csökkenését: a fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat a legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont a nagyobb forgalmú területeken nem volt érdemi fejlődés, azaz ezeknél továbbra is sokáig tartjuk ott az embereket, ahol a legkevésbé kellene.
+
+Egyetlen megjegyzés még idetartozik: a fenti kérdésnek nem pusztán orvosi és általános szervezési aspektusai vannak; Magyarországon ezt befolyásolja konkrétan a finanszírozási protokoll is. A fekvőbeteg-ellátás hazai finanszírozása egy rendkívül komplex rendszer, amelyben előállhatnak olyan helyzetek, ahol a finanszírozás javításához, első ránézésre elég paradox módon, *tovább* kell a beteget kórházban tartani. (Csak hogy egyetlen, és még relatíve egyszerű példát hozzak: minden ún. homogén betegségcsoporthoz -- HBCs -- amibe a betegeket be kell sorolni a kórházi ellátás során, és ami alapján a kórház finanszírozásának meghatározó részét kapja, tartozik egy alsó határnap: ha a beteg nem tartózkodik annyi ideig a kórházban, akkor ún. rövid esetnek fog minősülni, ami a kórház számára előnytelen, mert ilyenkor nem kapja meg az adott HBCs-ért járó teljes finanszírozást. Ez pláne kellemetlen azokban az esetekben, ahol közben a költségek nagy része rögtön az ellátás elején felmerül, ezért az ilyet a kórházak igyekeznek kerülni, és a beteget legalább az alsó határnapig mindenképp benntartani. Természetesen a HBCs szabálykönyvet rendszeresen felülvizsgálják, és az alsó határnapokat is szükség esetén igazítják a változó orvosi realitásokhoz, de ekkora mennyiségű kód esetén -- pláne, ha a rendszeres karbantartás elmarad... -- lesznek megkérdőjelezhető szabályok. Eseménymentes várandósság utáni, komplikáció nélküli, műtétet nem igénylő hüvelyi szülés alsó határnapja például 3 nap jelenleg, tehát teljesen mindegy milyen egészséges az anya, teljesen mindegy milyen egészséges az újszülött, teljesen mindegy mik a körülményei a családnak, szülőnőt nem lehet 3 napnál korábban elbocsátani úgy, hogy ne érje anyagi veszteség a kórházat.)
 
 ## Egy záró gondolat a hazai ellátórendszer kórház-centrikusságáról
 
@@ -714,7 +732,7 @@ Az ábráról azonban sokkal fontosabb dolgok is leolvashatóak. Egyrészt vanna
 
 A felvezetőben említettem, hogy a diagnosztikai infrastruktúráról az ágyszám- és betegforgalmi kimutatások nem adnak információt (lévén, hogy ezekhez nem tartozik ágy), noha ezek kritikus elemei a kórházi ellátásnak -- aligha képzelhető el kórház röntgen vagy labor nélkül. Szerencsére azonban ezen infrastruktúra egy részéről, jelesül a képalkotókról -- tételesen: a CT-, MRI- és PET-berendezésekről -- van információnk. Egész pontosan kétféle információ érhető el, és mindkettő érdekes lehet: a berendezések darabszáma, és az elvégzett vizsgálatok száma.
 
-Mielőtt a részletekre kitérünk, beszéljünk picit az adatforrásokról. A NEAK minden évben [kiad](https://www.neak.gov.hu/felso_menu/rolunk/kozerdeku_adatok/gazdalkodasi_adatok/statisztikai_kiadvanyok) egy ún. Statisztikai Évkönyvet, aminek van CT/MRI-ről szóló pontja. Az országos adatok tartalmazzák a vizsgálatok számát, az elektronikus mellékletben elérhető megyesoros adatok pedig a készülékek számát is. (Azt nem értem, hogy ez utóbbi miért nincsen szerepeltetve az országos adatok között; ott csak a finanszírozott szolgáltatók számáról van adat, ami nekünk nem sokat segít, hiszen nem tudni, hogy egy szolgáltatóhoz hány gép tartozik.) Az országos adathoz tartozó módszertani leírás rögzíti, hogy az ott szereplő adat, tehát a vizsgálatok száma, csak az [1-es térítési kategória](https://njt.hu/jogszabaly/1999-43-20-22) ("magyar biztosítás alapján végzett térítésmentes ellátás") adatait tartalmazzák. Mivel a "fekvő beteg részére végzett ellátás" egy másik térítési kategória (6-os kód), így értelmezésem szerint ez a szám a vizsgálatok egy lényeges hányadát nem tartalmazza, hiszen a fekvőbetegeken végzett vizsgálatok nincsenek benne. A megyesoros adatokhoz nem tartozik módszertani leírás, így ott nincs pontos definíciónk. A dolog ott válik érdekessé, ha mindehhez hozzátesszük, hogy ilyen adatok -- mindkét típus -- az Eurostat-nál is elérhető. Az ottani leírás szerint az adatszolgáltatójuk a NEAK, de az adatok mégsem egyeznek egymással. Hogy pontos legyek: a vizsgálatok száma nagyobb; azt gondolom, hogy ez megerősíti a feltételezésemet arról, hogy a NEAK-nál nincsenek benne a fekvőbetegek részére végzett vizsgálatok. Az Eurostat [módszertani leírása](https://ec.europa.eu/eurostat/cache/metadata/EN/hlth_res_esms_hu.htm) ugyanis úgy fogalmaz, hogy a közölt adat azon vizsgálatok száma, amit a NEAK finanszíroz; értelmezésem szerint ebben a fekvő betegek részére végzett vizsgálatok is benne vannak, a szám ezért nagyobb. (De még így is csak a közfinanszírozott ellátásokat tartalmazza -- nézőpont kérdése, hogy ez mennyire limitáció, lehet éppenséggel a mellett is érvelni, hogy az állam által működtetett egészségügyi infrastruktúra megítéléshez pont hogy ez számít.) A készülékek számára közölt adat az Eurostat-nál pontosan ugyanaz, mint a NEAK Statisztikai Évkönyvében. Ez azért nagyon fontos, mert mint említettem, a NEAK-nál ehhez nem volt módszertani leírás -- de az Eurostat-nál van! Így kiderül, hogy ez a szám mit jelent: azon túl, hogy itt is csak a közfinanszírozott ellátást nyújtó gépek vannak feltüntetve, van egy nagyon komoly limitáció: nem jelennek meg a statisztikákban azok a gépek, melyek kizárólag fekvőbeteg-ellátásban vesznek részt. (Ennek finanszírozástechnikai oka vannak: az ilyen gépekre nincs külön finanszírozási szerződés, mert a költségük bele van építve a megfelelő HBCS-be. Ezzel együtt is, számomra érthetetlen, hogy az ország miért nem vezet erről egy teljeskörű leltárt, finanszírozási szerződéstől függetlenül; azért ilyen gépből nincs követhetetlenül sok, és nem változik naponta kétszer a számuk...) Ez azt jelenti, hogy itt a magyar adat kevesebb lehet, mint a valós, még úgy is, hogy csak a közfinanszírozott ellátást tekintjük. E problémára sajnos nem találtam megoldást.
+Mielőtt a részletekre kitérünk, beszéljünk picit az adatforrásokról. A NEAK minden évben [kiad](https://www.neak.gov.hu/felso_menu/rolunk/kozerdeku_adatok/gazdalkodasi_adatok/statisztikai_kiadvanyok) egy ún. Statisztikai Évkönyvet, aminek van CT/MRI-ről szóló pontja. Az országos adatok tartalmazzák a vizsgálatok számát, az elektronikus mellékletben elérhető megyesoros adatok pedig a készülékek számát is. (Azt nem értem, hogy ez utóbbi miért nincsen szerepeltetve az országos adatok között; ott csak a finanszírozott szolgáltatók számáról van adat, ami nekünk nem sokat segít, hiszen nem tudni, hogy egy szolgáltatóhoz hány gép tartozik.) Az országos adathoz tartozó módszertani leírás rögzíti, hogy az ott szereplő adat, tehát a vizsgálatok száma, csak az [1-es térítési kategória](https://njt.hu/jogszabaly/1999-43-20-22) ("magyar biztosítás alapján végzett térítésmentes ellátás") adatait tartalmazzák. Mivel a "fekvő beteg részére végzett ellátás" egy másik térítési kategória (6-os kód), így értelmezésem szerint ez a szám a vizsgálatok egy lényeges hányadát nem tartalmazza, hiszen a fekvőbetegeken végzett vizsgálatok nincsenek benne. A megyesoros adatokhoz nem tartozik módszertani leírás, így ott nincs pontos definíciónk. A dolog ott válik érdekessé, ha mindehhez hozzátesszük, hogy ilyen adatok -- mindkét típus -- az Eurostat-nál is elérhető. Az ottani leírás szerint az adatszolgáltatójuk a NEAK, de az adatok mégsem egyeznek egymással. Hogy pontos legyek: a vizsgálatok száma nagyobb; azt gondolom, hogy ez megerősíti a feltételezésemet arról, hogy a NEAK-nál nincsenek benne a fekvőbetegek részére végzett vizsgálatok. Az Eurostat [módszertani leírása](https://ec.europa.eu/eurostat/cache/metadata/EN/hlth_res_esms_hu.htm) ugyanis úgy fogalmaz, hogy a közölt adat azon vizsgálatok száma, amit a NEAK finanszíroz; értelmezésem szerint ebben a fekvő betegek részére végzett vizsgálatok is benne vannak, a szám ezért nagyobb. (De még így is csak a közfinanszírozott ellátásokat tartalmazza -- nézőpont kérdése, hogy ez mennyire limitáció, lehet éppenséggel a mellett is érvelni, hogy az állam által működtetett egészségügyi infrastruktúra megítéléshez pont hogy ez számít.) A készülékek számára közölt adat az Eurostat-nál pontosan ugyanaz, mint a NEAK Statisztikai Évkönyvében. Ez azért nagyon fontos, mert mint említettem, a NEAK-nál ehhez nem volt módszertani leírás -- de az Eurostat-nál van! Így kiderül, hogy ez a szám mit jelent: azon túl, hogy itt is csak a közfinanszírozott ellátást nyújtó gépek vannak feltüntetve, van egy nagyon komoly limitáció: nem jelennek meg a statisztikákban azok a gépek, melyek kizárólag fekvőbeteg-ellátásban vesznek részt. (Ennek finanszírozástechnikai oka vannak: az ilyen gépekre nincs külön finanszírozási szerződés, mert a költségük bele van építve a megfelelő HBCs-be. Ezzel együtt is, számomra érthetetlen, hogy az ország miért nem vezet erről egy teljeskörű leltárt, finanszírozási szerződéstől függetlenül; azért ilyen gépből nincs követhetetlenül sok, és nem változik naponta kétszer a számuk...) Ez azt jelenti, hogy itt a magyar adat kevesebb lehet, mint a valós, még úgy is, hogy csak a közfinanszírozott ellátást tekintjük. E problémára sajnos nem találtam megoldást.
 
 Mindezek miatt én az Eurostat adatait használtam, hiszen ez van közelebb a realitáshoz, ráadásul az európai összevetést is lehetővé teszi. A NEAK Statisztikai Évkönyvének az lenne az előnye, hogy ha nem is a kórház, de a megye-szintű lebontást lehetővé tesz, az Eurostat-nál ilyen adat ugyanis nincsen, csak országos összesítés. Az előző okok miatt, illetve mert a NEAK Statisztikai Évkönyvet csak 2020-ig sikerült fellelnem, mégis az Eurostat adatokat használtam (a területi eloszlás esetleges jelentőségére később még visszatérek). PET-re vonatkozó adat csak az Eurostat-nál van, de ott a fenti problémák a módszertani leírás szerint nem jelentkeznek (azzal, hogy ott is csak a közfinanszírozott ellátásról van adat).
 

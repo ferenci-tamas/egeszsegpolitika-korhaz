@@ -144,7 +144,7 @@ Kezdjük először egy helyzetképpel: nézzük meg a magyar kórházak szakmái
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev==2024], aes(x = ElbocsatottBetegSzam)) +
+ggplot(res[Ev == 2024], aes(x = ElbocsatottBetegSzam)) +
   geom_histogram(boundary = 0, binwidth = 1000) +
   labs(x = "Elbocsátott betegek száma [fő]",
        y = "Gyakoriság [db]", caption = captionlab)
@@ -1118,7 +1118,8 @@ szürke vonalak az egyes osztályok forgalmai, a piros vonal az átlaguk
 ``` r
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ElbocsatottBetegSzam, group = KorhazRovid)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line(alpha = 0.2) +
+  facet_wrap(~SzakmaMegnev, scales = "free") +
+  geom_line(alpha = 0.2) +
   geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
     , .(ElbocsatottBetegSzam = mean(ElbocsatottBetegSzam)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ElbocsatottBetegSzam), inherit.aes = FALSE, color = "red") +
@@ -1143,9 +1144,11 @@ egészségügy teljesítményének:
 
 ``` r
 ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-  , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000), .(Ev, SzakmaMegnev)],
+  , .(ElbocsatottBetegSzam = sum(ElbocsatottBetegSzam)/1000),
+  .(Ev, SzakmaMegnev)],
   aes(x = Ev, y = ElbocsatottBetegSzam)) +
-  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() + geom_point() +
+  facet_wrap(~SzakmaMegnev, scales = "free") + geom_line() +
+  geom_point() +
   labs(x = "Év", y = "Elbocsátott betegszám [ezer fő]",
        caption = captionlab) +
   scale_x_continuous(limits = range(res$Ev))
@@ -1237,13 +1240,16 @@ adat](https://ec.europa.eu/eurostat/databrowser/view/hlth_rs_bds1/default/table?
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-res2 <- as.data.table(eurostat::get_eurostat("hlth_rs_bds1", use.data.table = TRUE))
+res2 <- as.data.table(eurostat::get_eurostat(
+  "hlth_rs_bds1", use.data.table = TRUE))
 res2 <- res2[unit == "P_HTHAB" & facility == "HBEDT_CUR" &
                TIME_PERIOD == "2023-01-01" & nchar(geo) == 2 &
                hlthcare == "TOTAL"]
-res2$countryname <- countrycode::countrycode(res2$geo, "eurostat", "cldr.name.hu")
+res2$countryname <- countrycode::countrycode(res2$geo, "eurostat",
+                                             "cldr.name.hu")
 ggplot(res2[order(values, decreasing = TRUE)],
-       aes(y = factor(countryname, levels = countryname), x = values, fill = geo=="HU")) +
+       aes(y = factor(countryname, levels = countryname),
+           x = values, fill = geo=="HU")) +
   geom_col() + guides(fill = "none") +
   labs(x = "Aktív kórházi ágyak száma [ágy/100 ezer fő]", y = "",
        caption = paste0(
@@ -1292,7 +1298,8 @@ az átlagos működő ágyszámot alapul véve:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev == 2024][MukodoAtlagAgy > 0], aes(x = MukodoAtlagAgy)) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0],
+       aes(x = MukodoAtlagAgy)) +
   geom_histogram(boundary = 0, binwidth = 10) +
   labs(x = "Működő átlagos ágyszám", y = "Gyakoriság [db]",
        caption = captionlab)
@@ -2023,9 +2030,13 @@ meg. Ez így néz ki 2022-ben:
 <details><summary>R kód megjelenítése</summary>
 
 ``` r
-ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
-  order(MukodoAtlagAgy)], aes(x = MukodoAtlagAgy, y = factor(KorhazRovid, levels = KorhazRovid))) +
-  geom_jitter(width = 0, height = 0.1) + scale_y_discrete(limits=rev) +
+ggplot(res[Ev == 2024][MukodoAtlagAgy > 0][
+  ,.(MukodoAtlagAgy = sum(MukodoAtlagAgy)), .(KorhazRovid)][
+    order(MukodoAtlagAgy)],
+  aes(x = MukodoAtlagAgy,
+      y = factor(KorhazRovid, levels = KorhazRovid))) +
+  geom_jitter(width = 0, height = 0.1) +
+  scale_y_discrete(limits=rev) +
   labs(x = "Működő átlagos aktív ágyszám", y = "Kórház azonosító",
        caption = captionlab)
 ```
@@ -2043,9 +2054,12 @@ szó):
 
 ``` r
 knitr::kable(
-  res[Ev == 2024][SzakmaKod != "" & MukodoAtlagAgy > 0 & Fenntarto == "Központi eü. intézmény"][
-    , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)), .(`Kórház` = KorhazNev)][
-      order(`Működő átlagos aktív ágyszám`)][1:15])
+  res[Ev == 2024][
+    SzakmaKod != "" & MukodoAtlagAgy > 0 &
+      Fenntarto == "Központi eü. intézmény"][
+        , .(`Működő átlagos aktív ágyszám` = sum(MukodoAtlagAgy)),
+        .(`Kórház` = KorhazNev)][
+          order(`Működő átlagos aktív ágyszám`)][1:15])
 ```
 
 </details>
@@ -2384,6 +2398,17 @@ európai országokat jelentik, piros Magyarország):
 res2 <- unique(rbind(
   data.table(eurostat::get_eurostat("hlth_co_proc2")),
   data.table(eurostat::get_eurostat("hlth_co_proc3"))))
+```
+
+</details>
+
+    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
+
+    ## indexed 0B in  0s, 0B/sindexed 2.15GB in  0s, 2.15GB/s                                                                              
+
+<details><summary>R kód megjelenítése</summary>
+
+``` r
 res2 <- res2[unit == "NR"]
 ggplot(res2[, .((1-values[icha_hc=="IN"]/values[icha_hc=="TOT_PAT"])*100),
             .(icd9cm, geo, TIME_PERIOD)],
@@ -2486,7 +2511,8 @@ magyar adatokon:
 ``` r
 ggplot(res[Ev == 2024][NemSpecKh & NemSpecSzakma & MukodoAtlagAgy>0],
        aes(x = MukodoAtlagAgy, y = ElbocsatottBetegSzam)) +
-  geom_point() + facet_wrap(~SzakmaMegnev) + geom_smooth(method = "lm", formula = y ~ x - 1) +
+  geom_point() + facet_wrap(~SzakmaMegnev) +
+  geom_smooth(method = "lm", formula = y ~ x - 1) +
   labs(x = "Működő ágyak átlagos száma",
        y = "Ellátott betegek száma",
        caption = captionlab)
@@ -2764,8 +2790,9 @@ ggplot(res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0],
        aes(x = Ev, y = ApolasAtlTartam, group = KorhazRovid)) +
   facet_wrap(~SzakmaMegnev, scales = "free") +
   geom_line(alpha = 0.2) +
-  geom_line(data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
-    , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
+  geom_line(
+    data = res[NemSpecKh & NemSpecSzakma & MukodoAtlagAgy > 0][
+      , .(ApolasAtlTartam = weighted.mean(ApolasAtlTartam, ElbocsatottBetegSzam, na.rm = TRUE)), .(Ev, SzakmaMegnev)],
     aes(x = Ev, y = ApolasAtlTartam), inherit.aes = FALSE, color = "red") +
   labs(x = "Év", y = "Átlagos ápolási időtartam [nap]",
        caption = captionlab) +
@@ -2786,6 +2813,33 @@ fül-orr-gégészet, tüdőgyógyászat, szemészet, szülészet-nőgyógyászat
 legegyértelműbb példák erre. Az összkép azonban nem túl jó, mert pont a
 nagyobb forgalmú területeken nem volt érdemi fejlődés, azaz ezeknél
 továbbra is sokáig tartjuk ott az embereket, ahol a legkevésbé kellene.
+
+Egyetlen megjegyzés még idetartozik: a fenti kérdésnek nem pusztán
+orvosi és általános szervezési aspektusai vannak; Magyarországon ezt
+befolyásolja konkrétan a finanszírozási protokoll is. A
+fekvőbeteg-ellátás hazai finanszírozása egy rendkívül komplex rendszer,
+amelyben előállhatnak olyan helyzetek, ahol a finanszírozás javításához,
+első ránézésre elég paradox módon, *tovább* kell a beteget kórházban
+tartani. (Csak hogy egyetlen, és még relatíve egyszerű példát hozzak:
+minden ún. homogén betegségcsoporthoz – HBCs – amibe a betegeket be kell
+sorolni a kórházi ellátás során, és ami alapján a kórház
+finanszírozásának meghatározó részét kapja, tartozik egy alsó határnap:
+ha a beteg nem tartózkodik annyi ideig a kórházban, akkor ún. rövid
+esetnek fog minősülni, ami a kórház számára előnytelen, mert ilyenkor
+nem kapja meg az adott HBCs-ért járó teljes finanszírozást. Ez pláne
+kellemetlen azokban az esetekben, ahol közben a költségek nagy része
+rögtön az ellátás elején felmerül, ezért az ilyet a kórházak igyekeznek
+kerülni, és a beteget legalább az alsó határnapig mindenképp
+benntartani. Természetesen a HBCs szabálykönyvet rendszeresen
+felülvizsgálják, és az alsó határnapokat is szükség esetén igazítják a
+változó orvosi realitásokhoz, de ekkora mennyiségű kód esetén – pláne,
+ha a rendszeres karbantartás elmarad… – lesznek megkérdőjelezhető
+szabályok. Eseménymentes várandósság utáni, komplikáció nélküli, műtétet
+nem igénylő hüvelyi szülés alsó határnapja például 3 nap jelenleg, tehát
+teljesen mindegy milyen egészséges az anya, teljesen mindegy milyen
+egészséges az újszülött, teljesen mindegy mik a körülményei a családnak,
+szülőnőt nem lehet 3 napnál korábban elbocsátani úgy, hogy ne érje
+anyagi veszteség a kórházat.)
 
 ## Egy záró gondolat a hazai ellátórendszer kórház-centrikusságáról
 
@@ -3685,7 +3739,7 @@ vannak feltüntetve, van egy nagyon komoly limitáció: nem jelennek meg a
 statisztikákban azok a gépek, melyek kizárólag fekvőbeteg-ellátásban
 vesznek részt. (Ennek finanszírozástechnikai oka vannak: az ilyen
 gépekre nincs külön finanszírozási szerződés, mert a költségük bele van
-építve a megfelelő HBCS-be. Ezzel együtt is, számomra érthetetlen, hogy
+építve a megfelelő HBCs-be. Ezzel együtt is, számomra érthetetlen, hogy
 az ország miért nem vezet erről egy teljeskörű leltárt, finanszírozási
 szerződéstől függetlenül; azért ilyen gépből nincs követhetetlenül sok,
 és nem változik naponta kétszer a számuk…) Ez azt jelenti, hogy itt a
